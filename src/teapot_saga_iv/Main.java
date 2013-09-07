@@ -13,29 +13,21 @@
 
 package teapot_saga_iv;
 
-import teapot_saga_iv.maps.Frame;
-import java.io.IOException;
-
-
-
 public class Main
 {
 
     public static boolean gameActive = true;
-    public static int lvl = 2;
     
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
             
     {
-        System.out.println("Map Starting");
+        System.out.println("Loading Map");
         Maps map = new Maps();
-        System.out.println("Maps Complete");
-        System.out.println("Render Starting");
-        Render render = new Render();
-        System.out.println("Render Complete");
-        System.out.println("Frame Starting");
+        Player player = new Player();
+        System.out.println("Loading Map Complete");
+        System.out.println("Creating Frame");
         Window window = new Window();
-        System.out.println("Frame Complete");
+        System.out.println("Frame Creation Complete");
         gameActive = false;
     }
 }
