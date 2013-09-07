@@ -7,35 +7,29 @@ public class Render
 
     public Render()
     {
-        
-        
-        while(Main.gameActive)
+
+        char[][] map = Maps.map;
+        render = "";
+        int px = Player.x;
+        int py = Player.y;
+            
+        for(int y = 0; y < map.length; y++)
         {
-            char[][] map = Maps.map;
-            render = "";
-            int px = Player.x;
-            int py = Player.y;
-            
-            for(int y = 0; y < map.length; y++)
+            for (int x = 0; x < map[y].length; x++)
             {
-                for (int x = 0; x < map[y].length; x++)
+                    
+                if(px==x & py==y)
                 {
-                    
-                    if(px==x & py==y)
-                    {
-                        render+="@";
+                    render+="@";
                         
-                    } else {
-                        render+=map[y][x];
-                    }
-                    
+                } else {
+                    render+=map[y][x];
                 }
-                render+="\n";
+                    
             }
-            
-            Window.setText(render);
-            
+            render+="\n";
         }
-        
+            
+        Window.setText(render);
     }
 } 

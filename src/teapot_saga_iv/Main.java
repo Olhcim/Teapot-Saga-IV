@@ -17,17 +17,32 @@ public class Main
 {
 
     public static boolean gameActive = true;
+    public static boolean frameActive = false;
     
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
             
     {
-        System.out.println("Loading Map");
-        Maps map = new Maps();
-        Player player = new Player();
-        System.out.println("Loading Map Complete");
-        System.out.println("Creating Frame");
-        Window window = new Window();
-        System.out.println("Frame Creation Complete");
-        gameActive = false;
+        
+        do
+        {
+            if(!frameActive)
+            {
+                Maps.loadCurrentMap();
+                Maps.loadCurrentMapData();
+                Window window = new Window();
+            }
+            
+            if(Player.x == MapExit.x && Player.y == MapExit.y)
+            {
+                Window.destroy();
+            }
+            
+            
+            Render render = new Render();
+
+            Thread.sleep(100);
+        } while (gameActive);
+        
+        
     }
 }

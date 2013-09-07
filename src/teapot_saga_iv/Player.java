@@ -4,12 +4,13 @@ package teapot_saga_iv;
 public class Player {
     
     public int health = 10;
-    public static int x, y;
+    public static int x=1, y=1;
     public static char gender = '♂';
-
-    public Player()
+    
+    public static void setPos(int a, int b)
     {
-        x=3; y=3;
+        x = a;
+        y = b;
     }
     
     public static void move(int a)

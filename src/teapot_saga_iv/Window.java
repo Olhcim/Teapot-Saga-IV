@@ -2,11 +2,8 @@ package teapot_saga_iv;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,8 +11,6 @@ import javax.swing.JTextArea;
 
 public class Window extends JFrame implements KeyListener
 {
-
-    public static boolean escPressed = false;
     
     static JFrame frame = new JFrame("Teavup Saga IV: The Teapocolypse");
     static JPanel jp = new JPanel();
@@ -25,6 +20,7 @@ public class Window extends JFrame implements KeyListener
     
     public Window()  //creates frame
     {
+        Main.frameActive = true;
         
         area.setEditable(false);
         area.setFont(font);
@@ -33,19 +29,16 @@ public class Window extends JFrame implements KeyListener
         area.addKeyListener(this);
 
         frame.add(area);
-        frame.setSize(400, 375);
+        frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         
-        Render render = new Render();
-
     }
     
     public static void setText(String a)
     {area.setText(a);}
-    
     public static void print(String a)
     {area.append(a);}
     public static void print(char a)
@@ -54,9 +47,15 @@ public class Window extends JFrame implements KeyListener
     {area.append(a + "\n");}
     public static void nl()
     {area.append("\n");}
-    
     public static void clear()
     {area.setText("");}
+    
+    
+    public static void destroy()
+    {
+        frame.dispose();
+        Main.frameActive = false;
+    }
 
     
     @Override
