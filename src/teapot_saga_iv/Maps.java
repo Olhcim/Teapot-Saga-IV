@@ -114,14 +114,16 @@ public class Maps {
                     startX = Integer.parseInt(mapData[i][1]);
                     startY = Integer.parseInt(mapData[i][2]);
                     
+                    Player.x = startX;
+                    Player.y = startY;
                     
                     //Player.setPos(Integer.parseInt(mapData[i][1]), Integer.parseInt(mapData[i][2]));
-                    System.out.println(Integer.parseInt(mapData[i][1]) + " " + Integer.parseInt(mapData[i][2]));
+                    System.out.println("PlayerPos: " +Integer.parseInt(mapData[i][1]) + " " + Integer.parseInt(mapData[i][2]));
                 } else if (mapData[i][0].contains("exit"))
                 {
                     exitX = Integer.parseInt(mapData[i][1]);
                     exitY = Integer.parseInt(mapData[i][2]);
-                    //MapExit mapExit = new MapExit(Integer.parseInt(mapData[i][1]), Integer.parseInt(mapData[i][2]));
+                   System.out.println("MapExit: " +Integer.parseInt(mapData[i][1]) + " " + Integer.parseInt(mapData[i][2]));
                 }
             }
     }

@@ -51,10 +51,9 @@ public class Window extends JFrame implements KeyListener
     {area.setText("");}
     
     
-    public static void destroy()
+    public static void resize()
     {
-        frame.dispose();
-        Main.frameActive = false;
+        frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
     }
 
     

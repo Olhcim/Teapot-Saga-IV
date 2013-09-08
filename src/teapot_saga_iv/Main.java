@@ -22,23 +22,25 @@ public class Main
     public static void main(String[] args) throws InterruptedException
             
     {
+        Maps.loadCurrentMap();
+        Maps.loadCurrentMapData();
+        Render.loadMap();
+        Window window = new Window();
         
         do
         {
-            if(!frameActive)
+            
+            if(Player.x == Maps.exitX && Player.y == Maps.exitY)
             {
+                Maps.mapNum++;
                 Maps.loadCurrentMap();
                 Maps.loadCurrentMapData();
-                Window window = new Window();
-            }
-            
-            if(Player.x == MapExit.x && Player.y == MapExit.y)
-            {
-                Window.destroy();
+                Render.loadMap();
+                Window.resize();
             }
             
             
-            Render render = new Render();
+            Render.rend();
 
             Thread.sleep(100);
         } while (gameActive);

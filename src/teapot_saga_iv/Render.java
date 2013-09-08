@@ -4,24 +4,31 @@ public class Render
 {
     
     public static String render;
+    private static char[][] map;
+    
+    public static void loadMap()
+    {
+        map = Maps.map;
+    }
 
-    public Render()
+    public static void rend()
     {
 
-        char[][] map = Maps.map;
         render = "";
-        int px = Player.x;
-        int py = Player.y;
+
             
         for(int y = 0; y < map.length; y++)
         {
             for (int x = 0; x < map[y].length; x++)
             {
                     
-                if(px==x & py==y)
+                if(Player.x==x & Player.y==y)
                 {
                     render+="@";
                         
+                } else if (Maps.exitX==x & Maps.exitY==y)
+                {
+                    render+="X";
                 } else {
                     render+=map[y][x];
                 }
@@ -32,4 +39,6 @@ public class Render
             
         Window.setText(render);
     }
+    
+    
 } 
