@@ -23,7 +23,7 @@ public class Maps {
             
             File file = new File(System.getProperty("user.dir")
                     + "/src/teapot_saga_iv/maps/"
-                    + mapNum + ".txt");
+                    + mapNum + ".map");
 
             Scanner scanner = new Scanner(file);
             
@@ -72,7 +72,7 @@ public class Maps {
             
             File file = new File(System.getProperty("user.dir")
                     + "/src/teapot_saga_iv/maps/"
-                    + mapNum + "data.txt");
+                    + mapNum + ".data");
 
             Scanner scanner = new Scanner(file);
             
