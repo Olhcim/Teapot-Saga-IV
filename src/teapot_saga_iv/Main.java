@@ -39,8 +39,14 @@ public class Main
                 Window.resize();
             }
             
+            if(Maps.mapNum > 2)
+            {
+                Window.setText("Game Over");
+                break;
+            } else {
+                Render.rend();
+            }
             
-            Render.rend();
 
             Thread.sleep(100);
         } while (gameActive);

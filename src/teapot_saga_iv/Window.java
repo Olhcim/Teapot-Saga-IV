@@ -29,7 +29,7 @@ public class Window extends JFrame implements KeyListener
         area.addKeyListener(this);
 
         frame.add(area);
-        frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
+        frame.setSize(260, 430 );
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -53,7 +53,7 @@ public class Window extends JFrame implements KeyListener
     
     public static void resize()
     {
-        frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
+        //frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
     }
 
     
