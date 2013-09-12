@@ -4,12 +4,6 @@ public class Render
 {
     
     public static String render;
-    private static char[][] map;
-    
-    public static void loadMap()
-    {
-        map = Maps.map;
-    }
 
     public static void rend()
     {
@@ -17,20 +11,19 @@ public class Render
         render = "";
 
             
-        for(int y = 0; y < map.length; y++)
+        for(int y = 0; y < Files.map.length; y++)
         {
-            for (int x = 0; x < map[y].length; x++)
+            for (int x = 0; x < Files.map[y].length; x++)
             {
                     
                 if(Player.x==x & Player.y==y)
                 {
                     render+="@";
-                        
-                } else if (Maps.exitX==x & Maps.exitY==y)
-                {
-                    render+="X";
+                    System.out.print("Pos: " + Player.x + " " + Player.y);
+                    System.out.print(" Tile: " + Files.map[Player.y][Player.x]);
+                    
                 } else {
-                    render+=map[y][x];
+                    render+=Files.map[y][x];
                 }
                     
             }

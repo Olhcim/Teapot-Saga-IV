@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -18,9 +20,15 @@ public class Window extends JFrame implements KeyListener
     
     static JFrame frame = new JFrame("Teavup Saga IV: The Teapocolypse");
     static JPanel jp = new JPanel();
+    static GroupLayout layout = new GroupLayout(jp);
+    
+    static JTextArea info = new JTextArea();
     static JTextPane textPane = new JTextPane();
+    static JTextArea stats = new JTextArea();
     static Font font = new Font("Monospaced",Font.PLAIN,16);
+    
     static Color brown = new Color(100,40,10);
+    static Color lbrown = new Color(200,150,110);
     
     public Window()  //creates frame
     {
@@ -31,19 +39,59 @@ public class Window extends JFrame implements KeyListener
         
         Main.frameActive = true;
         
+        //stats.setSize(500, 10);
+        info.setEditable(false);
+        info.setFont(font);
+        info.setBackground(lbrown);
+        info.setForeground(brown);
+        info.addKeyListener(this);
+        
+        //textPane.setSize(1000, 890);
         textPane.setEditable(false);
         textPane.setFont(font);
         textPane.setBackground(brown);
         textPane.setForeground(Color.WHITE);
         textPane.addKeyListener(this);
-
-        frame.add(textPane);
-        frame.setSize(260, 430);
+        
+        //stats.setSize(500, 100);
+        stats.setEditable(false);
+        stats.setFont(font);
+        stats.setBackground(lbrown);
+        stats.setForeground(brown);
+        stats.addKeyListener(this);
+        
+        setLayout();
+        jp.setLayout(layout);
+        
+        frame.setSize(1000, 1000);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.add(jp);
         frame.setVisible(true);
         
+    }
+    
+    private static void setLayout()
+    {
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(textPane)
+                    .addComponent(stats))
+                .addContainerGap()));
+        
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()//component - min, pref, max
+                .addComponent(info, 100, 100, 100)
+                .addComponent(textPane, 500, 800, 800)
+                .addComponent(stats, 100, 100, 100)
+                .addContainerGap()));
     }
     
     public static void setText(String a)
@@ -52,19 +100,13 @@ public class Window extends JFrame implements KeyListener
     {textPane.setText("");}
     
     
-    public static void resize()
-    {
-        //frame.setSize((int)(Math.round(Maps.map[0].length * 12.1)), (int)(Math.round(Maps.map.length * 22.7)) );
-    }
-
-    
     @Override
     public void keyTyped(KeyEvent ke) {}
 
     @Override
     public void keyPressed(KeyEvent ke) {
         
-        System.out.println(Player.x + " " + Player.y);
+        //System.out.println(ke.getKeyChar() + ": " +ke.getKeyCode());
         Player.move(ke.getKeyCode());
     }
 

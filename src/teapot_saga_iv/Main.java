@@ -21,36 +21,27 @@ public class Main
     
     public static void main(String[] args) throws InterruptedException
             
-    {       //game start
-        
-        Maps.loadCurrentMap();
-        Maps.loadCurrentMapData();
-        Render.loadMap();
+    {
         Window window = new Window();
+        Files.load();
+        Render.rend();
+    }
+    
+    public static void doGameTick()
+    {
         
-        do  //game loop
-        {
-            if(Player.x == Maps.exitX && Player.y == Maps.exitY)
-            {
-                Maps.mapNum++;
-                Maps.loadCurrentMap();
-                Maps.loadCurrentMapData();
-                Render.loadMap();
-                Window.resize();
-            }
-            
-            if(Maps.mapNum > 3)
-            {
-                Window.setText("Game Over");
-                break;
-            } else {
-                Render.rend();
-            }
-            
-
-            Thread.sleep(100);
-        } while (gameActive);
+        if(Files.map[Player.y][Player.x] == '>')
+        {}
         
-        
+        Render.rend();
+    }
+    
+    
+    
+    public static void NextMapAndUpdate()
+    {
+        Files.mapNum++;
+        Files.load();
+        Render.rend();
     }
 }
