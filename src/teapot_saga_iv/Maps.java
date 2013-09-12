@@ -27,7 +27,7 @@ public class Maps {
 
             Scanner scanner = new Scanner(file);
             
-            scanner.useDelimiter(System.getProperty("line.separator"));
+            scanner.useDelimiter("\n");
 
             while (scanner.hasNext())
             {
@@ -75,8 +75,7 @@ public class Maps {
                     + mapNum + ".data");
 
             Scanner scanner = new Scanner(file);
-            
-            scanner.useDelimiter(System.getProperty("line.separator"));
+            scanner.useDelimiter("\n");
 
             while (scanner.hasNext())
             {
@@ -109,7 +108,7 @@ public class Maps {
     {
             for (int i = 0; i < mapData.length; i++)
             {
-                if(mapData[i][0].contains("start"))
+                if(mapData[i][0].toLowerCase().contains("start"))
                 {
                     startX = Integer.parseInt(mapData[i][1]);
                     startY = Integer.parseInt(mapData[i][2]);
@@ -117,9 +116,9 @@ public class Maps {
                     Player.x = startX;
                     Player.y = startY;
                     
-                    //Player.setPos(Integer.parseInt(mapData[i][1]), Integer.parseInt(mapData[i][2]));
-                    System.out.println("PlayerPos: " +Integer.parseInt(mapData[i][1]) + " " + Integer.parseInt(mapData[i][2]));
-                } else if (mapData[i][0].contains("exit"))
+                    System.out.println("PlayerPos: " + mapData[i][1] + " " + mapData[i][2]);
+                    
+                } else if (mapData[i][0].toLowerCase().contains("exit"))
                 {
                     exitX = Integer.parseInt(mapData[i][1]);
                     exitY = Integer.parseInt(mapData[i][2]);

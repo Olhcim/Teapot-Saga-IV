@@ -21,15 +21,15 @@ public class Main
     
     public static void main(String[] args) throws InterruptedException
             
-    {
+    {       //game start
+        
         Maps.loadCurrentMap();
         Maps.loadCurrentMapData();
         Render.loadMap();
         Window window = new Window();
         
-        do
+        do  //game loop
         {
-            
             if(Player.x == Maps.exitX && Player.y == Maps.exitY)
             {
                 Maps.mapNum++;
@@ -39,7 +39,7 @@ public class Main
                 Window.resize();
             }
             
-            if(Maps.mapNum > 2)
+            if(Maps.mapNum > 3)
             {
                 Window.setText("Game Over");
                 break;

@@ -4,16 +4,15 @@ package teapot_saga_iv;
 public class Player {
     
     public int health = 10;
-    public static int x=1, y=1;
-    public static char gender = '♂';
+    public static int x=2, y=2;
     
-    public static void setPos(int a, int b)
+    public static void setPos(int a, int b)     //sets the possition of the player when 
     {
         x = a;
         y = b;
     }
     
-    public static void move(int a)
+    public static void move(int a)  //recieves code of key pressed from Window.class
     {
             switch (a)
             {

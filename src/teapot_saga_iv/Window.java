@@ -7,6 +7,10 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 
 public class Window extends JFrame implements KeyListener
@@ -14,22 +18,27 @@ public class Window extends JFrame implements KeyListener
     
     static JFrame frame = new JFrame("Teavup Saga IV: The Teapocolypse");
     static JPanel jp = new JPanel();
-    static JTextArea area = new JTextArea();
-    static Font font = new Font("Monospaced",Font.PLAIN,20);
-    static Color brown = new Color(110,70,30);
+    static JTextPane textPane = new JTextPane();
+    static Font font = new Font("Monospaced",Font.PLAIN,16);
+    static Color brown = new Color(100,40,10);
     
     public Window()  //creates frame
     {
+        StyledDocument doc = textPane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+        
         Main.frameActive = true;
         
-        area.setEditable(false);
-        area.setFont(font);
-        area.setBackground(Color.WHITE);
-        area.setForeground(brown);
-        area.addKeyListener(this);
+        textPane.setEditable(false);
+        textPane.setFont(font);
+        textPane.setBackground(brown);
+        textPane.setForeground(Color.WHITE);
+        textPane.addKeyListener(this);
 
-        frame.add(area);
-        frame.setSize(260, 430 );
+        frame.add(textPane);
+        frame.setSize(260, 430);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -38,17 +47,9 @@ public class Window extends JFrame implements KeyListener
     }
     
     public static void setText(String a)
-    {area.setText(a);}
-    public static void print(String a)
-    {area.append(a);}
-    public static void print(char a)
-    {area.append(a+"");}
-    public static void println(String a)
-    {area.append(a + "\n");}
-    public static void nl()
-    {area.append("\n");}
+    {textPane.setText(a);}
     public static void clear()
-    {area.setText("");}
+    {textPane.setText("");}
     
     
     public static void resize()
