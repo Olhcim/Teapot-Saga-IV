@@ -25,10 +25,10 @@ public class Window extends JFrame implements KeyListener
     static JTextArea info = new JTextArea();
     static JTextPane textPane = new JTextPane();
     static JTextArea stats = new JTextArea();
-    static Font font = new Font("Monospaced",Font.PLAIN,16);
+    static Font font = new Font("Monospaced",Font.PLAIN,20);
     
     static Color brown = new Color(100,40,10);
-    static Color lbrown = new Color(200,150,110);
+    //static Color lbrown = new Color(200,150,110);
     
     public Window()  //creates frame
     {
@@ -38,32 +38,33 @@ public class Window extends JFrame implements KeyListener
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         
         Main.frameActive = true;
-        
-        //stats.setSize(500, 10);
+
         info.setEditable(false);
         info.setFont(font);
-        info.setBackground(lbrown);
+        info.setBackground(Color.WHITE);
         info.setForeground(brown);
         info.addKeyListener(this);
         
-        //textPane.setSize(1000, 890);
+        info.setText("Default Info Text.");
+        
         textPane.setEditable(false);
         textPane.setFont(font);
         textPane.setBackground(brown);
         textPane.setForeground(Color.WHITE);
         textPane.addKeyListener(this);
         
-        //stats.setSize(500, 100);
         stats.setEditable(false);
         stats.setFont(font);
-        stats.setBackground(lbrown);
+        stats.setBackground(Color.WHITE);
         stats.setForeground(brown);
         stats.addKeyListener(this);
+        
+        stats.setText("Default Stats Text.");
         
         setLayout();
         jp.setLayout(layout);
         
-        frame.setSize(1000, 1000);
+        frame.setSize(400, 650);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -79,7 +80,7 @@ public class Window extends JFrame implements KeyListener
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                    .addComponent(info, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)//component - min, prefrence, max
                     .addComponent(textPane)
                     .addComponent(stats))
                 .addContainerGap()));
@@ -87,10 +88,10 @@ public class Window extends JFrame implements KeyListener
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()//component - min, pref, max
-                .addComponent(info, 100, 100, 100)
-                .addComponent(textPane, 500, 800, 800)
-                .addComponent(stats, 100, 100, 100)
+                .addContainerGap()
+                .addComponent(info, 100, 100, 100)//component - min, prefrence, max
+                .addComponent(textPane, 400, 800, Short.MAX_VALUE)//component - min, prefrence, max
+                .addComponent(stats, 100, 100, 100)//component - min, prefrence, max
                 .addContainerGap()));
     }
     
