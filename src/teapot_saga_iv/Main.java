@@ -19,29 +19,63 @@ public class Main
     public static boolean gameActive = true;
     public static boolean frameActive = false;
     
-    public static void main(String[] args) throws InterruptedException
+    public static void main(String[] args)
             
-    {
-        Window window = new Window();
+    {   
         Files.load();
-        Render.rend();
+        Player.setPos(Files.startX, Files.startY);
+        
+        Window window = new Window();
+        Render.paintMap();
+        Render.paintPlayer();
     }
     
+    
+    /*
+     * Called if the player is moved, performs all nessesary functions and checks.
+     */
     public static void doGameTick()
     {
         
         if(Files.map[Player.y][Player.x] == '>')
-        {}
+        {
+            NextMap();
+        } else if (Files.map[Player.y][Player.x] == '<')
+        {
+            PreviousMap();
+        } else
+        {
+            Render.render();
+        }
         
-        Render.rend();
+        
     }
     
     
-    
-    public static void NextMapAndUpdate()
+    /*
+     * Loads the next Map, moves the player and updates the GUI.
+     */
+    public static void NextMap()
     {
-        Files.mapNum++;
-        Files.load();
-        Render.rend();
+        if (Files.MapExists(1))
+        {
+            Files.mapNum++;
+            Files.load();
+            Player.goToStart();
+        }
+        Render.render();
+    }
+    
+    /*
+     * Loads the previous Map, moves the player and updates the GUI.
+     */
+    public static void PreviousMap()
+    {
+        if (Files.MapExists(-1)) {
+            Files.mapNum--;
+            Files.load();
+            Player.setPos(Files.exitX, Files.exitY);
+        }
+        Render.render();
     }
 }
