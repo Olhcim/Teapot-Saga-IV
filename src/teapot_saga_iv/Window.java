@@ -24,7 +24,6 @@ public class Window extends JFrame implements KeyListener
     {   
         
         Render.LoadGlyphs();
-        Render.update();
         picLabel = new JLabel(new ImageIcon(Render.rendered));
         
         picLabel.addKeyListener(this);

@@ -25,9 +25,10 @@ public class Main
         Files.load();
         Player.setPos(Files.startX, Files.startY);
         
+        Render.print("Hello person, My name is Geff and i will be your guide. Listen to my every word");
         Window window = new Window();
-        Render.paintMap();
-        Render.paintPlayer();
+        Render.render();
+        Files.renderDispMap();
     }
     
     
