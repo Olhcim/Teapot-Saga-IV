@@ -3,8 +3,9 @@ package teapot_saga_iv;
 
 public class Player {
     
-    public int health = 10;
+    public static int health = 100, moves = 0;
     public static int x=2, y=2;
+    public static boolean canMove = true;
     
     
     /*
@@ -34,7 +35,55 @@ public class Player {
     }
     
     /*
+     * Freezes the player and stops it from moving.
+     */
+    public static void freeze()
+    {
+        canMove = false;
+    }
+    
+    /*
+     * unFreezes the player and allowes it to move again.
+     */
+    public static void unFreeze()
+    {
+        canMove = false;
+    }
+    
+    /*
+     * Checks weather the current possition is over an entrance or exit and follows the apropreate actions..
+     */
+    private static void checkForStairCase()
+    {
+        if(isAtExit())
+        {
+            Main.NextMap();
+        }
+        else if (isAtEntrance())
+        {
+            Main.PrevMap();
+        }
+    }
+    
+    /*
+     * Checks weather the current possition is over an entrance.
+     */
+    private static boolean isAtEntrance()
+    {
+        return Files.map[Player.y][Player.x] == '<';
+    }
+    
+    /*
+     * Checks weather the current possition is over an exit.
+     */
+    private static boolean isAtExit()
+    {
+        return Files.map[Player.y][Player.x] == '>';
+    }
+    
+    /*
      * recieves the keycodes of keys pressed from Window.class
+     * 
      */
     public static void move(int a)
     {
@@ -42,28 +91,35 @@ public class Player {
         {
             case 65:
             case 37:
-                if(Files.map[y][x-1] != '#') { x--; }
-                System.out.print("Dir: Left ");
-                Main.doGameTick();
+                if(canMove(x-1, y)) { x--; moves++; Main.doGameTick();}
                 break;
             case 87:
             case 38:
-                if(Files.map[y-1][x] != '#') { y--; }
-                System.out.print("Dir: Up ");
-                Main.doGameTick();
+                if(canMove(x, y-1)) { y--; moves++; Main.doGameTick();}
                 break;
             case 68:
             case 39:
-                if(Files.map[y][x+1] != '#') { x++; }
-                System.out.print("Dir: Right ");
-                Main.doGameTick();
+                if(canMove(x+1, y)) { x++; moves++; Main.doGameTick();}
                 break;
             case 83:
             case 40:
-                if(Files.map[y+1][x] != '#') { y++; }
-                System.out.print("Dir: Down ");
-                Main.doGameTick();
+                if(canMove(x, y+1)) { y++; moves++; Main.doGameTick();}
                 break;
+            case 10:
+                if(canMove == false && isAtExit()) {
+                    canMove = true;
+                    Main.NextMap();
+                }
         }
+        checkForStairCase();
+    }
+    
+    
+    /*
+     * Checks weather the player can move to the specified location.
+     */
+    private static boolean canMove(int a, int b)
+    {
+        return Files.map[b][a] != '#' && canMove == true;
     }
 } 

@@ -22,13 +22,9 @@ public class Main
     public static void main(String[] args)
             
     {   
-        Files.load();
-        Player.setPos(Files.startX, Files.startY);
-        
-        Render.print("Hello person, My name is Geff and i will be your guide. Listen to my every word");
+        //Render.print("");
         Window window = new Window();
-        Render.render();
-        Files.renderDispMap();
+        NextMap();
     }
     
     
@@ -37,19 +33,7 @@ public class Main
      */
     public static void doGameTick()
     {
-        
-        if(Files.map[Player.y][Player.x] == '>')
-        {
-            NextMap();
-        } else if (Files.map[Player.y][Player.x] == '<')
-        {
-            PreviousMap();
-        } else
-        {
-            Render.render();
-        }
-        
-        
+            Render.update();
     }
     
     
@@ -62,21 +46,23 @@ public class Main
         {
             Files.mapNum++;
             Files.load();
+            Render.print(Files.dialogStart);
             Player.goToStart();
         }
-        Render.render();
+        Render.update();
     }
     
     /*
      * Loads the previous Map, moves the player and updates the GUI.
      */
-    public static void PreviousMap()
+    public static void PrevMap()
     {
         if (Files.MapExists(-1)) {
             Files.mapNum--;
             Files.load();
+            Render.print("You have already been to this place, head back to continue.");
             Player.setPos(Files.exitX, Files.exitY);
         }
-        Render.render();
+        Render.update();
     }
 }
