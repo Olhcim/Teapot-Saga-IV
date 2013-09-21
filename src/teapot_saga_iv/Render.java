@@ -42,7 +42,7 @@ public class Render {
 // Load Glyphs
 ////////////////////////////////////////////////////////////////////////////////
     
-/*
+/**
  * Loads all the Characters from the Files
  */
     public static void LoadGlyphs() {
@@ -55,7 +55,7 @@ public class Render {
             int sx = (i % 16) * CHAR_WIDTH;
             int sy = (i / 16) * CHAR_HEIGHT;
             
-            System.out.println("sx: " + sx + " sy: " + sy);
+            //System.out.println("sx: " + sx + " sy: " + sy);
 
             glyphs[i] = new BufferedImage(CHAR_WIDTH, CHAR_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             glyphs[i].getGraphics().drawImage(glyphSprite, 0, 0, CHAR_WIDTH, CHAR_HEIGHT, sx, sy, sx + CHAR_WIDTH, sy + CHAR_HEIGHT, null);
@@ -66,33 +66,35 @@ public class Render {
 // Paint
 ////////////////////////////////////////////////////////////////////////////////
     
+    /**
+    * Paints over the specified char. Full X and Full Y coords needed
+    */
     private static void paintToDialog(char a, int x, int y) {
         
         dialog.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
 
-/*
- * Paints over the specified char. Full X and Full Y coords needed
- */
+    /**
+    * Paints over the specified char. Full X and Full Y coords needed
+    */
     private static void paintToMap(char a, int x, int y) {
         
         map.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
+    /**
+    * Paints over the specified char. Full X and Full Y coords needed
+    */
     private static void paintToStats(char a, int x, int y) {
         
         stats.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
-    /*
-     * Paints the player, Map X and Map Y coords needed.
-     */
-    
 ////////////////////////////////////////////////////////////////////////////////
 // Print - Send text to dialog box
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
+    /**
      * Prints a line of text the the second line of the display
      */
     public static void print(String a)
@@ -106,8 +108,6 @@ public class Render {
         int x = 0;
         
         System.out.println(a);
-        
-        clearDialog();
         
         
         for (int i = 0; i < a.length(); i++)
@@ -130,7 +130,7 @@ public class Render {
 
     }
     
-    /*
+    /**
      * Wraps the specified string to fit the specified width in characters.
      * - inserts "\n" where nessesary.
      * 
@@ -156,16 +156,16 @@ public class Render {
 // Update Status box
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
-     * Updates the status box with the required text
+    /**
+     * Updates the status box with the required text.
      */
     private static void updateStats()
-    {
+    {        
         
         clearStats();
-        
-        String health = "Health: " + Player.health;
-        String numMoves = "Turns: " + Player.moves;
+
+        String health = "Health: " + Main.getPlayer().health;
+        String numMoves = "Turns: " + Main.getPlayer().getMoves();
         
         if      (Player.health > 99) {health += "   ";}
         else if (Player.health > 9)  {health += "    ";}
@@ -194,14 +194,15 @@ public class Render {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Clearing
+    // >>>> ADD SELECTIVE CLEARING <<<<
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
+    /**
      * Paints spaces over the whole image.
      */
     private static void clearDialog()
     {
-        for (int y = 0; y < DIALOG_HEIGHT-1; y++)
+        for (int y = 0; y < DIALOG_HEIGHT; y++)
         {
             for (int x = 0; x < WIDTH; x++)
             {
@@ -223,13 +224,64 @@ public class Render {
     
     private static void clearStats()
     {
-        for (int y = 1; y < STATS_HEIGHT; y++)
+        for (int x = 0; x < WIDTH; x++)
+        {
+            paintToStats(' ', x, STATS_HEIGHT-2);
+        }
+    }
+    
+    public static void clearAll()
+    {
+        clearDialog();
+        clearMap();
+        clearStats();
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////
+// Clearing
+////////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * Paints spaces over the whole image.
+     */
+    private static void fillDialog()
+    {
+        for (int y = 0; y < DIALOG_HEIGHT; y++)
+        {
+            for (int x = 0; x < WIDTH; x++)
+            {
+                paintToDialog(' ', x, y);
+            }
+        }
+    }
+    
+    private static void fillMap()
+    {
+        for (int y = 0; y < MAP_HEIGHT; y++)
+        {
+            for (int x = 0; x < WIDTH; x++)
+            {
+                paintToMap(' ', x, y);
+            }
+        }
+    }
+    
+    private static void fillStats()
+    {
+        for (int y = 0; y < STATS_HEIGHT; y++)
         {
             for (int x = 0; x < WIDTH; x++)
             {
                 paintToStats(' ', x, y);
             }
         }
+    }
+    
+    public static void fillAll()
+    {
+        fillDialog();
+        fillMap();
+        fillStats();
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -255,8 +307,6 @@ public class Render {
      * Paints all of the current map.
      */
     public static void paintMap() {
-        
-        clearMap();
         
         int midX = getMidX();
         int midY = getMidY();        

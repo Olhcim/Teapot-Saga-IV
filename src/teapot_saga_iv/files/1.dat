@@ -1,4 +1,4 @@
-DialogStart:A strange lampshade starts speaking to you. "Greetings adventurer, i am depressed, the world has been infused with tea and everything is brown. Please help me restore the balance and once again let the colours of the rainbow shine across the world."
+DialogStart:Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac mollis justo, et viverra neque. Vestibulum mollis lacinia quam at faucibus. Nam auctor, nunc id tincidunt blandit, eros nisi molestie arcu, eget tempor dolor dolor facilisis lacus. In imperdiet, arcu sit amet scelerisque rhoncus, nunc justo pellentesque ipsum, at tempor orci ipsum ut odio. Etiam dapibus tellus id feugiat placerat. Vestibulum sed nibh eget elit posuere imperdiet vitae id massa.
 DialogExit:It seems like you are living up to your reputation, you certainly took your time to find the exit!:
 #PosStart:3:2
 #PosExit:5:5

@@ -25,7 +25,7 @@ public class Files {
 // MAP EXISTS
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
+    /**
      * Loads the current .dat and .map file, from a predefined location.
      */
     public static void load()
@@ -42,23 +42,23 @@ public class Files {
 // MAP EXISTS
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
+    /**
      * Checks weather the specified map exists.
      */
     public static boolean MapExists(int a)
     {
         File file = new File(FILESPATH + (mapNum + a) + "." + MAP);
-        System.out.println(file.exists());
+        //System.out.println(file.exists());
         return file.exists();
     }
 
-    /*
+    /**
      * Checks weather the specified file exists inside the Files filder.
      */
     public static boolean MapExists(String a)
     {
         File file = new File(FILESPATH + a);
-        System.out.println(file.exists());
+        //System.out.println(file.exists());
         return file.exists();
     }
     
@@ -66,7 +66,7 @@ public class Files {
 // FILE LOADING
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
+    /**
      * Loads the current .map file, from a predefined location.
      */
     private static void loadMapFromFile()
@@ -93,7 +93,7 @@ public class Files {
         } catch (Exception e) { System.err.println(e.getMessage()); }
     }
     
-    /*
+    /**
      * Loads the current .map file, from a predefined location.
      */
     private static void loadDataFromFile()
@@ -128,8 +128,8 @@ public class Files {
 // FILE PARSING
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
-     * Searches the current map and gets the start and exit positions in terms of X and Y
+    /**
+     * Searches the current map and gets the start and exit positions in terms of X and Y.
      */
     private static void parseMap()
     {
@@ -153,18 +153,19 @@ public class Files {
     }
     
     /**
-     * Searches the current data and gets the following:
-     * - Entities
-     *      - NPC
-     *          - Position
-     *          - Name
-     *          - Dialog
-     *      - Monster
-     *          - Position
-     *          - Name
-     * - Dialog
-     *      - Start
-     *      - Exit
+     * Searches the current data and gets the following data.
+     * <br>
+     * # Entities <br>
+     *      - NPC <br>
+     *          * Position <br>
+     *          * Name <br>
+     *          * Dialog <br>
+     *      - Monster <br>
+     *          * Position <br>
+     *          * Name. <br> <br>
+     * # Dialog <br>
+     *      - Start <br>
+     *      - Exit <br>
      */
     private static void parseData()
     {
@@ -195,44 +196,51 @@ public class Files {
 // MAP CONVERSION
 ////////////////////////////////////////////////////////////////////////////////
     
-    /*
-     * Replaces '#'s with the appropreate wall icon.
+    /**
+     * Replaces walls and characters with the appropriate character needed for rendering
      */
     private static void renderDispMap()
     {
-        char w = '#', d = '+';
+        char w = '#', d = '+', s = ' ', f = '.';
         
-        for(int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[0].length; x++) {
+        for(int y = 0; y < map.length; y++)
+        {
+            for (int x = 0; x < map[0].length; x++)
+            {
                 
                 byte a = 0;
                 
-                if (map[y][x]==w) {
+                if (map[y][x]==w)
+                {
                     try { if (map[y][x+1]==w || map[y][x+1]==d){a+=1;} } catch (Exception e) {}   // x++   1
                     try { if (map[y][x-1]==w || map[y][x-1]==d){a+=2;} } catch (Exception e) {}   // x--   2
                     try { if (map[y+1][x]==w || map[y+1][x]==d){a+=4;} } catch (Exception e) {}   // y++   4
                     try { if (map[y-1][x]==w || map[y-1][x]==d){a+=8;} } catch (Exception e) {}   // y--   8
-                }
-                
-                switch(a) {
-                    case 15: disMap[y][x] = (char) 197; break;  //all
+                    
+                    switch(a)
+                    {
+                        case 15: disMap[y][x] = (char) 197; break;  //all
                         
-                    case 14: disMap[y][x] = (char) 180; break;  // x-- y++ y--
-                    case 13: disMap[y][x] = (char) 195; break;  // x++ y++ y--
-                    case  7: disMap[y][x] = (char) 194; break;  // x++ x-- y++
-                    case 11: disMap[y][x] = (char) 193; break;  // x++ x-- y--
+                        case 14: disMap[y][x] = (char) 180; break;  // x-- y++ y--
+                        case 13: disMap[y][x] = (char) 195; break;  // x++ y++ y--
+                        case  7: disMap[y][x] = (char) 194; break;  // x++ x-- y++
+                        case 11: disMap[y][x] = (char) 193; break;  // x++ x-- y--
                         
-                    case  5: disMap[y][x] = (char) 218; break;  // x++ y++
-                    case  9: disMap[y][x] = (char) 192; break;  // x++ y--
-                    case  6: disMap[y][x] = (char) 191; break;  // x-- y++
-                    case 10: disMap[y][x] = (char) 217; break;  // x-- y--
+                        case  5: disMap[y][x] = (char) 218; break;  // x++ y++
+                        case  9: disMap[y][x] = (char) 192; break;  // x++ y--
+                        case  6: disMap[y][x] = (char) 191; break;  // x-- y++
+                        case 10: disMap[y][x] = (char) 217; break;  // x-- y--
                         
-                    case  1:
-                    case  2:
-                    case  3: disMap[y][x] = (char) 196; break;  // x++ x--
-                    case  4:
-                    case  8:
-                    case 12: disMap[y][x] = (char) 179; break;  // y++ y--
+                        case  1:
+                        case  2:
+                        case  3: disMap[y][x] = (char) 196; break;  // x++ x--
+                        case  4:
+                        case  8:
+                        case 12: disMap[y][x] = (char) 179; break;  // y++ y--
+                    }
+                } else if (map[y][x]==f)
+                {
+                    disMap[y][x] = (char) 7;
                 }
             }
         }

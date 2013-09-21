@@ -19,26 +19,42 @@ public class Main
     public static boolean gameActive = true;
     public static boolean frameActive = false;
     
+    public static Player p = new Player();
+    
     public static void main(String[] args)
-            
     {   
-        //Render.print("");
+        
         Window window = new Window();
         NextMap();
+        
+        for (int i = 0; i < 1000; i++)
+        {
+            p.move(37);
+            p.move(39);
+        }
+    }
+    
+    /**
+     * Returns the current player and its data.
+     * @return The current player and its data.
+     */
+    public static Player getPlayer()
+    {
+        return p;
     }
     
     
-    /*
-     * Called if the player is moved, performs all nessesary functions and checks.
+    /**
+     * Called if the player is moved, performs all necesary functions and checks.
      */
     public static void doGameTick()
     {
-            Player.useStaircase();
+            p.useStaircase();
             Render.update();
     }
     
     
-    /*
+    /**
      * Loads the next Map, moves the player and updates the GUI.
      */
     public static void NextMap()
@@ -48,12 +64,14 @@ public class Main
             Files.mapNum++;
             Files.load();
             Render.print(Files.dialogStart);
-            Player.goToStart();
+            p.goToStart();
+            p.setPos(2, 2);
         }
+        Render.clearAll();
         Render.update();
     }
     
-    /*
+    /**
      * Loads the previous Map, moves the player and updates the GUI.
      */
     public static void PrevMap()
@@ -62,8 +80,9 @@ public class Main
             Files.mapNum--;
             Files.load();
             Render.print("You have already been to this place, head back to continue.");
-            Player.setPos(Files.exitX, Files.exitY);
+            p.setPos(Files.exitX, Files.exitY);
         }
+        Render.clearAll();
         Render.update();
     }
 }

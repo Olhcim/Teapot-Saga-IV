@@ -1,59 +1,36 @@
 package teapot_saga_iv;
 
 
-public class Player {
+public class Player extends Character{
     
-    public static int health = 100, moves = 0;
-    public static int x=2, y=2;
-    public static boolean canMove = true;
+    public int moves = 0;
     
-    
-    /*
-     * Moves the player to the specified position, but does not update the GUI.
-     */
-    public static void setPos(int a, int b)
+    public int getMoves()
     {
-        x = a;
-        y = b;
+        return moves;
     }
     
-    /*
+    /**
      * Moves the player to the start but does not update the GUI.
      */
-    public static void goToStart()
+    public void goToStart()
     {
         setPos(Files.startX, Files.startY);
     }
     
     
-    /*
+    /**
      * Moves the player to the exit but does not update the GUI.
      */
-    public static void goToExit()
+    public void goToExit()
     {
         setPos(Files.exitX, Files.exitY);
     }
     
-    /*
-     * Freezes the player and stops it from moving.
-     */
-    public static void freeze()
-    {
-        canMove = false;
-    }
-    
-    /*
-     * unFreezes the player and allowes it to move again.
-     */
-    public static void unFreeze()
-    {
-        canMove = false;
-    }
-    
-    /*
+    /**
      * Checks for and uses a staircase, does not allow the use of a staircase if the player is currently on one.
      */
-    public static void useStaircase()
+    public void useStaircase()
     {
         if(isOnStaircase())
         {
@@ -61,18 +38,18 @@ public class Player {
         }
     }
     
-    /*
-     * Checks weather the current possition is over an entrance or exit and follows the apropreate actions..
+    /**
+     * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
      */
-     private static boolean isOnStaircase()
+     private boolean isOnStaircase()
     {
         return isAtEntrance() || isAtExit();
     }
     
-    /*
-     * Checks weather the current possition is over an entrance or exit and follows the apropreate actions..
+    /**
+     * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
      */
-    private static void checkForStairCase()
+    private void checkForStairCase()
     {
         if(isAtExit())
         {
@@ -84,27 +61,26 @@ public class Player {
         }
     }
     
-    /*
-     * Checks weather the current possition is over an entrance.
+    /**
+     * Checks weather the current position is over an entrance.
      */
-    private static boolean isAtEntrance()
+    private boolean isAtEntrance()
     {
-        return Files.map[Player.y][Player.x] == '<';
+        return Files.map[y][x] == '<';
     }
     
-    /*
-     * Checks weather the current possition is over an exit.
+    /**
+     * Checks weather the current position is over an exit.
      */
-    private static boolean isAtExit()
+    private boolean isAtExit()
     {
-        return Files.map[Player.y][Player.x] == '>';
+        return Files.map[y][x] == '>';
     }
     
-    /*
+    /**
      * recieves the keycodes of keys pressed from Window.class
-     * 
      */
-    public static void move(int a)
+    public void move(int a)
     {
         switch (a)
         {
@@ -124,18 +100,16 @@ public class Player {
             case 40:
                 if(canMove(x, y+1)) { y++; moves++; Main.doGameTick();}
                 break;
-            case 10:
-                if(canMove == false && isAtExit()) {
-                    canMove = true;
-                    Main.NextMap();
-                }
             case 79:
                 useDoor();
                 break;
         }
     }
     
-    private static void useDoor()
+    /**
+     * checks for a door and switches the state of the door if it exists.
+     */
+    private void useDoor()
     {
         if(doorAt(0,1))
         {
@@ -152,34 +126,38 @@ public class Player {
         }
     }
     
-    private static void openDoor(int dx, int dy)
+    /**
+     * Switches the state of a door between open and closed.
+     * 
+     * @param x The x position of the door
+     * @param y The y position of the door
+     */
+    private void openDoor(int x, int y)
     {
-        if (Files.disMap[y+dy][x+dx] == '+')
+        if      (Files.disMap[this.y+y][this.x+x] == '+')
         {
-            Files.disMap[y+dy][x+dx] = 'X';
-        } else if (Files.disMap[y+dy][x+dx] == 'X')
+            Files.disMap[this.y+y][this.x+x] = 'X';
+        }
+        else if (Files.disMap[this.y+y][this.x+x] == 'X')
         {
-            Files.disMap[y+dy][x+dx] = '+';
+            Files.disMap[this.y+y][this.x+x] = '+';
         }
         
         Render.update();
     }
     
-    public static boolean doorAt(int dx, int dy)
+    /**
+     * 
+     * @param x The x position of the door
+     * @param y The y position of the door
+     * @return True or False if there is a door at the specified coordinates.
+     */
+    public boolean doorAt(int x, int y)
     {
-        if(Files.disMap[y+dy][x+dx] == '+' || Files.disMap[y+dy][x+dx] == 'X')
+        if(Files.disMap[this.y+y][this.x+x] == '+' || Files.disMap[this.y+y][this.x+x] == 'X')
         {
             return true;
         }
         return false;
-    }
-    
-    
-    /*
-     * Checks weather the player can move to the specified location.
-     */
-    private static boolean canMove(int a, int b)
-    {
-        return Files.map[b][a] != '#' && Files.disMap[b][a] != '+' && canMove == true;
     }
 } 
