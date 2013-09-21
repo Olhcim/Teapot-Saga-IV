@@ -51,6 +51,25 @@ public class Player {
     }
     
     /*
+     * Checks for and uses a staircase, does not allow the use of a staircase if the player is currently on one.
+     */
+    public static void useStaircase()
+    {
+        if(isOnStaircase())
+        {
+            checkForStairCase();
+        }
+    }
+    
+    /*
+     * Checks weather the current possition is over an entrance or exit and follows the apropreate actions..
+     */
+     private static boolean isOnStaircase()
+    {
+        return isAtEntrance() || isAtExit();
+    }
+    
+    /*
      * Checks weather the current possition is over an entrance or exit and follows the apropreate actions..
      */
     private static void checkForStairCase()
@@ -110,8 +129,49 @@ public class Player {
                     canMove = true;
                     Main.NextMap();
                 }
+            case 79:
+                useDoor();
+                break;
         }
-        checkForStairCase();
+    }
+    
+    private static void useDoor()
+    {
+        if(doorAt(0,1))
+        {
+            openDoor(0,1);
+        } else if (doorAt(0,-1))
+        {
+            openDoor(0,-1);
+        } else if (doorAt(1,0))
+        {
+            openDoor(1,0);
+        } else if (doorAt(-1,0))
+        {
+            openDoor(-1,0);
+        }
+    }
+    
+    private static void openDoor(int dx, int dy)
+    {
+        if (Files.disMap[y+dy][x+dx] == '+')
+        {
+            Files.disMap[y+dy][x+dx] = 'X';
+        } else if (Files.disMap[y+dy][x+dx] == 'X')
+        {
+            Files.disMap[y+dy][x+dx] = '+';
+        }
+        
+        Render.update();
+    }
+    
+    public static boolean doorAt(int dx, int dy)
+    {
+        if(Files.disMap[y+dy][x+dx] == '+' || Files.disMap[y+dy][x+dx] == 'X')
+        {
+            return true;
+        }
+        return false;
     }
     
     
@@ -120,6 +180,6 @@ public class Player {
      */
     private static boolean canMove(int a, int b)
     {
-        return Files.map[b][a] != '#' && canMove == true;
+        return Files.map[b][a] != '#' && Files.disMap[b][a] != '+' && canMove == true;
     }
 } 

@@ -33,6 +33,7 @@ public class Main
      */
     public static void doGameTick()
     {
+            Player.useStaircase();
             Render.update();
     }
     

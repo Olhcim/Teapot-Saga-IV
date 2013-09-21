@@ -67,6 +67,11 @@ public class Window extends JFrame implements KeyListener
         jPanel.repaint();
     }
     
+    public static void repaintMap()
+    {
+        mapLabel.repaint();
+    }
+    
     /*
      * Checks for a key that has been typed.
      */
@@ -79,7 +84,7 @@ public class Window extends JFrame implements KeyListener
     @Override
     public void keyPressed(KeyEvent ke) {
         
-        //System.out.println(ke.getKeyChar() + ": " +ke.getKeyCode());
+        System.out.println(ke.getKeyChar() + ": " +ke.getKeyCode());
         Player.move(ke.getKeyCode());
     }
 

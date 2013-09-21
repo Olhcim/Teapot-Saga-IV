@@ -7,12 +7,12 @@ import javax.imageio.ImageIO;
 
 public class Render {
     
-    public static final byte CHAR_WIDTH     = 9;
-    public static final byte CHAR_HEIGHT    = 16;
+    public static final byte CHAR_WIDTH     = 15;
+    public static final byte CHAR_HEIGHT    = 15;
     
-    public static final byte DIALOG_HEIGHT  = 7;
+    public static final byte DIALOG_HEIGHT  = 10;
     public static final byte WIDTH          = 80;
-    public static final byte MAP_HEIGHT     = 24;
+    public static final byte MAP_HEIGHT     = 40;
     public static final byte STATS_HEIGHT   = 4;
     
     public static final int WIDTH_PIXELS            = WIDTH * CHAR_WIDTH;
@@ -22,7 +22,7 @@ public class Render {
     public static final int STATS_HEIGHT_PIXELS     = STATS_HEIGHT * CHAR_HEIGHT;
     public static final int TOTAL_HEIGHT_PIXELS     = DIALOG_HEIGHT_PIXELS + MAP_HEIGHT_PIXELS + STATS_HEIGHT_PIXELS + 22;
     
-    private static final String FILENAME = "cp437.png";
+    private static final String FILENAME = "mycharset.png";
     
     private static BufferedImage glyphSprite;
     private static BufferedImage[] glyphs = new BufferedImage[256];
@@ -52,10 +52,12 @@ public class Render {
         } catch (Exception e) {}
         
         for (int i = 0; i < 256; i++) {     //functions the same as two for loops, one inside the other, but more efficient.
-            int sx = (i % 32) * CHAR_WIDTH;
-            int sy = (i / 32) * CHAR_HEIGHT;
+            int sx = (i % 16) * CHAR_WIDTH;
+            int sy = (i / 16) * CHAR_HEIGHT;
+            
+            System.out.println("sx: " + sx + " sy: " + sy);
 
-            glyphs[i] = new BufferedImage(9, 16, BufferedImage.TYPE_INT_ARGB);
+            glyphs[i] = new BufferedImage(CHAR_WIDTH, CHAR_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             glyphs[i].getGraphics().drawImage(glyphSprite, 0, 0, CHAR_WIDTH, CHAR_HEIGHT, sx, sy, sx + CHAR_WIDTH, sy + CHAR_HEIGHT, null);
         }
     }
@@ -66,7 +68,7 @@ public class Render {
     
     private static void paintToDialog(char a, int x, int y) {
         
-        dialog.getGraphics().drawImage(glyphs[a], x*9, y*16, null);
+        dialog.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
 
 /*
@@ -74,12 +76,12 @@ public class Render {
  */
     private static void paintToMap(char a, int x, int y) {
         
-        map.getGraphics().drawImage(glyphs[a], x*9, y*16, null);
+        map.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
     private static void paintToStats(char a, int x, int y) {
         
-        stats.getGraphics().drawImage(glyphs[a], x*9, y*16, null);
+        stats.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
     /*
@@ -163,7 +165,7 @@ public class Render {
         clearStats();
         
         String health = "Health: " + Player.health;
-        String numMoves = "Moves: " + Player.moves;
+        String numMoves = "Turns: " + Player.moves;
         
         if      (Player.health > 99) {health += "   ";}
         else if (Player.health > 9)  {health += "    ";}
