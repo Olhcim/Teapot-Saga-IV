@@ -3,8 +3,8 @@ package teapot_saga_iv;
 
 public class Character {
     
-    public static int health = 100, x, y;
-    private static boolean canMove = true;
+    public int health = 100, x, y;
+    private boolean canMove = true;
     
     /**
      * Creates a character with 100 health.
@@ -75,7 +75,7 @@ public class Character {
      * Sets whether this character can move or not.
      * @param a true or false.
      */
-    public static void setMoveAllowed(boolean a)
+    public void setMoveAllowed(boolean a)
     {
         canMove = a;
     }
@@ -86,12 +86,12 @@ public class Character {
      * @param b the y coordinate on the map.
      * @return true or false if the character can or cannot move.
      */
-    public static boolean canMove(int x, int y)
+    public boolean canMove(int x, int y)
     {
         return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && canMove == true;
     }
     
-    public static boolean MoveAllowed()
+    public boolean MoveAllowed()
     {
         return canMove;
     }

@@ -20,18 +20,15 @@ public class Main
     public static boolean frameActive = false;
     
     public static Player p = new Player();
+    public static Monster m;
     
     public static void main(String[] args)
     {   
+         m = new Monster(5,5,Monster.DEFUALT);
         
         Window window = new Window();
-        NextMap();
         
-        for (int i = 0; i < 1000; i++)
-        {
-            p.move(37);
-            p.move(39);
-        }
+        NextMap();
     }
     
     /**
@@ -50,6 +47,7 @@ public class Main
     public static void doGameTick()
     {
             p.useStaircase();
+            m.moveTowards(p.x, p.y);
             Render.update();
     }
     
@@ -61,14 +59,15 @@ public class Main
     {
         if (Files.MapExists(1))
         {
+            Render.clearAll();
             Files.mapNum++;
             Files.load();
             Render.print(Files.dialogStart);
             p.goToStart();
-            p.setPos(2, 2);
+            Render.update();
+        } else {
+            Render.print("The following map does not exist.");
         }
-        Render.clearAll();
-        Render.update();
     }
     
     /**
@@ -76,13 +75,16 @@ public class Main
      */
     public static void PrevMap()
     {
-        if (Files.MapExists(-1)) {
+        if (Files.MapExists(-1))
+        {
+            Render.clearAll();
             Files.mapNum--;
             Files.load();
             Render.print("You have already been to this place, head back to continue.");
             p.setPos(Files.exitX, Files.exitY);
+            Render.update();
+        } else {
+            Render.print("The previous map does not exist.");
         }
-        Render.clearAll();
-        Render.update();
     }
 }

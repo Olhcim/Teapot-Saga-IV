@@ -100,6 +100,7 @@ public class Render {
     public static void print(String a)
     {
         
+        clearDialog();
         
         a = wrap(a, WIDTH - 8);
         
@@ -127,7 +128,6 @@ public class Render {
         }
         
         Window.repaintAll();
-
     }
     
     /**
@@ -161,20 +161,13 @@ public class Render {
      */
     private static void updateStats()
     {        
-        
-        clearStats();
 
         String health = "Health: " + Main.getPlayer().health;
         String numMoves = "Turns: " + Main.getPlayer().getMoves();
         
-        if      (Player.health > 99) {health += "   ";}
-        else if (Player.health > 9)  {health += "    ";}
+        if      (Main.p.health > 99) {health += "   ";}
+        else if (Main.p.health > 9)  {health += "    ";}
         else                         {health += "     ";}
-        
-        //for(int i = 7; i > Integer.toString(Player.moves).length(); i--)
-        {
-            //numMoves += " ";
-        }
         
         String all = health + numMoves;
 
@@ -224,50 +217,6 @@ public class Render {
     
     private static void clearStats()
     {
-        for (int x = 0; x < WIDTH; x++)
-        {
-            paintToStats(' ', x, STATS_HEIGHT-2);
-        }
-    }
-    
-    public static void clearAll()
-    {
-        clearDialog();
-        clearMap();
-        clearStats();
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////
-// Clearing
-////////////////////////////////////////////////////////////////////////////////
-    
-    /**
-     * Paints spaces over the whole image.
-     */
-    private static void fillDialog()
-    {
-        for (int y = 0; y < DIALOG_HEIGHT; y++)
-        {
-            for (int x = 0; x < WIDTH; x++)
-            {
-                paintToDialog(' ', x, y);
-            }
-        }
-    }
-    
-    private static void fillMap()
-    {
-        for (int y = 0; y < MAP_HEIGHT; y++)
-        {
-            for (int x = 0; x < WIDTH; x++)
-            {
-                paintToMap(' ', x, y);
-            }
-        }
-    }
-    
-    private static void fillStats()
-    {
         for (int y = 0; y < STATS_HEIGHT; y++)
         {
             for (int x = 0; x < WIDTH; x++)
@@ -277,11 +226,11 @@ public class Render {
         }
     }
     
-    public static void fillAll()
+    public static void clearAll()
     {
-        fillDialog();
-        fillMap();
-        fillStats();
+        clearDialog();
+        clearMap();
+        clearStats();
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -295,6 +244,7 @@ public class Render {
     {
         paintMap();
         paintPlayer();
+        paintMonster();
         updateStats();
         Window.repaintAll();
     }
@@ -322,7 +272,12 @@ public class Render {
     
     private static void paintPlayer() {
         
-        paintToMap('@', Player.x + getMidX(), Player.y + getMidY());
+        paintToMap('@', Main.p.x + getMidX(), Main.p.y + getMidY());
+    }
+    
+    private static void paintMonster() {
+        
+        paintToMap(Main.m.symbol, Main.m.x + getMidX(), Main.m.y + getMidY());
     }
 
 ////////////////////////////////////////////////////////////////////////////////

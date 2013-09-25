@@ -67,11 +67,6 @@ public class Window extends JFrame implements KeyListener
         jPanel.repaint();
     }
     
-    public static void repaintMap()
-    {
-        mapLabel.repaint();
-    }
-    
     /*
      * Checks for a key that has been typed.
      */
