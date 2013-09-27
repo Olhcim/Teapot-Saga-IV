@@ -13,6 +13,9 @@
 
 package teapot_saga_iv;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main
 {
 
@@ -20,11 +23,9 @@ public class Main
     public static boolean frameActive = false;
     
     public static Player p = new Player();
-    public static Monster m;
     
     public static void main(String[] args)
     {   
-         m = new Monster(5,5,Monster.DEFUALT);
         
         Window window = new Window();
         
@@ -42,13 +43,26 @@ public class Main
     
     
     /**
-     * Called if the player is moved, performs all necesary functions and checks.
+     * Called if the player is moved, performs all nessecery functions and checks.
      */
-    public static void doGameTick()
+    
+    public static void doPreGameTick()
+    {
+    }
+    
+    public static void doAfterGameTick()
     {
             p.useStaircase();
-            m.moveTowards(p.x, p.y);
+            updateMonsters();
             Render.update();
+    }
+    
+    private static void updateMonsters()
+    {
+        for (Monster m : Files.monsters)
+        {
+            m.moveTowardsPlayer();
+        }
     }
     
     

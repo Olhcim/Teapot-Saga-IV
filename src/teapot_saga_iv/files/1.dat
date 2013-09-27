@@ -1,5 +1,4 @@
-#DialogStart:Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac mollis justo, et viverra neque. Vestibulum mollis lacinia quam at faucibus. Nam auctor, nunc id tincidunt blandit, eros nisi molestie arcu, eget tempor dolor dolor facilisis lacus. In imperdiet, arcu sit amet scelerisque rhoncus, nunc justo pellentesque ipsum, at tempor orci ipsum ut odio. Etiam dapibus tellus id feugiat placerat. Vestibulum sed nibh eget elit posuere imperdiet vitae id massa.
-#PosStart:3:2
-#PosExit:5:5
-
 DialogStart:Map #1 - Monster testing facility.
+Monster:65:1:Zombie
+Monster:63:3:Spider
+Monster:55:2:Default

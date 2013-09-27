@@ -5,7 +5,9 @@ public class Monster extends Character{
 
     char symbol;
     
-    public static final String DEFUALT = "DEFUALT"; 
+    public static final String DEFAULT = "default";
+    public static final String ZOMBIE = "zombie";
+    public static final String SPIDER = "spider";
     
     public Monster(int x, int y, int health, char symbol)
     {
@@ -20,39 +22,61 @@ public class Monster extends Character{
         this.x = x;
         this.y = y;
         
-        if (type == DEFUALT)
+        if (ZOMBIE.equalsIgnoreCase(type))
+        {
+            this.health = 50;
+            this.symbol = 'Z';
+        } else if (SPIDER.equalsIgnoreCase(type))
         {
             this.health = 10;
-            this.symbol = 'M';
+            this.symbol = 'S';
+        } else {
+            this.health = 25;
+            this.symbol = 'D';
         }
     }
     
-    public void moveTowards(int x, int y)
+    public void moveTowardsPlayer()
     {
-        if(x <= this.x && canMove(this.x - 1, this.y))
+        if (distanceToPlayer() < 1)
         {
-            setPos(this.x - 1, this.y);
+            displace();
         }
-        if(x >= this.x && canMove(this.x + 1, this.y))
+        else if (distanceToPlayer() > 3)
         {
-            setPos(this.x + 1, this.y);
+            findPath(Main.p.getX(), Main.p.getY());
+        
+            if (path != null && path.getParent() != null)
+            {
+                path = path.getParent();
+
+                if (!isMonster(path.getX(), path.getY()))
+                {
+                setPos(path.getX(), path.getY());
+                }
+            } else {
+                displace();
+            }
         }
-        if(y <= this.y && canMove(this.x, this.y - 1))
+
+    }
+    
+    public static boolean isMonster(int x, int y)
+    {
+        for (Monster m : Files.monsters)
         {
-            setPos(this.x, this.y - 1);
+            if (m.x == x && m.y == y)
+            {
+                return true;
+            }
         }
-        if(y >= this.y && canMove(this.x, this.y + 1))
-        {
-            setPos(this.x, this.y + 1);
-        }
+        return false;
     }
     
     @Override
     public boolean canMove(int x, int y)
     {
-        boolean notOnPlayer = Main.p.x != x && Main.p.y != y;
-        
-                
-        return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && notOnPlayer;
+        return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && canMove == true && !Monster.isMonster(x,y);
     }
+    
 } 

@@ -1,10 +1,14 @@
 package teapot_saga_iv;
 
+import teapot_saga_iv.a_star.*;
+
 
 public class Character {
     
-    public int health = 100, x, y;
-    private boolean canMove = true;
+    int health = 100, x, y;
+    boolean canMove = true;
+    
+    public Node path;
     
     /**
      * Creates a character with 100 health.
@@ -80,6 +84,36 @@ public class Character {
         canMove = a;
     }
     
+    public void move(int disX, int disY)
+    {
+        if (disX > -2 && disX < 2 && disY > -2 && disY < 2)
+        {
+            setPos(x+disX, y+disY);
+        }
+    }
+    
+    public void move(int dir)
+    {
+        System.out.println("moved");
+        
+        if (canMove(dir))
+        {
+            switch (dir)
+            {
+                // N:0  - E:2  - S:4  - W:6
+                case 0: setPos(x, y-1); break;
+                case 2: setPos(x+1, y); break;
+                case 4: setPos(x, y+1); break;
+                case 6: setPos(x-1, y); break;
+                // NE:1 - SE:3 - SW:5 - NW:7
+                case 1: setPos(x+1, y-1); break;
+                case 3: setPos(x+1, y+1); break;
+                case 5: setPos(x-1, y+1); break;
+                case 7: setPos(x-1, y-1); break;
+            }
+        }
+    }
+    
     /**
      * Returns true or false based on whether the character can move the the specified location.
      * @param a the x coordinate on the map.
@@ -91,10 +125,53 @@ public class Character {
         return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && canMove == true;
     }
     
+    public boolean canMove(int dir)
+    {        
+        switch (dir)
+            {
+                // N:0  - E:2  - S:4  - W:6
+                case 0: return canMove(x, y-1);
+                case 2: return canMove(x+1, y);
+                case 4: return canMove(x, y+1);
+                case 6: return canMove(x-1, y);
+                // NE:1 - SE:3 - SW:5 - NW:7
+                case 1: return canMove(x+1, y-1);
+                case 3: return canMove(x+1, y+1);
+                case 5: return canMove(x-1, y+1);
+                case 7: return canMove(x-1, y-1);
+            }
+        return false;
+    }
+    
+    
     public boolean MoveAllowed()
     {
         return canMove;
     }
     
+    public double distanceToPlayer()
+    {
+        int x = Main.p.getX();
+        int y = Main.p.getY();
+        
+        return Math.sqrt((this.x-x)*(this.x-x) + (this.y-y)*(this.y-y));
+    }
     
+    public void displace()
+    {
+        int ran;
+        do
+        {
+            ran = (int) (Math.random()*8);
+        } while (!canMove(ran));
+        move(ran);
+        
+        
+    }
+    
+    public void findPath(int x, int y)
+    {
+        AStar path = new AStar(this.x, this.y, x, y);
+        this.path = path.getFinalNode();
+    }
 } 

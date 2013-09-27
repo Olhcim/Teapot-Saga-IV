@@ -3,6 +3,8 @@ package teapot_saga_iv;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -12,6 +14,8 @@ public class Files {
     
     public static char map[][];
     public static char disMap[][];
+    
+    public static List<Monster> monsters = new ArrayList<Monster>();
 
     public static String mapData[][];
     public static int mapNum = 0;
@@ -30,7 +34,8 @@ public class Files {
      */
     public static void load()
     {
-        loadMapFromFile();
+        //loadMapFromFile();
+        createRandomMap(5,70,77777,5);
         parseMap();
         renderDispMap();
         
@@ -90,6 +95,15 @@ public class Files {
                 for (int i = 0; i < mapTemp.length; i++)
                 { map[i] = mapTemp[i].clone(); disMap[i] = mapTemp[i].clone(); }
                 
+                for (int y=0; y<map.length;y++)
+                {
+                    for (int x=0; x<map[y].length;x++)
+                    {
+                        System.out.print(map[y][x]);
+                    }
+                    System.out.println();
+                }
+                
         } catch (Exception e) { System.err.println(e.getMessage()); }
     }
     
@@ -124,6 +138,57 @@ public class Files {
         } catch (Exception e) { System.err.println(e.getMessage()); }
     }
     
+    
+////////////////////////////////////////////////////////////////////////////////
+// Creates Random Map. Overrides current map.
+////////////////////////////////////////////////////////////////////////////////
+    
+    public static void createRandomMap(int length, int breadth, int seed, int noise)
+    {
+        Random gen = new Random(seed);
+        int ran = 0;
+        
+        char[][] mapTemp = new char[length][breadth];
+        
+        for(int y = 0; y < mapTemp.length; y++)
+        {
+            for(int x = 0; x < mapTemp[y].length; x++)
+            {   
+                
+                if(x==2 && y==2)
+                {
+                    mapTemp[y][x] = '<';
+                }
+                else if(y==mapTemp.length-3 && x==mapTemp[y].length-3)
+                {
+                    mapTemp[y][x] = '>';
+                }
+                else if(y==0 || y==mapTemp.length-1 || x==0 || x==mapTemp[y].length-1)
+                {
+                    mapTemp[y][x] = '#';
+                } else {
+                    
+                    ran = (int)(gen.nextDouble()*noise);
+
+                    if(ran==0)
+                    {
+                        mapTemp[y][x] = '#';
+                    }
+                    else
+                    {
+                        mapTemp[y][x] = '.';
+                    }
+                }
+            }
+        }
+        
+        map = mapTemp.clone(); disMap = mapTemp.clone();
+        
+        for (int i = 0; i < mapTemp.length; i++)
+        { map[i] = mapTemp[i].clone(); disMap[i] = mapTemp[i].clone(); }
+        
+    }
+    
 ////////////////////////////////////////////////////////////////////////////////
 // FILE PARSING
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,7 +200,7 @@ public class Files {
     {
         for (int y = 0; y < map.length; y++)
         {
-            for (int x = 0; x < map[0].length; x++)
+            for (int x = 0; x < map[y].length; x++)
             {
                 if (map[y][x] == '<')
                 {
@@ -153,41 +218,33 @@ public class Files {
     }
     
     /**
-     * Searches the current data and gets the following data.
-     * <br>
-     * # Entities <br>
-     *      - NPC <br>
-     *          * Position <br>
-     *          * Name <br>
-     *          * Dialog <br>
-     *      - Monster <br>
-     *          * Position <br>
-     *          * Name. <br> <br>
-     * # Dialog <br>
-     *      - Start <br>
-     *      - Exit <br>
+     * Searches the current data and for the Start, Exit, Start Dialog and any NPC's.
      */
     private static void parseData()
     {
         dialogStart = "";
         dialogExit = "";
         
-        for (int y = 0; y < mapData.length; y++)
+        for (int i = 0; i < mapData.length; i++)
         {
-            if (mapData[y][0].equalsIgnoreCase("DialogStart"))
+            if (mapData[i][0].equalsIgnoreCase("DialogStart"))
             {
-                dialogStart = mapData[y][1];
-            } else if (mapData[y][0].equalsIgnoreCase("DialogExit"))
+                dialogStart = mapData[i][1];
+            } else if (mapData[i][0].equalsIgnoreCase("PosStart"))
             {
-                dialogExit = mapData[y][1];
-            } else if (mapData[y][0].equalsIgnoreCase("PosStart"))
+                startX = Integer.parseInt(mapData[i][1]);
+                startY = Integer.parseInt(mapData[i][2]);
+            } else if (mapData[i][0].equalsIgnoreCase("PosExit"))
             {
-                startX = Integer.parseInt(mapData[y][1]);
-                startY = Integer.parseInt(mapData[y][2]);
-            } else if (mapData[y][0].equalsIgnoreCase("PosExit"))
+                exitX = Integer.parseInt(mapData[i][1]);
+                exitY = Integer.parseInt(mapData[i][2]);
+            } else if (mapData[i][0].equalsIgnoreCase("Monster"))
             {
-                exitX = Integer.parseInt(mapData[y][1]);
-                exitY = Integer.parseInt(mapData[y][2]);
+                int x = Integer.parseInt(mapData[i][1]);
+                int y = Integer.parseInt(mapData[i][2]);
+                String type = mapData[i][3].toLowerCase();
+                
+                monsters.add(new Monster(x, y, type));
             }
         }
     }
@@ -205,13 +262,15 @@ public class Files {
         
         for(int y = 0; y < map.length; y++)
         {
-            for (int x = 0; x < map[0].length; x++)
+            for (int x = 0; x < map[y].length; x++)
             {
                 
                 byte a = 0;
                 
                 if (map[y][x]==w)
                 {
+                    disMap[y][x] = (char) 219;
+                    
                     try { if (map[y][x+1]==w || map[y][x+1]==d){a+=1;} } catch (Exception e) {}   // x++   1
                     try { if (map[y][x-1]==w || map[y][x-1]==d){a+=2;} } catch (Exception e) {}   // x--   2
                     try { if (map[y+1][x]==w || map[y+1][x]==d){a+=4;} } catch (Exception e) {}   // y++   4

@@ -244,7 +244,7 @@ public class Render {
     {
         paintMap();
         paintPlayer();
-        paintMonster();
+        paintMonsters();
         updateStats();
         Window.repaintAll();
     }
@@ -263,7 +263,7 @@ public class Render {
         
         for (int y = 0; y < Files.map.length; y++)
         {
-            for (int x = 0; x < Files.map[0].length; x++)
+            for (int x = 0; x < Files.map[y].length; x++)
             {
                 paintToMap(Files.disMap[y][x], x + midX, y + midY);
             }
@@ -275,9 +275,12 @@ public class Render {
         paintToMap('@', Main.p.x + getMidX(), Main.p.y + getMidY());
     }
     
-    private static void paintMonster() {
+    private static void paintMonsters() {
         
-        paintToMap(Main.m.symbol, Main.m.x + getMidX(), Main.m.y + getMidY());
+        for (Monster m : Files.monsters)
+        {
+            paintToMap(m.symbol, m.x + getMidX(),m.y + getMidY());
+        }
     }
 
 ////////////////////////////////////////////////////////////////////////////////
