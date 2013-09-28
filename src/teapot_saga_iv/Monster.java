@@ -78,6 +78,35 @@ public class Monster extends Character{
 
     }
     
+    public void move(int disX, int disY)
+    {
+        if (disX > -2 && disX < 2 && disY > -2 && disY < 2)
+        {
+            setPos(x+disX, y+disY);
+        }
+    }
+    
+    public void move(int dir)
+    {
+        
+        if (canMove(dir))
+        {
+            switch (dir)
+            {
+                // N:0  - E:2  - S:4  - W:6
+                case 0: setPos(x, y-1); break;
+                case 2: setPos(x+1, y); break;
+                case 4: setPos(x, y+1); break;
+                case 6: setPos(x-1, y); break;
+                // NE:1 - SE:3 - SW:5 - NW:7
+                case 1: setPos(x+1, y-1); break;
+                case 3: setPos(x+1, y+1); break;
+                case 5: setPos(x-1, y+1); break;
+                case 7: setPos(x-1, y-1); break;
+            }
+        }
+    }
+    
     public void displace(boolean diagonal)
     {
         int ran;

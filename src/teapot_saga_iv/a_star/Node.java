@@ -17,10 +17,12 @@ public class Node {
         else
         { this.g = parent.g + g; }
 
-        this.h =  (int)
-                Math.sqrt((AStar.getEndX() - this.x)*(AStar.getEndX() - this.x))
-                + (int)
-                Math.sqrt((AStar.getEndY() - this.y)*(AStar.getEndY() - this.y));
+//        this.h =  (int)
+//                Math.sqrt((AStar.getEndX() - this.x)*(AStar.getEndX() - this.x))
+//                + (int)
+//                Math.sqrt((AStar.getEndY() - this.y)*(AStar.getEndY() - this.y));
+        
+                this.h =  (AStar.getEndX() - this.x) + (AStar.getEndY() - this.y);      //works - investigate
     }
     
     public boolean equal(Node node)

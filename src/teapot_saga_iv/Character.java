@@ -84,36 +84,6 @@ public class Character {
         canMove = a;
     }
     
-    public void move(int disX, int disY)
-    {
-        if (disX > -2 && disX < 2 && disY > -2 && disY < 2)
-        {
-            setPos(x+disX, y+disY);
-        }
-    }
-    
-    public void move(int dir)
-    {
-        System.out.println("moved");
-        
-        if (canMove(dir))
-        {
-            switch (dir)
-            {
-                // N:0  - E:2  - S:4  - W:6
-                case 0: setPos(x, y-1); break;
-                case 2: setPos(x+1, y); break;
-                case 4: setPos(x, y+1); break;
-                case 6: setPos(x-1, y); break;
-                // NE:1 - SE:3 - SW:5 - NW:7
-                case 1: setPos(x+1, y-1); break;
-                case 3: setPos(x+1, y+1); break;
-                case 5: setPos(x-1, y+1); break;
-                case 7: setPos(x-1, y-1); break;
-            }
-        }
-    }
-    
     /**
      * Returns true or false based on whether the character can move the the specified location.
      * @param a the x coordinate on the map.
