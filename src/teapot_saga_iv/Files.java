@@ -2,7 +2,12 @@ package teapot_saga_iv;
 
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -21,6 +26,10 @@ public class Files {
     public static int mapNum = 0;
     public static int startX = 0, startY = 0, exitX = 0, exitY = 0;
     public static String dialogStart = "", dialogExit = "";
+
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHH");
+    private static Date date = new Date();
+    private static int seed = Integer.parseInt(dateFormat.format(date));    // seed used for 'random' maps - seed changes every hour.
     
     public static final String FILESPATH = System.getProperty("user.dir") + "/src/teapot_saga_iv/files/";
     private static final String DAT = "dat", MAP = "map";
@@ -34,12 +43,16 @@ public class Files {
      */
     public static void load()
     {
+        System.out.println("seed: " + seed);
+        
         loadMapFromFile();
-        //createRandomMap(5,70,77777,5);
         parseMap();
-        renderDispMap();
         
         loadDataFromFile();
+        
+        //createRandomMap(120,40,seed,5);
+        
+        renderDispMap();
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +100,9 @@ public class Files {
                 
                 char[][] mapTemp = new char[list.size()][];
                 
-                for (int i = 0; i < list.size(); i++) { mapTemp[i] = list.get(i).toCharArray(); }
+                for (int i = 0; i < list.size(); i++) {
+                    mapTemp[i] = list.get(i).replace("\r", "").toCharArray();
+                }
                 
                 map = mapTemp.clone(); disMap = mapTemp.clone();
                     
@@ -143,10 +158,14 @@ public class Files {
 // Creates Random Map. Overrides current map.
 ////////////////////////////////////////////////////////////////////////////////
     
-    public static void createRandomMap(int length, int breadth, int seed, int noise)
+    public static void createRandomMap(int breadth, int length, int seed, int noise)
     {
+        Files.monsters.clear();
+        
         Random gen = new Random(seed);
+        Random genMon = new Random(seed);
         int ran = 0;
+        int ranMon = 0;
         
         char[][] mapTemp = new char[length][breadth];
         
@@ -179,8 +198,19 @@ public class Files {
                         mapTemp[y][x] = '.';
                     }
                 }
+                
+                ran = (int) (gen.nextDouble()*(mapTemp.length * mapTemp[y].length));
+                
+                if (ran < 3 && mapTemp[y][x] == '.')
+                {
+                    monsters.add(new Monster(x,y,Monster.DEFAULT));
+                }
+                
+                
             }
         }
+        
+        
         
         map = mapTemp.clone(); disMap = mapTemp.clone();
         
@@ -262,7 +292,7 @@ public class Files {
     {
         char w = '#', d = '+', s = ' ', f = '.', t='t';
         
-        Random ran = new Random(7);
+        Random ran = new Random(seed);
         int random = 0;
         
         for(int y = 0; y < map.length; y++)

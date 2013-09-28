@@ -162,4 +162,14 @@ public class Player extends Character{
         }
         return false;
     }
+    
+    
+    public boolean sameAsPlayer(int a, int b)
+    {
+        if (this.x == a && this.y == b)
+        {
+            return true;
+        }
+        return false;
+    }
 } 

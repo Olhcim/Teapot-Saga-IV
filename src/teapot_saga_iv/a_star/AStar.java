@@ -36,29 +36,15 @@ public class AStar {
         closed.add(lowest);
         findAdj(lowest);
         
-        long time = System.currentTimeMillis();
-        
         while(true)
         {
 
             findLowest();
             findAdj(lowest);
             
-            if (foundPath())
-            {
-                System.err.println("Found Path.");
-                break;
-            }
-            
-            if (open.isEmpty()) {
-                System.err.println("No Path.");
-                break;
-            }
+            if (foundPath()) { break; }
+            if (open.isEmpty()) { break; }
         }
-        
-        time = System.currentTimeMillis() - time;
-        
-        System.out.println("time:" + time);
             
     }
     

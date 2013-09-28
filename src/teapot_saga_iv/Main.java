@@ -47,10 +47,16 @@ public class Main
      */
     public static void doGameTick()
     {
+        
+        long time = System.currentTimeMillis();
+
         p.moves++;
         p.useStaircase();
         updateMonsters();
         Render.update();
+        
+        time = System.currentTimeMillis() - time;
+        System.out.println("move: " + Main.p.moves + "time:" + time);
     }
     
     private static void updateMonsters()

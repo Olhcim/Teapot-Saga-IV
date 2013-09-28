@@ -40,7 +40,7 @@ public class Node {
     
     public int getF()
     {
-        return g + h;
+        return g + h*h;     // h squared increases effeciency drastically in certain cases.
     }
     
     public Node getParent()

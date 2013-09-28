@@ -157,18 +157,6 @@ public class Character {
         return Math.sqrt((this.x-x)*(this.x-x) + (this.y-y)*(this.y-y));
     }
     
-    public void displace()
-    {
-        int ran;
-        do
-        {
-            ran = (int) (Math.random()*8);
-        } while (!canMove(ran));
-        move(ran);
-        
-        
-    }
-    
     public void findPath(int x, int y)
     {
         AStar path = new AStar(this.x, this.y, x, y);
