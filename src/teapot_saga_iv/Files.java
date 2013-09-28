@@ -18,9 +18,9 @@ public class Files {
     public static List<Monster> monsters = new ArrayList<Monster>();
 
     public static String mapData[][];
-    public static int mapNum = 0;
-    public static int startX, startY, exitX, exitY;
-    public static String dialogStart, dialogExit;
+    public static int mapNum = 5;
+    public static int startX = 0, startY = 0, exitX = 0, exitY = 0;
+    public static String dialogStart = "", dialogExit = "";
     
     public static final String FILESPATH = System.getProperty("user.dir") + "/src/teapot_saga_iv/files/";
     private static final String DAT = "dat", MAP = "map";
@@ -34,13 +34,12 @@ public class Files {
      */
     public static void load()
     {
-        //loadMapFromFile();
-        createRandomMap(5,70,77777,5);
+        loadMapFromFile();
+        //createRandomMap(5,70,77777,5);
         parseMap();
         renderDispMap();
         
         loadDataFromFile();
-        parseData();
     }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -134,6 +133,7 @@ public class Files {
                 for (int i = 0; i < mapDataTemp.length; i++)
                 { mapData[i] = mapDataTemp[i].clone(); }
                 
+                parseData();        // loads all the extra map data
                 
         } catch (Exception e) { System.err.println(e.getMessage()); }
     }
@@ -224,6 +224,8 @@ public class Files {
     {
         dialogStart = "";
         dialogExit = "";
+        monsters.clear();
+        monsters = new ArrayList<Monster>();
         
         for (int i = 0; i < mapData.length; i++)
         {
@@ -258,7 +260,10 @@ public class Files {
      */
     private static void renderDispMap()
     {
-        char w = '#', d = '+', s = ' ', f = '.';
+        char w = '#', d = '+', s = ' ', f = '.', t='t';
+        
+        Random ran = new Random(7);
+        int random = 0;
         
         for(int y = 0; y < map.length; y++)
         {
@@ -267,8 +272,7 @@ public class Files {
                 
                 byte a = 0;
                 
-                if (map[y][x]==w)
-                {
+                if (map[y][x]==w) {
                     disMap[y][x] = (char) 219;
                     
                     try { if (map[y][x+1]==w || map[y][x+1]==d){a+=1;} } catch (Exception e) {}   // x++   1
@@ -276,8 +280,7 @@ public class Files {
                     try { if (map[y+1][x]==w || map[y+1][x]==d){a+=4;} } catch (Exception e) {}   // y++   4
                     try { if (map[y-1][x]==w || map[y-1][x]==d){a+=8;} } catch (Exception e) {}   // y--   8
                     
-                    switch(a)
-                    {
+                    switch(a) {
                         case 15: disMap[y][x] = (char) 197; break;  //all
                         
                         case 14: disMap[y][x] = (char) 180; break;  // x-- y++ y--
@@ -297,9 +300,18 @@ public class Files {
                         case  8:
                         case 12: disMap[y][x] = (char) 179; break;  // y++ y--
                     }
-                } else if (map[y][x]==f)
-                {
+                } else if (map[y][x]==f) {
                     disMap[y][x] = (char) 7;
+                } else if (map[y][x]==t) {
+                    random = (int)(ran.nextDouble()*3);
+                    
+                    if (random==0) {
+                        disMap[y][x] = (char) 176;
+                    } else if (random==1) {
+                        disMap[y][x] = (char) 177;
+                    } else {
+                        disMap[y][x] = (char) 178;
+                    }
                 }
             }
         }

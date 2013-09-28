@@ -45,16 +45,12 @@ public class Main
     /**
      * Called if the player is moved, performs all nessecery functions and checks.
      */
-    
-    public static void doPreGameTick()
+    public static void doGameTick()
     {
-    }
-    
-    public static void doAfterGameTick()
-    {
-            p.useStaircase();
-            updateMonsters();
-            Render.update();
+        p.moves++;
+        p.useStaircase();
+        updateMonsters();
+        Render.update();
     }
     
     private static void updateMonsters()

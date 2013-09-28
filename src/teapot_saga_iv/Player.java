@@ -86,22 +86,24 @@ public class Player extends Character{
         {
             case 65:
             case 37:
-                if(canMove(x-1, y)) { Main.doPreGameTick(); x--; moves++; Main.doAfterGameTick();}
+                if(canMove(x-1, y)) { x--; Main.doGameTick();}
                 break;
             case 87:
             case 38:
-                if(canMove(x, y-1)) { Main.doPreGameTick(); y--; moves++; Main.doAfterGameTick();}
+                if(canMove(x, y-1)) { y--; Main.doGameTick();}
                 break;
             case 68:
             case 39:
-                if(canMove(x+1, y)) { Main.doPreGameTick(); x++; moves++; Main.doAfterGameTick();}
+                if(canMove(x+1, y)) { x++; Main.doGameTick();}
                 break;
             case 83:
             case 40:
-                if(canMove(x, y+1)) { Main.doPreGameTick(); y++; moves++; Main.doAfterGameTick();}
+                if(canMove(x, y+1)) { y++; Main.doGameTick();}
                 break;
             case 79:
                 useDoor();
+            case 67:
+                Main.doGameTick();
                 break;
         }
     }
@@ -143,9 +145,7 @@ public class Player extends Character{
             Files.disMap[this.y+y][this.x+x] = '+';
         }
         
-        Main.doPreGameTick();
-        moves++;
-        Main.doAfterGameTick();
+        Main.doGameTick();
     }
     
     /**

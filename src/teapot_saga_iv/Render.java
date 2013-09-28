@@ -11,7 +11,7 @@ public class Render {
     public static final byte CHAR_HEIGHT    = 15;
     
     public static final byte DIALOG_HEIGHT  = 10;
-    public static final byte WIDTH          = 80;
+    public static final byte WIDTH          = 120;
     public static final byte MAP_HEIGHT     = 40;
     public static final byte STATS_HEIGHT   = 4;
     
@@ -67,26 +67,30 @@ public class Render {
 ////////////////////////////////////////////////////////////////////////////////
     
     /**
-    * Paints over the specified char. Full X and Full Y coords needed
+    * Paints over the specified char. Full X and Full Y coords needed.
+    * 
+    * Does not allow the printing of return. (key code 13)
     */
-    private static void paintToDialog(char a, int x, int y) {
-        
+    private static void paintToDialog(char a, int x, int y)
+    {
         dialog.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
 
     /**
-    * Paints over the specified char. Full X and Full Y coords needed
+    * Paints over the specified char. Full X and Full Y coords needed.
+    * 
+    * Does not allow the printing of return. (key code 13)
     */
     private static void paintToMap(char a, int x, int y) {
-        
         map.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
     /**
-    * Paints over the specified char. Full X and Full Y coords needed
+    * Paints over the specified char. Full X and Full Y coords needed.
+    * 
+    * Does not allow the printing of return. (key code 13)
     */
     private static void paintToStats(char a, int x, int y) {
-        
         stats.getGraphics().drawImage(glyphs[a], x*CHAR_WIDTH, y*CHAR_HEIGHT, null);
     }
     
