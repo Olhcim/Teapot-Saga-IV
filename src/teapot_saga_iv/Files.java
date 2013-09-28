@@ -18,7 +18,7 @@ public class Files {
     public static List<Monster> monsters = new ArrayList<Monster>();
 
     public static String mapData[][];
-    public static int mapNum = 5;
+    public static int mapNum = 0;
     public static int startX = 0, startY = 0, exitX = 0, exitY = 0;
     public static String dialogStart = "", dialogExit = "";
     
