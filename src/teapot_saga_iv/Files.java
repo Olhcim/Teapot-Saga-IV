@@ -5,9 +5,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,7 +17,7 @@ public class Files {
     
     public static char map[][];
     public static char disMap[][];
-    
+        
     public static List<Monster> monsters = new ArrayList<Monster>();
 
     public static String mapData[][];
@@ -163,9 +161,7 @@ public class Files {
         Files.monsters.clear();
         
         Random gen = new Random(seed);
-        Random genMon = new Random(seed);
         int ran = 0;
-        int ranMon = 0;
         
         char[][] mapTemp = new char[length][breadth];
         
