@@ -265,11 +265,11 @@ public class Render {
         int midX = getMidX();
         int midY = getMidY();        
         
-        for (int y = 0; y < Files.map.length; y++)
+        for (int y = 0; y < Files.currentMap().length; y++)
         {
-            for (int x = 0; x < Files.map[y].length; x++)
+            for (int x = 0; x < Files.currentMap()[y].length; x++)
             {
-                paintToMap(Files.disMap[y][x], x + midX, y + midY);
+                paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
             }
         }
     }
@@ -281,7 +281,7 @@ public class Render {
     
     private static void paintMonsters() {
         
-        for (Monster m : Files.monsters)
+        for (Monster m : Files.currentMapData().monsters)
         {
             paintToMap(m.symbol, m.x + getMidX(),m.y + getMidY());
         }
@@ -296,7 +296,7 @@ public class Render {
      */
     private static int getMidX()
     {
-        return (WIDTH - Files.map[0].length) / 2;
+        return (WIDTH - Files.currentMap()[0].length) / 2;
     }   
     
     /*
@@ -312,7 +312,7 @@ public class Render {
      */
     private static int getMidY()
     {
-        return (MAP_HEIGHT - Files.map.length) / 2;
+        return (MAP_HEIGHT - Files.currentMap().length) / 2;
     }
     
     

@@ -92,7 +92,7 @@ public class Character {
      */
     public boolean canMove(int x, int y)
     {
-        return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && canMove == true;
+        return Files.currentMap()[y][x] != '#' && Files.currentDisMap()[y][x] != '+' && canMove == true;
     }
     
     public boolean canMove(int dir)

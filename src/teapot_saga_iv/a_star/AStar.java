@@ -143,8 +143,8 @@ public class AStar {
     private boolean removeNode(Node n)
     {
         boolean remove =
-                    Files.map[n.y][n.x] == '#'
-                ||  Files.disMap[n.y][n.x] == '+'
+                    Files.currentMap()[n.y][n.x] == '#'
+                ||  Files.currentDisMap()[n.y][n.x] == '+'
                 ||  containedInClosed(n)
                 ||  containedInOpen(n);
         

@@ -125,7 +125,7 @@ public class Monster extends Character{
     
     public static boolean isMonster(int x, int y)
     {
-        for (Monster m : Files.monsters)
+        for (Monster m : Files.currentMapData().monsters)
         {
             if (m.x == x && m.y == y)
             {
@@ -138,7 +138,7 @@ public class Monster extends Character{
     @Override
     public boolean canMove(int x, int y)
     {
-        return Files.map[y][x] != '#' && Files.disMap[y][x] != '+' && canMove == true && !Monster.isMonster(x,y) && !Main.p.sameAsPlayer(x,y);
+        return Files.currentMap()[y][x] != '#' && Files.currentDisMap()[y][x] != '+' && canMove == true && !Monster.isMonster(x,y) && !Main.p.sameAsPlayer(x,y);
     }
     
 } 

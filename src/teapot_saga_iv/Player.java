@@ -15,7 +15,7 @@ public class Player extends Character{
      */
     public void goToStart()
     {
-        setPos(Files.startX, Files.startY);
+        setPos(Files.currentMapData().getStartX(), Files.currentMapData().getStartY());
     }
     
     
@@ -24,7 +24,7 @@ public class Player extends Character{
      */
     public void goToExit()
     {
-        setPos(Files.exitX, Files.exitY);
+        setPos(Files.currentMapData().getExitX(), Files.currentMapData().getExitY());
     }
     
     /**
@@ -66,7 +66,7 @@ public class Player extends Character{
      */
     private boolean isAtEntrance()
     {
-        return Files.map[y][x] == '<';
+        return Files.currentMap()[y][x] == '<';
     }
     
     /**
@@ -74,7 +74,7 @@ public class Player extends Character{
      */
     private boolean isAtExit()
     {
-        return Files.map[y][x] == '>';
+        return Files.currentMap()[y][x] == '>';
     }
     
     /**
@@ -101,7 +101,8 @@ public class Player extends Character{
                 if(canMove(x, y+1)) { y++; Main.doGameTick();}
                 break;
             case 79:
-                useDoor();
+                 useDoor(); Main.doGameTick();
+                break;
             case 67:
                 Main.doGameTick();
                 break;
@@ -136,16 +137,14 @@ public class Player extends Character{
      */
     private void openDoor(int x, int y)
     {
-        if      (Files.disMap[this.y+y][this.x+x] == '+')
+        if      (Files.currentDisMap()[this.y+y][this.x+x] == '+')
         {
-            Files.disMap[this.y+y][this.x+x] = 'X';
+            Files.currentDisMap()[this.y+y][this.x+x] = 'X';
         }
-        else if (Files.disMap[this.y+y][this.x+x] == 'X')
+        else if (Files.currentDisMap()[this.y+y][this.x+x] == 'X')
         {
-            Files.disMap[this.y+y][this.x+x] = '+';
+            Files.currentDisMap()[this.y+y][this.x+x] = '+';
         }
-        
-        Main.doGameTick();
     }
     
     /**
@@ -156,7 +155,7 @@ public class Player extends Character{
      */
     public boolean doorAt(int x, int y)
     {
-        if(Files.disMap[this.y+y][this.x+x] == '+' || Files.disMap[this.y+y][this.x+x] == 'X')
+        if(Files.currentDisMap()[this.y+y][this.x+x] == '+' || Files.currentDisMap()[this.y+y][this.x+x] == 'X')
         {
             return true;
         }

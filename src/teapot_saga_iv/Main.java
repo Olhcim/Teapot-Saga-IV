@@ -13,8 +13,6 @@
 
 package teapot_saga_iv;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main
 {
@@ -23,12 +21,11 @@ public class Main
     public static boolean frameActive = false;
     
     public static Player p = new Player();
+    public static Window w = new Window();
     
     public static void main(String[] args)
     {   
-        
-        Window window = new Window();
-        
+        Files.loadMaps();
         NextMap();
     }
     
@@ -61,7 +58,7 @@ public class Main
     
     private static void updateMonsters()
     {
-        for (Monster m : Files.monsters)
+        for (Monster m : Files.currentMapData().monsters)
         {
             m.moveTowardsPlayer();
         }
@@ -73,12 +70,11 @@ public class Main
      */
     public static void NextMap()
     {
-        if (Files.MapExists(1))
+        if (Files.mapExists(Files.world, Files.level+1))
         {
             Render.clearAll();
-            Files.mapNum++;
-            Files.load();
-            Render.print(Files.dialogStart);
+            Files.level++;
+            Render.print(Files.currentMapData().dialogStart);
             p.goToStart();
             Render.update();
         } else {
@@ -91,13 +87,12 @@ public class Main
      */
     public static void PrevMap()
     {
-        if (Files.MapExists(-1))
+        if (Files.mapExists(Files.world, Files.level-1))
         {
             Render.clearAll();
-            Files.mapNum--;
-            Files.load();
+            Files.level--;
             Render.print("You have already been to this place, head back to continue.");
-            p.setPos(Files.exitX, Files.exitY);
+            p.goToExit();
             Render.update();
         } else {
             Render.print("The previous map does not exist.");
