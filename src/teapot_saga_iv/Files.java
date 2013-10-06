@@ -17,7 +17,7 @@ public class Files {
     public static final String FILESPATH = System.getProperty("user.dir") + "/src/teapot_saga_iv/files/";
     private static final String DAT = "dat", MAP = "map";
     
-    public static int world = 1, level = 1;
+    public static int world = 1, level = 0;
     
 
     
