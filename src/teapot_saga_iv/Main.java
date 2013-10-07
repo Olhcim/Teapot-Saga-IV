@@ -77,7 +77,18 @@ public class Main
             Render.print(Files.currentMapData().dialogStart);
             p.goToStart();
             Render.update();
-        } else {
+        }
+        else if (Files.mapExists(Files.world+1, 1))
+        {
+            Render.clearAll();
+            Files.level = 1;
+            Files.world++;
+            Render.print(Files.currentMapData().dialogStart);
+            p.goToStart();
+            Render.update();
+        }
+        else
+        {
             Render.print("The following map does not exist.");
         }
     }
@@ -94,7 +105,29 @@ public class Main
             Render.print("You have already been to this place, head back to continue.");
             p.goToExit();
             Render.update();
-        } else {
+        }
+        else if (Files.mapExists(Files.world-1, 1))
+        {
+            int highest = 0;
+            do
+            {
+                if (Files.mapExists(Files.world-1, highest+1))
+                {
+                    highest++;
+                } else {
+                    break;
+                }
+            } while(true);
+            
+            Render.clearAll();
+            Files.level = highest;
+            Files.world--;
+            Render.print("You have already been to this place, head back to continue.");
+            p.goToExit();
+            Render.update();
+        }
+        else
+        {
             Render.print("The previous map does not exist.");
         }
     }

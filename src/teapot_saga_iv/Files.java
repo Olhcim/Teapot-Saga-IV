@@ -135,15 +135,6 @@ public class Files {
                     mapTemp[i] = list.get(i).replace("\r", "").toCharArray();
                 }
                 
-                for (int y=0; y<mapTemp.length;y++)
-                {
-                    for (int x=0; x<mapTemp[y].length;x++)
-                    {
-                        System.out.print(mapTemp[y][x]);
-                    }
-                    System.out.println();
-                }
-                
         } catch (Exception e) { System.err.println(e.getMessage()); }
         
         return mapTemp;
