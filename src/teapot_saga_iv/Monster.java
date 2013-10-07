@@ -46,17 +46,8 @@ public class Monster extends Character{
     {
         if (distanceToPlayer() > 20)
         {
-            displace(true);
-        }
-        else if (distanceToPlayer() >= 2.5 && distanceToPlayer() <= 20)
-        {
-            findPath(Main.p.getX(), Main.p.getY());
+            findPath(startX, startY);
             
-            if (path == null)
-            {
-                findPath(startX, startY);
-            }
-        
             if (path != null)
             {
                 path = path.getParent();
@@ -71,9 +62,35 @@ public class Monster extends Character{
                 displace(true);
             }
         }
-        else if (distanceToPlayer() < 1)
+        else
         {
-                displace(false);
+            if (distanceToPlayer() >= 2.5 )
+            {
+                findPath(Main.p.getX(), Main.p.getY());
+
+                if (path == null)
+                {
+                    findPath(startX, startY);
+                }
+
+                if (path != null)
+                {
+                    path = path.getParent();
+
+                    if (!isMonster(path.getX(), path.getY()))
+                    {
+                        setPos(path.getX(), path.getY());
+                    } 
+                }
+                else
+                {
+                    displace(true);
+                }
+            }
+            else if (distanceToPlayer() < 1)
+            {
+                    displace(false);
+            }
         }
 
     }

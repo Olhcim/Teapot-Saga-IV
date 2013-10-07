@@ -129,7 +129,6 @@ public class Character {
     
     public void findPath(int x, int y)
     {
-        AStar path = new AStar(this.x, this.y, x, y);
-        this.path = path.getFinalNode();
+        this.path = new AStar(this.x, this.y, x, y).getFinalNode();
     }
 } 

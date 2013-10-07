@@ -22,7 +22,8 @@ public class Node {
 //                + (int)
 //                Math.sqrt((AStar.getEndY() - this.y)*(AStar.getEndY() - this.y));
         
-                this.h =  (AStar.getEndX() - this.x) + (AStar.getEndY() - this.y);      //works - investigate
+                this.h =  (AStar.getEndX() - this.x) + (AStar.getEndY() - this.y);
+                this.h *= this.h;
     }
     
     public boolean equal(Node node)
@@ -42,7 +43,7 @@ public class Node {
     
     public int getF()
     {
-        return g + h*h;     // h squared increases effeciency drastically in certain cases.
+        return g + h;
     }
     
     public Node getParent()
