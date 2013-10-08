@@ -61,7 +61,7 @@ public class AStar {
                     path = n;
                     foundPath = true;
                     
-                    System.out.println("closed length: " + closed.size() + " open length: " + open.size());
+                    //System.out.println("closed length: " + closed.size() + " open length: " + open.size());
                     
                     return true;
                 }

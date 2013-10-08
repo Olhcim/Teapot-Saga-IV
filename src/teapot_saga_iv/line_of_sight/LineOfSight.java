@@ -31,9 +31,11 @@ public class LineOfSight
     }
     
     /**
-     * 2(x+y)*n calculations.
-     * only searches for lines to the edges of the map.
-     * a 40x80 map requires 240*n calculations.
+     * Searches for lines to every wall in the current map.
+     * 
+     * a 40x80 map requires W*n calculations.
+     * 
+     * where W is the number of walls
      * 
      * inaccurate.
      * 
@@ -47,21 +49,22 @@ public class LineOfSight
         {
             for (int ex = 0; ex < sight[ey].length; ex++)
             {
-                if(ex == 0 || ey == 0 || ey == sight.length-1 || ex == sight[0].length-1)
+//                if(ex == 0 || ey == 0 || ey == sight.length-1 || ex == sight[0].length-1) // only searches to the edges
+                if(Files.currentMap()[ey][ex] == '#' || Files.currentMap()[ey][ex] == '+') // only searches to all the walls in the current map
                 {
                     Line line = new Line(sx,sy,ex,ey);
                     
                     for (Point p : line.getPoints())
                     {
-                        int x = p.getX();
-                        int y = p.getY();
+                        int px = p.getX();
+                        int py = p.getY();
                         
-                        if(Files.currentMap()[y][x] == '#' || Files.currentDisMap()[y][x] == '+')
+                        if(Files.currentMap()[py][px] == '#' || Files.currentDisMap()[py][px] == '+')
                         {
-                            sight[y][x] = '1';
+                            sight[py][px] = '1';
                             break;
                         } else {
-                            sight[y][x] = '1';
+                            sight[py][px] = '1';
                         }
                     }
                 }
@@ -70,9 +73,10 @@ public class LineOfSight
     }
     
     /**
-     * x*y*n calculations
-     * Searches for lines to every coord on the current map.
-     * A 40x80 map requires 3600*n calculations.
+     * Searches for lines to every coord in the current map.
+     * 
+     * Requires l*b*n calculations.
+     * where l is length and b is breadth.
      * 
      * very accurate.
      * 
