@@ -59,7 +59,7 @@ public class Monster extends Character{
             }
             else
             {
-                displace(true);
+                displace();
             }
         }
         else
@@ -84,12 +84,12 @@ public class Monster extends Character{
                 }
                 else
                 {
-                    displace(true);
+                    displace();
                 }
             }
             else if (distanceToPlayer() < 1)
             {
-                    displace(false);
+                    displace();
             }
         }
 
@@ -103,41 +103,19 @@ public class Monster extends Character{
         }
     }
     
-    public void move(int dir)
+    public void displace()
     {
-        
-        if (canMove(dir))
-        {
-            switch (dir)
-            {
-                // N:0  - E:2  - S:4  - W:6
-                case 0: setPos(x, y-1); break;
-                case 2: setPos(x+1, y); break;
-                case 4: setPos(x, y+1); break;
-                case 6: setPos(x-1, y); break;
-                // NE:1 - SE:3 - SW:5 - NW:7
-                case 1: setPos(x+1, y-1); break;
-                case 3: setPos(x+1, y+1); break;
-                case 5: setPos(x-1, y+1); break;
-                case 7: setPos(x-1, y-1); break;
-            }
-        }
-    }
-    
-    public void displace(boolean diagonal)
-    {
-        int ran;
-        
         do
         {
-            if (diagonal)
+            int x = (int) (Math.random()*3) - 1;
+            int y = (int) (Math.random()*3) - 1;
+            
+            if (canMove(this.x + x, this.y + y))
             {
-            ran = (int) (Math.random()*8);
-            } else {
-                ran = (int) (Math.random()*4) * 2;
+                move(x, y);
+                break;
             }
-        } while (!canMove(ran));
-        move(ran);
+        } while (true);
     }
     
     public static boolean isMonster(int x, int y)

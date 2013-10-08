@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
 public class MapData {
@@ -22,6 +23,10 @@ public class MapData {
     
     String dialogStart;
     String dialogExit;
+    
+    private LineOfSight sight;
+    private char[][] seen;
+    
     
     List<Monster> monsters = new ArrayList<Monster>();
     
@@ -43,6 +48,12 @@ public class MapData {
         renderDisMap();
         
         try { parseData(); } catch (Exception e) {e.getMessage();}
+        
+        sight = new LineOfSight(this);
+        
+        seen = clone(map);
+        
+        for(int y=0; y<map.length; y++) { for(int x=0; x<map[y].length; x++) { seen[y][x] = '0'; }}
     }
     
     
@@ -53,6 +64,26 @@ public class MapData {
     
     public char[][] getDisMap()
     { return disMap; }
+    
+    public char[][] getSeen()
+    { return seen; }
+    
+    
+    public void updateSeen()
+    {
+        sight.update(Main.p.x, Main.p.y, true); //verbose option becomes increasingly resource intensive with large maps.
+        
+        for (int y = 0; y < sight.getVisible().length; y++)
+        {
+            for (int x = 0; x < sight.getVisible()[0].length; x++)
+            {
+                if(seen[y][x] == '0' && sight.getVisible()[y][x] == '1')
+                {
+                    seen[y][x] = '1';
+                }
+            }
+        }
+    }
     
     
     public char getMapTile(int x, int y)

@@ -49,7 +49,10 @@ public class Main
 
         p.moves++;
         p.useStaircase();
+        
         updateMonsters();
+        
+        Files.currentMapData().updateSeen();
         Render.update();
         
         time = System.currentTimeMillis() - time;
@@ -76,6 +79,7 @@ public class Main
             Files.level++;
             Render.print(Files.currentMapData().dialogStart);
             p.goToStart();
+            Files.currentMapData().updateSeen();
             Render.update();
         }
         else if (Files.mapExists(Files.world+1, 1))
@@ -85,6 +89,7 @@ public class Main
             Files.world++;
             Render.print(Files.currentMapData().dialogStart);
             p.goToStart();
+            Files.currentMapData().updateSeen();
             Render.update();
         }
         else
@@ -104,6 +109,7 @@ public class Main
             Files.level--;
             Render.print("You have already been to this place, head back to continue.");
             p.goToExit();
+            Files.currentMapData().updateSeen();
             Render.update();
         }
         else if (Files.mapExists(Files.world-1, 1))
@@ -124,6 +130,7 @@ public class Main
             Files.world--;
             Render.print("You have already been to this place, head back to continue.");
             p.goToExit();
+            Files.currentMapData().updateSeen();
             Render.update();
         }
         else

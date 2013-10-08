@@ -12,7 +12,7 @@ public class Render {
     
     public static final byte DIALOG_HEIGHT  = 10;
     public static final byte WIDTH          = 120;
-    public static final byte MAP_HEIGHT     = 40;
+    public static final byte MAP_HEIGHT     = 50;
     public static final byte STATS_HEIGHT   = 4;
     
     public static final int WIDTH_PIXELS            = WIDTH * CHAR_WIDTH;
@@ -269,7 +269,13 @@ public class Render {
         {
             for (int x = 0; x < Files.currentMap()[y].length; x++)
             {
-                paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
+                if (Files.currentMapData().getSeen()[y][x] == '1')
+                {
+                    paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
+                } else {
+                    paintToMap((char) 176, x + midX, y + midY);
+                }
+                
             }
         }
     }
@@ -283,7 +289,10 @@ public class Render {
         
         for (Monster m : Files.currentMapData().monsters)
         {
+            if (Files.currentMapData().getSeen()[m.y][m.x] == '1')
+            {
             paintToMap(m.symbol, m.x + getMidX(),m.y + getMidY());
+            }
         }
     }
 

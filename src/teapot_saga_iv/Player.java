@@ -80,7 +80,7 @@ public class Player extends Character{
     /**
      * recieves the keycodes of keys pressed from Window.class
      */
-    public void move(int a)
+    public void handleKey(int a)
     {
         switch (a)
         {
@@ -105,6 +105,12 @@ public class Player extends Character{
                 break;
             case 67:
                 Main.doGameTick();
+                break;
+            case 49:
+                Main.PrevMap();         //quick navigation, testing purposes only.
+                break;
+            case 50:
+                Main.NextMap();         //quick navigation, testing purposes only.
                 break;
         }
     }
