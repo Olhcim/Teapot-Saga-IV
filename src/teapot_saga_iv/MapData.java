@@ -71,7 +71,7 @@ public class MapData {
     
     public void updateSeen()
     {
-        sight.update(Main.p.x, Main.p.y, true); //verbose option becomes increasingly resource intensive with large maps.
+        sight.update(Main.p.x, Main.p.y); //verbose option becomes increasingly resource intensive with large maps.
         
         for (int y = 0; y < sight.getVisible().length; y++)
         {

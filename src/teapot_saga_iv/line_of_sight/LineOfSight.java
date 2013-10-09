@@ -6,8 +6,6 @@ import teapot_saga_iv.MapData;
 
 public class LineOfSight
 {
-    private char map[][];
-    
     private char[][] sight;
     
     public LineOfSight(MapData data)
@@ -20,14 +18,9 @@ public class LineOfSight
         fill('0');
     }
     
-    public void update(int x, int y, boolean verbose)
+    public void update(int x, int y)
     {
-        if (verbose)
-        {
-            findVisable(x,y);
-        } else {
-            findVisableVerbose(x,y);
-        }
+        findVisable(x,y);
     }
     
     /**
@@ -49,16 +42,15 @@ public class LineOfSight
         {
             for (int ex = 0; ex < sight[ey].length; ex++)
             {
-//                if(ex == 0 || ey == 0 || ey == sight.length-1 || ex == sight[0].length-1) // only searches to the edges
                 if(Files.currentMap()[ey][ex] == '#' || Files.currentMap()[ey][ex] == '+') // only searches to all the walls in the current map
                 {
                     Line line = new Line(sx,sy,ex,ey);
-                    
+
                     for (Point p : line.getPoints())
                     {
                         int px = p.getX();
                         int py = p.getY();
-                        
+
                         if(Files.currentMap()[py][px] == '#' || Files.currentDisMap()[py][px] == '+')
                         {
                             sight[py][px] = '1';
@@ -70,43 +62,7 @@ public class LineOfSight
                 }
             }
         }
-    }
-    
-    /**
-     * Searches for lines to every coord in the current map.
-     * 
-     * Requires l*b*n calculations.
-     * where l is length and b is breadth.
-     * 
-     * very accurate.
-     * 
-     * @param sx
-     * @param sy 
-     */
-    private void findVisableVerbose(int sx, int sy)
-    {
-        
-        for (int ey = 0; ey < sight.length; ey++)
-        {
-            for (int ex = 0; ex < sight[ey].length; ex++)
-            {
-                Line line = new Line(sx,sy,ex,ey);
-
-                for (Point p : line.getPoints())
-                {
-                    int x = p.getX();
-                    int y = p.getY();
-
-                    if(Files.currentMap()[y][x] == '#' || Files.currentDisMap()[y][x] == '+')
-                    {
-                        sight[y][x] = '1';
-                        break;
-                    } else {
-                        sight[y][x] = '1';
-                    }
-                }
-            }
-        }
+        print(sight);
     }
     
     private void findCircle(int px, int py, int radius)
@@ -129,11 +85,6 @@ public class LineOfSight
         }
     }
     
-    private List findLine (int ex, int ey, int x, int y)
-    {
-        return new Line(x,y,ex,ey).getPoints();
-    }
-    
     private void fill (char a)
     {
         for (int y = 0; y < sight.length; y++)
@@ -151,7 +102,7 @@ public class LineOfSight
         {
             for (int x = 0; x < array[y].length; x++)
             {
-                System.out.print( array );
+                System.out.print( array[y][x] );
             }
             System.out.println();
         }
