@@ -2,7 +2,7 @@ package teapot_saga_iv.line_of_sight;
 
 import java.util.List;
 import teapot_saga_iv.Files;
-import teapot_saga_iv.MapData;
+import teapot_saga_iv.maps.MapData;
 
 public class LineOfSight
 {
@@ -64,6 +64,24 @@ public class LineOfSight
         }
         print(sight);
     }
+
+//    private int numOfSurroudingWalls(int x, int y) // was trying to use to stop rays from passing through thin areas... BAD!
+//    {
+//        int count = 0;
+//        
+//        if (Files.currentMap()[y+1][x] == '#')
+//        { count++; }
+//        else if (Files.currentMap()[y-1][x] == '#')
+//        { count++; }
+//        else if (Files.currentMap()[y][x+1] == '#')
+//        { count++; }
+//        else if (Files.currentMap()[y][x-1] == '#')
+//        { count++; }
+//        
+//        System.out.println(x + " " + y + " " + count);
+//        
+//        return count;
+//    }
     
     private void findCircle(int px, int py, int radius)
     {

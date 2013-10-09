@@ -120,7 +120,7 @@ public class Monster extends Character{
     
     public static boolean isMonster(int x, int y)
     {
-        for (Monster m : Files.currentMapData().monsters)
+        for (Monster m : Files.currentMapData().getMonsters())
         {
             if (m.x == x && m.y == y)
             {

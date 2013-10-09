@@ -23,10 +23,14 @@ public class Main
     public static Player p = new Player();
     public static Window w = new Window();
     
+        public static int world = -1, level = 1;
+        public static boolean isAtOverworld = true;
+    
+    
     public static void main(String[] args)
     {   
-        Files.loadMaps();
-        NextMap();
+        Files.loadAllMapData();
+        useMap(1,1);
     }
     
     /**
@@ -50,9 +54,7 @@ public class Main
         p.moves++;
         p.useStaircase();
         
-        updateMonsters();
-        
-        Files.currentMapData().updateSeen();
+        Files.currentMapData().update();
         Render.update();
         
         time = System.currentTimeMillis() - time;
@@ -61,40 +63,76 @@ public class Main
     
     private static void updateMonsters()
     {
-        for (Monster m : Files.currentMapData().monsters)
+        for (Monster m : Files.currentMapData().getMonsters())
         {
             m.moveTowardsPlayer();
         }
     }
     
     
-    /**
-     * Loads the next Map, moves the player and updates the GUI.
-     */
+    public static void goToOverworld()
+    {
+        Render.clearAll();
+
+        isAtOverworld = true;
+        
+        Files.currentMapData().update();
+        p.setPos(5, 5);
+
+        Render.update();
+    }
+    
+    
+    public static void useMap(int world, int level)
+    {
+        
+        Render.clearAll();
+     
+        isAtOverworld = false;
+        boolean ahead = true;
+        
+        
+        if (Files.world < world) {ahead = true;}
+        else if (Files.world > world) {ahead = false;}
+        else if (Files.world == world)
+        {
+            if (Files.level < level) {ahead = true;}
+            else if (Files.level > level) {ahead = false;}
+            else { ahead = true; }
+        }
+        
+            
+        Files.world = world;
+        Files.level = level;
+        
+        if (ahead)
+        {
+            Render.print(Files.currentMapData().getDialogStart());
+            p.goToStart();
+            Files.currentMapData().update();
+        } else if (!ahead) {
+            Render.print("You have already been to this place, head back to continue.");
+            p.goToExit();
+            Files.currentMapData().update();
+        }
+
+        Render.update();
+    }
+    
     public static void NextMap()
     {
-        if (Files.mapExists(Files.world, Files.level+1))
+        
+        if (Files.mapExists(Files.world, Files.level + 1))
         {
-            Render.clearAll();
-            Files.level++;
-            Render.print(Files.currentMapData().dialogStart);
-            p.goToStart();
-            Files.currentMapData().updateSeen();
-            Render.update();
+            useMap(Files.world, Files.level + 1);
         }
-        else if (Files.mapExists(Files.world+1, 1))
+        else if (Files.mapExists(Files.world + 1, 1))
         {
-            Render.clearAll();
-            Files.level = 1;
-            Files.world++;
-            Render.print(Files.currentMapData().dialogStart);
-            p.goToStart();
-            Files.currentMapData().updateSeen();
-            Render.update();
+            useMap(Files.world + 1, 1);
         }
         else
         {
-            Render.print("The following map does not exist.");
+            goToOverworld();
         }
     }
     
@@ -103,39 +141,25 @@ public class Main
      */
     public static void PrevMap()
     {
-        if (Files.mapExists(Files.world, Files.level-1))
+        if (Files.mapExists(Files.world, Files.level - 1))
         {
-            Render.clearAll();
-            Files.level--;
-            Render.print("You have already been to this place, head back to continue.");
-            p.goToExit();
-            Files.currentMapData().updateSeen();
-            Render.update();
+            useMap(Files.world, Files.level - 1);
+
         }
         else if (Files.mapExists(Files.world-1, 1))
         {
             int highest = 0;
-            do
-            {
+            do {
                 if (Files.mapExists(Files.world-1, highest+1))
-                {
-                    highest++;
-                } else {
-                    break;
-                }
+                { highest++;
+                } else { break;}
             } while(true);
             
-            Render.clearAll();
-            Files.level = highest;
-            Files.world--;
-            Render.print("You have already been to this place, head back to continue.");
-            p.goToExit();
-            Files.currentMapData().updateSeen();
-            Render.update();
+            useMap(Files.world - 1, highest);
         }
         else
         {
-            Render.print("The previous map does not exist.");
+            goToOverworld();
         }
     }
 }

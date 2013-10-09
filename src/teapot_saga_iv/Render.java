@@ -269,12 +269,12 @@ public class Render {
         {
             for (int x = 0; x < Files.currentMap()[y].length; x++)
             {
-                if (Files.currentMapData().getSeen()[y][x] == '1')
-                {
+//                if (Files.currentMapData().getSeen()[y][x] == '0')
+//                {
                     paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
-                } else {
-                    paintToMap((char) 176, x + midX, y + midY);
-                }
+//                } else {
+//                    paintToMap((char) 176, x + midX, y + midY);
+//                }
                 
             }
         }
@@ -285,9 +285,10 @@ public class Render {
         paintToMap('@', Main.p.x + getMidX(), Main.p.y + getMidY());
     }
     
-    private static void paintMonsters() {
+    private static void paintMonsters()
+    {
         
-        for (Monster m : Files.currentMapData().monsters)
+        for (Monster m : Files.currentMapData().getMonsters())
         {
             if (Files.currentMapData().getSeen()[m.y][m.x] == '1')
             {

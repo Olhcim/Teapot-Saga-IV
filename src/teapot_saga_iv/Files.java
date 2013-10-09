@@ -5,12 +5,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import teapot_saga_iv.maps.*;
 
 
 
 public class Files {
 
     public static List<MapData> data = new ArrayList<MapData>();
+    private static MapData overworld;
     
     private static MapData currentMapData;
     
@@ -23,31 +25,34 @@ public class Files {
     
     
     public static char[][] currentMap()
-    {
-        return currentMapData().getMap();
-    }
+    { return currentMapData().getMap(); }
     
     public static char[][] currentDisMap()
-    {
-        return currentMapData().getDisMap();
-    }
+    { return currentMapData().getDisMap(); }
     
     public static MapData currentMapData()
     {
-        if (currentMapData != null)
+        if (Main.isAtOverworld)
         {
-            if (currentMapData.getWorld() == world && currentMapData.getLvl() == level)
+            return overworld;
+        }
+        else
+        {
+            if (currentMapData != null)
             {
-                return currentMapData;
-            }
-            
-        } else {
-        
-            for (MapData dat : data)
-            {
-                if (dat.getWorld() == world && dat.getLvl() == level)
+                if (currentMapData.getWorld() == world && currentMapData.getLevel() == level)
                 {
-                    return dat;
+                    return currentMapData;
+                }
+
+            } else {
+
+                for (MapData dat : data)
+                {
+                    if (dat.getWorld() == world && dat.getLevel() == level)
+                    {
+                        return dat;
+                    }
                 }
             }
         }
@@ -56,11 +61,20 @@ public class Files {
     }
     
     
+    
+    
+    public static void loadAllMapData()
+    {
+        overworld = new Overworld( loadMap("overworld"), loadMapData("overworld") );
+        loadMaps();
+    }
+
+    
 
     /**
      * Loads the current .dat and .map file, from a predefined location.
      */
-    public static void loadMaps()
+    private static void loadMaps()
     {
         
         int world = 1, lvl = 1;
@@ -76,17 +90,24 @@ public class Files {
             System.out.println(world + " " + lvl);
             
             
-            char[][] map = loadMap(world,lvl);
-            String[][] mapData = loadMapData(world,lvl);
+            char[][] map = loadMap(world + "." + lvl);
+            String[][] mapData = loadMapData(world + "." + lvl);
             
             
-            data.add( new MapData(world, lvl, map, mapData ) );
+            data.add( new Map(world, lvl, map, mapData ) );
             
             printCharMap(map);
             
             lvl++;
         } while (true);
     }
+    
+    
+    
+    
+    
+    
+    
     
     public static void printCharMap(char[][] map)
     {
@@ -112,10 +133,14 @@ public class Files {
     }
 
     
+    
+    
+    
+    
     /**
      * Loads the current .map file, from a predefined location.
      */
-    private static char[][] loadMap(int world, int level)
+    private static char[][] loadMap(String string)
     {
         char[][] mapTemp = null;
         
@@ -123,7 +148,8 @@ public class Files {
             
             ArrayList<String> list = new ArrayList<String>();
 
-            Scanner scanner = new Scanner(new File(FILESPATH + world + "." + level + ".map"));
+            Scanner scanner = new Scanner(new File(FILESPATH + string + ".map"));
+            
             scanner.useDelimiter("\n");
 
             while (scanner.hasNext()) { list.add(scanner.next()); }
@@ -141,10 +167,11 @@ public class Files {
     }
     
     
+    
     /**
      * Loads the current .map file, from a predefined location.
      */
-    private static String[][] loadMapData(int world, int level)
+    private static String[][] loadMapData(String string)
     {
         String[][] mapDataTemp = null;
         
@@ -152,7 +179,7 @@ public class Files {
             
             ArrayList<String> list = new ArrayList<String>();
 
-            Scanner scanner = new Scanner(new File(FILESPATH + world + "." + level + ".dat"));
+            Scanner scanner = new Scanner(new File(FILESPATH + string + ".dat"));
             scanner.useDelimiter("\n");
 
             while (scanner.hasNext()) { list.add(scanner.next()); }
@@ -169,6 +196,4 @@ public class Files {
         
         return mapDataTemp;
     }
-    
-    
 }

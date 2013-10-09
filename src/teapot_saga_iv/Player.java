@@ -27,6 +27,7 @@ public class Player extends Character{
         setPos(Files.currentMapData().getExitX(), Files.currentMapData().getExitY());
     }
     
+    
     /**
      * Checks for and uses a staircase, does not allow the use of a staircase if the player is currently on one.
      */
