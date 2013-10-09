@@ -3,6 +3,7 @@ package teapot_saga_iv;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import teapot_saga_iv.maps.Staircase;
 
 
 public class Render {
@@ -249,6 +250,7 @@ public class Render {
         paintMap();
         paintPlayer();
         paintMonsters();
+        paintOverworldObjects();
         updateStats();
         Window.repaintAll();
     }
@@ -269,12 +271,22 @@ public class Render {
         {
             for (int x = 0; x < Files.currentMap()[y].length; x++)
             {
-//                if (Files.currentMapData().getSeen()[y][x] == '0')
-//                {
+                if (Main.isAtOverworld)
+                {
                     paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
-//                } else {
-//                    paintToMap((char) 176, x + midX, y + midY);
-//                }
+                }
+                else
+                {
+                    if (Files.currentMapData().getSeen()[y][x] == '1')
+                    {
+                        paintToMap(Files.currentDisMap()[y][x], x + midX, y + midY);
+                    }
+                    else
+                    {
+                        paintToMap((char) 176, x + midX, y + midY);
+                    }
+                }
+                
                 
             }
         }
@@ -293,6 +305,17 @@ public class Render {
             if (Files.currentMapData().getSeen()[m.y][m.x] == '1')
             {
             paintToMap(m.symbol, m.x + getMidX(),m.y + getMidY());
+            }
+        }
+    }
+    
+    private static void paintOverworldObjects()
+    {
+        if (Main.isAtOverworld)
+        {
+            for (Staircase s : Files.currentMapData().getStairs())
+            {
+                paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
             }
         }
     }

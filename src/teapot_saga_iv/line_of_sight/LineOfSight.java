@@ -10,7 +10,7 @@ public class LineOfSight
     
     public LineOfSight(MapData data)
     {
-       sight = data.getMap().clone();
+        sight = data.getMap().clone();
                 
         for (int y = 0; y < data.getMap().length; y++)
         { sight[y] = data.getMap()[y].clone(); }

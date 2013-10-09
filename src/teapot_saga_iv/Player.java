@@ -10,6 +10,12 @@ public class Player extends Character{
         return moves;
     }
     
+    public void update()
+    {
+        moves++;
+        useStaircase();
+    }
+    
     /**
      * Moves the player to the start but does not update the GUI.
      */

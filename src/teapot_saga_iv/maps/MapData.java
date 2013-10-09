@@ -26,8 +26,6 @@ public class MapData {
     String dialogExit;
     
     LineOfSight sight;
-    char[][] seen;
-    
     
     private DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHH");
     private Date date = new Date();
@@ -49,15 +47,7 @@ public class MapData {
     
     public char[][] getSeen()
     { 
-        for (char[] y : seen)
-        {
-            for (char x : y)
-            {
-                System.out.print(x);
-            }
-            System.out.println();
-        }
-        return seen;
+        return sight.getVisible();
     }
     
     
@@ -108,6 +98,10 @@ public class MapData {
     
     public int getWorld()
     { return world; }
+    public List<Staircase> getStairs ()
+    {
+        return stairs;
+    }
     
     
     
@@ -120,33 +114,10 @@ public class MapData {
     
     
     
+    
+    
+    
     public void update() {};
-    
-    
-    
-    
-    public void playerAtStaircase()
-    {
-        for (Staircase s : stairs)
-        {
-            s.checkForPlayer();
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -173,6 +144,8 @@ public class MapData {
             dialogExit = "";
             monsters.clear();
             monsters = new ArrayList<Monster>();
+            
+            boolean stairscleared = false;
 
             for (int i = 0; i < mapData.length; i++)
             {
@@ -194,16 +167,6 @@ public class MapData {
 
                     monsters.add(new Monster(x, y, type));
                 }
-                
-                if (mapData[i][0].equalsIgnoreCase("Staircase"))
-                {
-                    int x = Integer.parseInt( mapData[i][1] );
-                    int y = Integer.parseInt( mapData[i][1] );
-                    int destWorld = Integer.parseInt( mapData[i][1] );
-                    int destLevel = Integer.parseInt( mapData[i][1] );
-                    
-                    stairs.add( new Staircase(x, y, destWorld, destLevel) );
-                }
             }
         } catch (Exception e) {}
     }
@@ -216,9 +179,11 @@ public class MapData {
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (map[y][x] == '<') {
-                    //stairs.add(new Staircase(x, y, world, level++));
+                    startX = x;
+                    startY = y;
                 } else if (map[y][x] == '>') {
-                    //stairs.add(new Staircase(x, y, world, level--));
+                    exitX = x;
+                    exitY = y;
                 }
             }
         }

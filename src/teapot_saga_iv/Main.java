@@ -13,6 +13,8 @@
 
 package teapot_saga_iv;
 
+import teapot_saga_iv.maps.Staircase;
+
 
 public class Main
 {
@@ -23,8 +25,8 @@ public class Main
     public static Player p = new Player();
     public static Window w = new Window();
     
-        public static int world = -1, level = 1;
-        public static boolean isAtOverworld = true;
+    public static int world = -1, level = 1;
+    public static boolean isAtOverworld = true;
     
     
     public static void main(String[] args)
@@ -51,8 +53,8 @@ public class Main
         
         long time = System.currentTimeMillis();
 
-        p.moves++;
-        p.useStaircase();
+        
+        p.update();
         
         Files.currentMapData().update();
         Render.update();
@@ -67,19 +69,6 @@ public class Main
         {
             m.moveTowardsPlayer();
         }
-    }
-    
-    
-    public static void goToOverworld()
-    {
-        Render.clearAll();
-
-        isAtOverworld = true;
-        
-        Files.currentMapData().update();
-        p.setPos(5, 5);
-
-        Render.update();
     }
     
     
@@ -119,10 +108,35 @@ public class Main
         Render.update();
     }
     
+    
+    public static void goToOverworld()
+    {
+        Render.clearAll();
+
+        isAtOverworld = true;
+        
+        Files.currentMapData().update();
+
+        for (Staircase s : Files.currentMapData().getStairs())
+        {
+            if (s.getDestWorld() == Files.world)
+            {
+                p.setPos(s.getX()+1, s.getY());
+            }
+        }
+        
+
+        Render.update();
+    }
+    
+    
     public static void NextMap()
     {
-        
-        if (Files.mapExists(Files.world, Files.level + 1))
+        if (isAtOverworld)
+        {
+            useMap(Files.world, Files.level);
+        }
+        else if (Files.mapExists(Files.world, Files.level + 1))
         {
             useMap(Files.world, Files.level + 1);
         }
@@ -134,6 +148,7 @@ public class Main
         {
             goToOverworld();
         }
+        
     }
     
     /**
@@ -141,7 +156,11 @@ public class Main
      */
     public static void PrevMap()
     {
-        if (Files.mapExists(Files.world, Files.level - 1))
+        if (isAtOverworld)
+        {
+            useMap(Files.world, Files.level);
+        }
+        else if (Files.mapExists(Files.world, Files.level - 1))
         {
             useMap(Files.world, Files.level - 1);
 

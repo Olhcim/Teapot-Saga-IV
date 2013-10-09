@@ -22,13 +22,17 @@ public class Overworld extends MapData {
         parseMap();
         renderDisMap();
 
-        seen = fill( clone(map), '1' );
+        sight = new LineOfSight(this);
+        fill( sight.getVisible(), '1' );
     }
     
     @Override
     public void update()
     {
-        playerAtStaircase();
+        for (Staircase s : stairs)
+        {
+            s.checkForPlayer();
+        }
     }
     
     @Override
@@ -46,11 +50,12 @@ public class Overworld extends MapData {
                 if (mapData[i][0].equalsIgnoreCase("Staircase"))
                 {
                     int x = Integer.parseInt( mapData[i][1] );
-                    int y = Integer.parseInt( mapData[i][1] );
-                    int destWorld = Integer.parseInt( mapData[i][1] );
-                    int destLevel = Integer.parseInt( mapData[i][1] );
+                    int y = Integer.parseInt( mapData[i][2] );
+                    int destWorld = Integer.parseInt( mapData[i][3] );
+                    int destLevel = Integer.parseInt( mapData[i][4] );
+                    char symbol =  mapData[i][5].charAt(0);
                     
-                    stairs.add( new Staircase(x, y, destWorld, 1) );
+                    stairs.add( new Staircase(x, y, destWorld, destLevel, symbol) );
                 }
             }
         } catch (Exception e) {}

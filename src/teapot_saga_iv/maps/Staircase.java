@@ -9,14 +9,27 @@ public class Staircase {
     
     int destWorld, destLevel;
     
+    char symbol;
     
-    public Staircase (int x, int y, int destWorld, int destLevel)
+    
+    public Staircase (int x, int y, int destWorld, int destLevel, char symbol)
     {
         this.x = x;
         this.y = y;
         this.destWorld = destWorld;
         this.destLevel = destLevel;
+        this.symbol = symbol;
     }
+    
+    public int getX()
+    { return x; }
+    public int getY()
+    { return y; }
+    
+    public int getDestWorld()
+    { return destWorld; }
+    public int getDestLevel()
+    { return destLevel; }
     
     private void use()
     {
@@ -35,25 +48,6 @@ public class Staircase {
     
     public char getSymbol()
     {
-        if(destWorld > Main.world)
-        {
-            return '<';
-        }
-        else if(destWorld < Main.world)
-        {
-            return '>';
-        }
-        else if(destWorld == Main.world)
-        {
-            if(destLevel > Main.world)
-            {
-                return '<';
-            }
-            else if(destLevel < Main.world)
-            {
-                return '>';
-            }
-        }
-        return '?';
+        return symbol;
     }
 } 

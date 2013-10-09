@@ -17,12 +17,13 @@ public class Map extends MapData {
 
         //createRandomMap(map[0].length, map.length, seed, 20);
 
-        parseData();
+        
         parseMap();
         renderDisMap();
-
+        parseData();
+        
+        
         sight = new LineOfSight(this);
-        seen = fill( clone(map), '1' );
     }
     
     
@@ -32,7 +33,6 @@ public class Map extends MapData {
     @Override
     public void update()
     {
-        playerAtStaircase();
         updateSeen();
         updateMonsters();
         
@@ -46,16 +46,16 @@ public class Map extends MapData {
     {
         sight.update(Main.p.getX(), Main.p.getY());
         
-        for (int y = 0; y < sight.getVisible().length; y++)
-        {
-            for (int x = 0; x < sight.getVisible()[0].length; x++)
-            {
-                if(seen[y][x] == '0' && sight.getVisible()[y][x] == '1')
-                {
-                    seen[y][x] = '1';
-                }
-            }
-        }
+//        for (int y = 0; y < sight.getVisible().length; y++)
+//        {
+//            for (int x = 0; x < sight.getVisible()[0].length; x++)
+//            {
+//                if(seen[y][x] == '0' && sight.getVisible()[y][x] == '1')
+//                {
+//                    seen[y][x] = '1';
+//                }
+//            }
+//        }
     }
     
     public void updateMonsters()
