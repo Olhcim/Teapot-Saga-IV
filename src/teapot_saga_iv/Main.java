@@ -140,10 +140,6 @@ public class Main
         {
             useMap(Files.world, Files.level + 1);
         }
-        else if (Files.mapExists(Files.world + 1, 1))
-        {
-            useMap(Files.world + 1, 1);
-        }
         else
         {
             goToOverworld();
@@ -164,17 +160,6 @@ public class Main
         {
             useMap(Files.world, Files.level - 1);
 
-        }
-        else if (Files.mapExists(Files.world-1, 1))
-        {
-            int highest = 0;
-            do {
-                if (Files.mapExists(Files.world-1, highest+1))
-                { highest++;
-                } else { break;}
-            } while(true);
-            
-            useMap(Files.world - 1, highest);
         }
         else
         {

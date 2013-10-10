@@ -68,6 +68,11 @@ public class Player extends Character{
         }
     }
     
+    public void attack(Monster m)
+    {
+        m.damage(2);
+    }
+    
     /**
      * Checks weather the current position is over an entrance.
      */

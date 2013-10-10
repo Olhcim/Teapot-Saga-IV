@@ -1,4 +1,4 @@
 DialogStart:Map #1 - Monster testing facility.
-Monster:2:6:Zombie
-Monster:2:10:Spider
-Monster:14:18:Default
+Monster:2:6:Prisoner
+Monster:2:10:Prisoner
+Monster:13:17:Prisoner

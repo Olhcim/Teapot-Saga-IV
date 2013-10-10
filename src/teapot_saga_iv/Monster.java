@@ -6,8 +6,9 @@ public class Monster extends Character{
     char symbol;
     
     public static final String DEFAULT = "default";
+    public static final String PRISONER = "zombie";
     public static final String ZOMBIE = "zombie";
-    public static final String SPIDER = "spider";
+    public static final String GOLEM = "golem";
     
     int startX, startY;
     
@@ -30,12 +31,16 @@ public class Monster extends Character{
         
         if (ZOMBIE.equalsIgnoreCase(type))
         {
-            this.health = 50;
+            this.health = 5;
             this.symbol = 'Z';
-        } else if (SPIDER.equalsIgnoreCase(type))
+        } else if (GOLEM.equalsIgnoreCase(type))
         {
             this.health = 10;
-            this.symbol = 'S';
+            this.symbol = 'G';
+        } else if (PRISONER.equalsIgnoreCase(type))
+        {
+            this.health = 2;
+            this.symbol = 'P';
         } else {
             this.health = 25;
             this.symbol = 'D';
@@ -89,6 +94,7 @@ public class Monster extends Character{
             }
             else if (distanceToPlayer() < 1)
             {
+                    Main.getPlayer().attack(this);
                     displace();
             }
         }
@@ -128,6 +134,17 @@ public class Monster extends Character{
             }
         }
         return false;
+    }
+    
+    @Override
+    public void damage(int d)
+    {
+        health -= d;
+        
+        if (health < 1)
+        {
+            Files.currentMapData().getMonsters().remove(this);
+        }
     }
     
     @Override

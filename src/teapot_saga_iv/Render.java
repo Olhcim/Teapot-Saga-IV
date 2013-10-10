@@ -12,7 +12,7 @@ public class Render {
     public static final byte CHAR_HEIGHT    = 15;
     
     public static final byte DIALOG_HEIGHT  = 10;
-    public static final byte WIDTH          = 120;
+    public static final byte WIDTH          = 80;
     public static final byte MAP_HEIGHT     = 50;
     public static final byte STATS_HEIGHT   = 4;
     
@@ -215,7 +215,7 @@ public class Render {
         {
             for (int x = 0; x < WIDTH; x++)
             {
-                paintToMap(' ', x, y);
+                paintToMap((char) 176, x, y);
             }
         }
     }

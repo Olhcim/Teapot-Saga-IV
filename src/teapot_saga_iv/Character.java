@@ -75,6 +75,9 @@ public class Character {
         return y;
     }
     
+    public void damage(int d)
+    {}
+    
     /**
      * Sets whether this character can move or not.
      * @param a true or false.
