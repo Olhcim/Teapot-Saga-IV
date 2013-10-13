@@ -1,5 +1,6 @@
 package teapot_saga_iv.maps;
 
+import teapot_saga_iv.Files;
 import teapot_saga_iv.Main;
 
 
@@ -30,21 +31,6 @@ public class Staircase {
     { return destWorld; }
     public int getDestLevel()
     { return destLevel; }
-    
-    private void use()
-    {
-        Main.world = destWorld;
-        Main.level = 1;
-        Main.getPlayer().goToStart();
-    }
-    
-    public void checkForPlayer()
-    {
-        if (Main.getPlayer().getX() == x && Main.getPlayer().getY() == y)
-        {
-            Main.useMap(destWorld, destLevel);
-        }
-    }
     
     public char getSymbol()
     {

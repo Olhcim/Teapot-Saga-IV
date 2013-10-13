@@ -1,11 +1,16 @@
-package teapot_saga_iv;
+package teapot_saga_iv.characters;
 
+
+import teapot_saga_iv.Files;
+import teapot_saga_iv.Main;
 import teapot_saga_iv.a_star.*;
 
 
 public class Character {
     
-    int health = 100, x, y;
+    int health = 100, damage = 2;
+    int x, y;
+    
     boolean canMove = true;
     
     public Node path;
@@ -72,11 +77,22 @@ public class Character {
      */
     public int getHealth()
     {
-        return y;
+        return health;
     }
     
     public void damage(int d)
-    {}
+    {
+        health -= (d > 0) ? d : 0;
+    }
+    
+    public boolean isDead()
+    {
+        if (health < 1)
+        {
+            return true;
+        }
+        return false;
+    }
     
     /**
      * Sets whether this character can move or not.
@@ -124,8 +140,8 @@ public class Character {
     
     public double distanceToPlayer()
     {
-        int x = Main.p.getX();
-        int y = Main.p.getY();
+        int x = Main.getPlayer().getX();
+        int y = Main.getPlayer().getY();
         
         return Math.sqrt((this.x-x)*(this.x-x) + (this.y-y)*(this.y-y));
     }

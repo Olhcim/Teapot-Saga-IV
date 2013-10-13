@@ -3,12 +3,11 @@ package teapot_saga_iv.a_star;
 import java.util.ArrayList;
 import java.util.List;
 import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
-import teapot_saga_iv.Monster;
+import teapot_saga_iv.characters.Monster;
 
 public class AStar {
 
-    private static int endX, endY;
+    private int endX, endY;
     
     private Node start;
     private Node end;
@@ -29,8 +28,8 @@ public class AStar {
         this.endX = fromX;
         this.endY = fromY;
         
-        end = new Node(null, fromX,fromY, 0);
-        start = new Node(null, toX ,toY, 0);
+        end = new Node(null, fromX,fromY, endX, endY, 0);
+        start = new Node(null, toX ,toY, endX, endY, 0);
 
         lowest = start;
         closed.add(lowest);
@@ -102,15 +101,15 @@ public class AStar {
         
         adj.clear();
         
-        adj.add(new Node(n, x+1, y, 10));
-        adj.add(new Node(n, x-1, y, 10));
-        adj.add(new Node(n, x, y+1, 10));
-        adj.add(new Node(n, x, y-1, 10));
+        adj.add(new Node(n, x+1, y, endX, endY, 10));
+        adj.add(new Node(n, x-1, y, endX, endY, 10));
+        adj.add(new Node(n, x, y+1, endX, endY, 10));
+        adj.add(new Node(n, x, y-1, endX, endY, 10));
         
-        adj.add(new Node(n, x+1, y+1, 14));
-        adj.add(new Node(n, x+1, y-1, 14));
-        adj.add(new Node(n, x-1, y+1, 14));
-        adj.add(new Node(n, x-1, y-1, 14));
+        adj.add(new Node(n, x+1, y+1, endX, endY, 14));
+        adj.add(new Node(n, x+1, y-1, endX, endY, 14));
+        adj.add(new Node(n, x-1, y+1, endX, endY, 14));
+        adj.add(new Node(n, x-1, y-1, endX, endY, 14));
         
         updateAdj();
     }
@@ -143,14 +142,33 @@ public class AStar {
     private boolean removeNode(Node n)
     {
         boolean remove =
+                (   
                     Files.currentMap()[n.y][n.x] == '#'
-                ||  Files.currentDisMap()[n.y][n.x] == '+'
-                ||  containedInClosed(n)
-                ||  containedInOpen(n);
+                    ||  Files.currentDisMap()[n.y][n.x] == '+'
+                    ||  containedInClosed(n)
+                    ||  containedInOpen(n)
+                    ||  isOtherMonster(n)
+                );
         
         return remove;
     }
     
+    public boolean isOtherMonster(Node n)
+    {
+        for (Monster m : Files.currentMapData().getMonsters())
+        {
+            if (m.getX() != endX && m.getY() != endY)
+            {
+                if (m.getX() == n.x && m.getY() == n.y)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+   
     private boolean containedInClosed(Node n)
     {
         for (Node i : closed)
@@ -191,12 +209,12 @@ public class AStar {
         }
     }
     
-    public static int getEndX()
+    public int getEndX()
     {
         return endX;
     }
     
-    public static int getEndY()
+    public int getEndY()
     {
         return endY;
     }

@@ -1,6 +1,5 @@
 package teapot_saga_iv.line_of_sight;
 
-import java.util.List;
 import teapot_saga_iv.Files;
 import teapot_saga_iv.maps.MapData;
 
@@ -62,48 +61,9 @@ public class LineOfSight
                 }
             }
         }
-        print(sight);
-    }
-
-//    private int numOfSurroudingWalls(int x, int y) // was trying to use to stop rays from passing through thin areas... BAD!
-//    {
-//        int count = 0;
-//        
-//        if (Files.currentMap()[y+1][x] == '#')
-//        { count++; }
-//        else if (Files.currentMap()[y-1][x] == '#')
-//        { count++; }
-//        else if (Files.currentMap()[y][x+1] == '#')
-//        { count++; }
-//        else if (Files.currentMap()[y][x-1] == '#')
-//        { count++; }
-//        
-//        System.out.println(x + " " + y + " " + count);
-//        
-//        return count;
-//    }
-    
-    private void findCircle(int px, int py, int radius)
-    {
-        
-        for (int y = -radius; y < radius; y++)
-        {
-            for (int x = -radius; x < radius; x++)
-            {
-                int dist = (int) Math.round( Math.sqrt(x*x + y*y) );
-                
-                if ( dist < radius)
-                {
-                    try
-                    {
-                    sight[py+y][px+x] = '1';
-                    } catch (IndexOutOfBoundsException e) { }
-                }
-            }
-        }
     }
     
-    private void fill (char a)
+    public void fill (char a)
     {
         for (int y = 0; y < sight.length; y++)
         {
@@ -114,13 +74,13 @@ public class LineOfSight
         }
     }
     
-    private void print (char[][] array)
+    private void print ()
     {
-        for (int y = 0; y < array.length; y++)
+        for (char [] y : sight)
         {
-            for (int x = 0; x < array[y].length; x++)
+            for (char x : y)
             {
-                System.out.print( array[y][x] );
+                System.out.print(x);
             }
             System.out.println();
         }

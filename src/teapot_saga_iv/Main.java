@@ -13,19 +13,23 @@
 
 package teapot_saga_iv;
 
+import teapot_saga_iv.characters.Player;
 import teapot_saga_iv.maps.Staircase;
 
 
 public class Main
 {
+    
+    public static int totalTime = 0;
+    public static int count = 0;
+    public static double aveTime = 0;
 
     public static boolean gameActive = true;
     public static boolean frameActive = false;
     
-    public static Player p = new Player();
-    public static Window w = new Window();
+    private static Player p = new Player();
+    private static Window w = new Window();
     
-    public static int world = -1, level = 1;
     public static boolean isAtOverworld = true;
     
     
@@ -57,19 +61,18 @@ public class Main
         p.update();
         
         Files.currentMapData().update();
+        
         Render.update();
         
         time = System.currentTimeMillis() - time;
-        System.out.println("move: " + Main.p.moves + "time:" + time);
+        
+        count++;
+        totalTime += time;
+        aveTime = totalTime / count;
+        
+        System.out.println("move: " + Main.p.moves + " Time:" + time + " AveTime: " + aveTime);
     }
     
-    private static void updateMonsters()
-    {
-        for (Monster m : Files.currentMapData().getMonsters())
-        {
-            m.moveTowardsPlayer();
-        }
-    }
     
     
     public static void useMap(int world, int level)
@@ -81,8 +84,14 @@ public class Main
         boolean ahead = true;
         
         
-        if (Files.world < world) {ahead = true;}
-        else if (Files.world > world) {ahead = false;}
+        if (Files.world < world)
+        {
+        	ahead = true;
+        }
+        else if (Files.world > world)
+        {
+        	ahead = false;
+		}
         else if (Files.world == world)
         {
             if (Files.level < level) {ahead = true;}
@@ -96,35 +105,32 @@ public class Main
         
         if (ahead)
         {
-            Render.print(Files.currentMapData().getDialogStart());
             p.goToStart();
-            Files.currentMapData().update();
-        } else if (!ahead) {
-            Render.print("You have already been to this place, head back to continue.");
+        }
+        else if (!ahead)
+        {
             p.goToExit();
-            Files.currentMapData().update();
         }
 
+        Files.currentMapData().update();
         Render.update();
     }
     
     
     public static void goToOverworld()
     {
+    	
         Render.clearAll();
 
         isAtOverworld = true;
         
         Files.currentMapData().update();
 
-        for (Staircase s : Files.currentMapData().getStairs())
-        {
-            if (s.getDestWorld() == Files.world)
-            {
-                p.setPos(s.getX()+1, s.getY());
+        for (Staircase s : Files.currentMapData().getStairs()) {
+            if (s.getDestWorld() == Files.world) {
+                p.setPos(s.getX(), s.getY());
             }
         }
-        
 
         Render.update();
     }
@@ -132,11 +138,7 @@ public class Main
     
     public static void NextMap()
     {
-        if (isAtOverworld)
-        {
-            useMap(Files.world, Files.level);
-        }
-        else if (Files.mapExists(Files.world, Files.level + 1))
+        if (Files.mapExists(Files.world, Files.level + 1))
         {
             useMap(Files.world, Files.level + 1);
         }
@@ -152,11 +154,7 @@ public class Main
      */
     public static void PrevMap()
     {
-        if (isAtOverworld)
-        {
-            useMap(Files.world, Files.level);
-        }
-        else if (Files.mapExists(Files.world, Files.level - 1))
+    	if (Files.mapExists(Files.world, Files.level - 1))
         {
             useMap(Files.world, Files.level - 1);
 

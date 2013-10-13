@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 
 
+@SuppressWarnings("serial")
 public class Window extends JFrame implements KeyListener
 {   
     private static JFrame jFrame = new JFrame("Teavup Saga IV: The Teapocolypse");

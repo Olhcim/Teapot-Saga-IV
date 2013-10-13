@@ -1,4 +1,8 @@
-package teapot_saga_iv;
+package teapot_saga_iv.characters;
+
+import teapot_saga_iv.Files;
+import teapot_saga_iv.Main;
+import teapot_saga_iv.maps.Staircase;
 
 
 public class Player extends Character{
@@ -13,7 +17,7 @@ public class Player extends Character{
     public void update()
     {
         moves++;
-        useStaircase();
+        checkForStairCase();
     }
     
     /**
@@ -33,31 +37,12 @@ public class Player extends Character{
         setPos(Files.currentMapData().getExitX(), Files.currentMapData().getExitY());
     }
     
-    
-    /**
-     * Checks for and uses a staircase, does not allow the use of a staircase if the player is currently on one.
-     */
-    public void useStaircase()
-    {
-        if(isOnStaircase())
-        {
-            checkForStairCase();
-        }
-    }
-    
-    /**
-     * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
-     */
-     private boolean isOnStaircase()
-    {
-        return isAtEntrance() || isAtExit();
-    }
-    
     /**
      * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
      */
     private void checkForStairCase()
     {
+
         if(isAtExit())
         {
             Main.NextMap();
@@ -66,11 +51,22 @@ public class Player extends Character{
         {
             Main.PrevMap();
         }
+        else
+        {
+            for (Staircase s : Files.currentMapData().getStairs())
+            {
+                if (s.getX() == x && s.getY() == y)
+                {
+                    Main.useMap(s.getDestWorld(), s.getDestLevel());
+                }
+            }
+        }
+        
     }
     
     public void attack(Monster m)
     {
-        m.damage(2);
+        m.damage(damage);
     }
     
     /**
@@ -135,15 +131,24 @@ public class Player extends Character{
         if(doorAt(0,1))
         {
             openDoor(0,1);
+            openDoor(1,1);
+            openDoor(-1,1);
+            
         } else if (doorAt(0,-1))
         {
             openDoor(0,-1);
+            openDoor(1,-1);
+            openDoor(-1,-1);
         } else if (doorAt(1,0))
         {
             openDoor(1,0);
+            openDoor(1,1);
+            openDoor(1,-1);
         } else if (doorAt(-1,0))
         {
             openDoor(-1,0);
+            openDoor(-1,1);
+            openDoor(-1,-1);
         }
     }
     
@@ -155,6 +160,7 @@ public class Player extends Character{
      */
     private void openDoor(int x, int y)
     {
+
         if      (Files.currentDisMap()[this.y+y][this.x+x] == '+')
         {
             Files.currentDisMap()[this.y+y][this.x+x] = 'X';
@@ -163,6 +169,7 @@ public class Player extends Character{
         {
             Files.currentDisMap()[this.y+y][this.x+x] = '+';
         }
+        
     }
     
     /**

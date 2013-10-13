@@ -3,26 +3,24 @@ package teapot_saga_iv.a_star;
 
 public class Node {
     
-    int x, y, g, h;
+    int x, y, ex, ey, g, h;
     Node parent = null;
 
-    public Node(Node parent, int x, int y, int g)
+    public Node(Node parent, int x, int y, int ex, int ey, int g)
     {
         this.x = x;
         this.y = y;
+        this.ex = ex;
+        this.ey = ey;
         this.parent = parent;
         
         if (parent == null)
         { this.g = 0; }
         else
         { this.g = parent.g + g; }
-
-//        this.h =  (int)
-//                Math.sqrt((AStar.getEndX() - this.x)*(AStar.getEndX() - this.x))
-//                + (int)
-//                Math.sqrt((AStar.getEndY() - this.y)*(AStar.getEndY() - this.y));
         
-                this.h =  (AStar.getEndX() - this.x) + (AStar.getEndY() - this.y);
+        
+                this.h =  (this.ex - this.x) + (this.ey - this.y);
                 this.h *= this.h;
     }
     

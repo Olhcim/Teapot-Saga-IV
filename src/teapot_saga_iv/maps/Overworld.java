@@ -1,15 +1,14 @@
 package teapot_saga_iv.maps;
 
 import java.util.ArrayList;
-import java.util.List;
-import teapot_saga_iv.Monster;
+import teapot_saga_iv.characters.Monster;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
 public class Overworld extends MapData {
 
-    
-        
+    private boolean canUpdate = false;
+	
     
     public Overworld(char[][] map, String[][] mapDat) {
         this.mapData = mapDat;
@@ -29,10 +28,7 @@ public class Overworld extends MapData {
     @Override
     public void update()
     {
-        for (Staircase s : stairs)
-        {
-            s.checkForPlayer();
-        }
+        
     }
     
     @Override

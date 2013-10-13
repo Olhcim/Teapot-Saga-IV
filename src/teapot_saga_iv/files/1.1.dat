@@ -1,4 +1,25 @@
+PosStart:2:2
+#PosExit:2:2
+
 DialogStart:Map #1 - Monster testing facility.
+
 Monster:2:6:Prisoner
-Monster:2:10:Prisoner
-Monster:13:17:Prisoner
+Monster:2:17:Golem
+Monster:2:25:Prisoner
+
+Monster:9:2:Zombie
+Monster:9:10:Prisoner
+Monster:9:25:Prisoner
+
+Monster:13:10:Prisoner
+
+Monster:17:10:Golem
+
+Monster:21:2:Prisoner
+Monster:21:6:Zombie
+Monster:21:17:Zombie
+
+Monster:28:2:Prisoner
+Monster:28:10:Prisoner
+Monster:28:25:Golem
+

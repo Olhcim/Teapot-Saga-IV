@@ -2,7 +2,10 @@ package teapot_saga_iv;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
+import teapot_saga_iv.characters.Monster;
 import teapot_saga_iv.maps.Staircase;
 
 
@@ -33,6 +36,9 @@ public class Render {
     public static BufferedImage stats   = new BufferedImage(CHAR_WIDTH*WIDTH, CHAR_HEIGHT*STATS_HEIGHT, BufferedImage.TYPE_INT_RGB);
     
     public static char[][] disMap;
+    
+    
+    private static List<String> dialogQueue = new ArrayList<String>();
     
 ////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCTOR
@@ -66,6 +72,26 @@ public class Render {
 ////////////////////////////////////////////////////////////////////////////////
 // Paint
 ////////////////////////////////////////////////////////////////////////////////
+    
+    public static void queueDialog(String a)
+    {
+        dialogQueue.add(a);
+    }
+    
+    private static void paintDialogQueue()
+    {
+        try {
+            String current = dialogQueue.get(0);
+            print(current);
+            dialogQueue.remove(current);
+        }
+        catch (Exception e)
+        {
+            clearDialog();
+            System.out.println("No dialog in queue.");
+        }
+    }
+    
     
     /**
     * Paints over the specified char. Full X and Full Y coords needed.
@@ -102,7 +128,7 @@ public class Render {
     /**
      * Prints a line of text the the second line of the display
      */
-    public static void print(String a)
+    private static void print(String a)
     {
         
         clearDialog();
@@ -167,11 +193,11 @@ public class Render {
     private static void updateStats()
     {        
 
-        String health = "Health: " + Main.getPlayer().health;
+        String health = "Health: " + Main.getPlayer().getHealth();
         String numMoves = "Turns: " + Main.getPlayer().getMoves();
         
-        if      (Main.p.health > 99) {health += "   ";}
-        else if (Main.p.health > 9)  {health += "    ";}
+        if      (Main.getPlayer().getHealth() > 99) {health += "   ";}
+        else if (Main.getPlayer().getHealth() > 9)  {health += "    ";}
         else                         {health += "     ";}
         
         String all = health + numMoves;
@@ -180,11 +206,6 @@ public class Render {
         for (int i = 0; i < all.length(); i++)
         {
             paintToStats(all.charAt(i), i+5 , STATS_HEIGHT-2);
-        }
-
-        for (int i = 0; i < WIDTH; i++)
-        {
-            paintToStats((char) 196, i, 0);
         }
     }
     
@@ -206,6 +227,11 @@ public class Render {
             {
                 paintToDialog(' ', x, y);
             }
+        }
+        
+        for (int i = 0; i < WIDTH; i++)
+        {
+            paintToDialog((char) 196, i, DIALOG_HEIGHT - 1);
         }
     }
     
@@ -229,6 +255,11 @@ public class Render {
                 paintToStats(' ', x, y);
             }
         }
+        
+        for (int i = 0; i < WIDTH; i++)
+        {
+            paintToStats((char) 196, i, 0);
+        }
     }
     
     public static void clearAll()
@@ -248,9 +279,14 @@ public class Render {
     public static void update()
     {
         paintMap();
-        paintPlayer();
         paintMonsters();
         paintOverworldObjects();
+        paintPlayer();
+        
+        
+        paintDialogQueue();
+        
+        
         updateStats();
         Window.repaintAll();
     }
@@ -294,7 +330,7 @@ public class Render {
     
     private static void paintPlayer() {
         
-        paintToMap('@', Main.p.x + getMidX(), Main.p.y + getMidY());
+        paintToMap('@', Main.getPlayer().getX() + getMidX(), Main.getPlayer().getY() + getMidY());
     }
     
     private static void paintMonsters()
@@ -302,9 +338,9 @@ public class Render {
         
         for (Monster m : Files.currentMapData().getMonsters())
         {
-            if (Files.currentMapData().getSeen()[m.y][m.x] == '1')
+            if (Files.currentMapData().getSeen()[m.getY()][m.getX()] == '1')
             {
-            paintToMap(m.symbol, m.x + getMidX(),m.y + getMidY());
+            paintToMap(m.getSymbol(), m.getX() + getMidX(),m.getY() + getMidY());
             }
         }
     }
@@ -330,15 +366,7 @@ public class Render {
     private static int getMidX()
     {
         return (WIDTH - Files.currentMap()[0].length) / 2;
-    }   
-    
-    /*
-     * Aproximates the starting x coord that is needed to display a String in the center of the screen.
-     */
-    private static int getMidX(int a)
-    {
-        return (WIDTH - a) / 2;
-    }       
+    }    
     
     /*
      * Aproximates the starting y coord that is needed to display the map in the center of the screen.

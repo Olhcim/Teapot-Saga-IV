@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import teapot_saga_iv.*;
+import teapot_saga_iv.characters.Monster;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
@@ -35,6 +36,7 @@ public class MapData {
     
     List<Staircase> stairs = new ArrayList<Staircase>();
     List<Monster> monsters = new ArrayList<Monster>();
+    List<Monster> removeMonsters = new ArrayList<Monster>();
     
     
     
@@ -115,10 +117,32 @@ public class MapData {
     
     
     
+    public void killMonster(Monster m)
+    {
+        Render.queueDialog("You Killed a " + m.getType() + ".");
+        queueMonsterForRemoval(m);
+    }
+    
+    public void queueMonsterForRemoval(Monster m)
+    {
+        removeMonsters.add(m);
+    }
+    
+    public void removeMonsters()
+    {
+        for (Monster m : removeMonsters)
+        {
+            monsters.remove(m);
+        }
+        
+        removeMonsters.clear();
+    }
     
     
-    public void update() {};
+    public void update() {}
     
+    
+    public void canUpdate(boolean b) {}
     
     
     char[][] clone(char[][] a)
@@ -144,11 +168,23 @@ public class MapData {
             dialogExit = "";
             monsters.clear();
             monsters = new ArrayList<Monster>();
-            
-            boolean stairscleared = false;
 
             for (int i = 0; i < mapData.length; i++)
             {
+                if (mapData[i][0].equalsIgnoreCase("PosStart"))
+                {
+                    startX = Integer.parseInt(mapData[i][1]);
+                    startY = Integer.parseInt(mapData[i][2]);
+                }
+                
+                if (mapData[i][0].equalsIgnoreCase("PosExit"))
+                {
+                    exitX = Integer.parseInt(mapData[i][1]);
+                    exitY = Integer.parseInt(mapData[i][2]);
+                }
+                
+                
+                
                 if (mapData[i][0].equalsIgnoreCase("DialogStart"))
                 {
                     dialogStart = mapData[i][1];
@@ -167,6 +203,17 @@ public class MapData {
 
                     monsters.add(new Monster(x, y, type));
                 }
+                
+                if (mapData[i][0].equalsIgnoreCase("Staircase"))
+                {
+                    int x = Integer.parseInt( mapData[i][1] );
+                    int y = Integer.parseInt( mapData[i][2] );
+                    int destWorld = Integer.parseInt( mapData[i][3] );
+                    int destLevel = Integer.parseInt( mapData[i][4] );
+                    char symbol =  mapData[i][5].charAt(0);
+                    
+                    stairs.add( new Staircase(x, y, destWorld, destLevel, symbol) );
+                }
             }
         } catch (Exception e) {}
     }
@@ -181,9 +228,11 @@ public class MapData {
                 if (map[y][x] == '<') {
                     startX = x;
                     startY = y;
+                    stairs.add( new Staircase(x, y, world, level - 1, '<') );
                 } else if (map[y][x] == '>') {
                     exitX = x;
                     exitY = y;
+                    stairs.add( new Staircase(x, y, world, level + 1, '>') );
                 }
             }
         }
@@ -195,7 +244,8 @@ public class MapData {
     void renderDisMap()
     {
  
-        char wall = '#', door = '+', space = ' ', floor = '.', tea='t';
+        @SuppressWarnings("unused")
+		char wall = '#', door = '+', space = ' ', floor = '.', tea='t';
 
         int ran = 0;
         
@@ -242,7 +292,7 @@ public class MapData {
                     ran = (int)(random.nextDouble()*3);
                     
                     if (ran==0) {
-                        disMap[y][x] = (char) 176;
+                        disMap[y][x] = '.';
                     } else if (ran==1) {
                         disMap[y][x] = (char) 177;
                     } else {
@@ -267,7 +317,7 @@ public class MapData {
     {
         for(char[] y : array)
         {
-            for (char x : y)
+            for (@SuppressWarnings("unused") char x : y)
             {
                 x = a;
             }
