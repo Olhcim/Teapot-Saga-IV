@@ -78,20 +78,25 @@ public class Render {
         dialogQueue.add(a);
     }
     
-    private static void paintDialogQueue()
+    public static void paintDialogInQueue()
     {
         try {
             String current = dialogQueue.get(0);
             print(current);
+            
+            if (dialogQueue.size() > 1)
+            {
+                printSpaceToContinue();
+            }
+            
             dialogQueue.remove(current);
         }
         catch (Exception e)
         {
-            clearDialog();
+//            clearDialog();
             System.out.println("No dialog in queue.");
         }
     }
-    
     
     /**
     * Paints over the specified char. Full X and Full Y coords needed.
@@ -153,12 +158,25 @@ public class Render {
             }
         }
         
-        for (int i = 0; i < WIDTH; i++)
-        {
-            paintToDialog((char) 196, i, DIALOG_HEIGHT-1);
-        }
+//        for (int i = 0; i < WIDTH; i++)
+//        {
+//            paintToDialog((char) 196, i, DIALOG_HEIGHT-1);
+//        }
         
         Window.repaintAll();
+    }
+    
+    /**
+     * Prints a line of text the the second line of the display
+     */
+    private static void printSpaceToContinue()
+    {
+        String a = " > Press the Spacebar < ";
+        
+        for (int x = 0; x < a.length(); x++)
+        {
+                paintToDialog(a.charAt(x), getMidX(a.length()) + x , DIALOG_HEIGHT - 1);
+        }
     }
     
     /**
@@ -284,7 +302,7 @@ public class Render {
         paintPlayer();
         
         
-        paintDialogQueue();
+        paintDialogInQueue();
         
         
         updateStats();
@@ -366,7 +384,15 @@ public class Render {
     private static int getMidX()
     {
         return (WIDTH - Files.currentMap()[0].length) / 2;
-    }    
+    }
+    
+    /*
+     * Aproximates the starting x coord that is needed to display the text in the center.
+     */
+    private static int getMidX(int textLength)
+    {
+        return (WIDTH - textLength) / 2;
+    }
     
     /*
      * Aproximates the starting y coord that is needed to display the map in the center of the screen.

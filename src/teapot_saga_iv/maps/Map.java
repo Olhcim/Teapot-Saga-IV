@@ -24,6 +24,7 @@ public class Map extends MapData {
         
         
         sight = new LineOfSight(this);
+        sight.fill('1');
     }
     
     

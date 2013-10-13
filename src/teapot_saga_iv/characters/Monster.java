@@ -3,67 +3,13 @@ package teapot_saga_iv.characters;
 import teapot_saga_iv.Files;
 import teapot_saga_iv.Main;
 
-
-
 public class Monster extends Character{
-
-    private char symbol;
     
-    public static final String DEFAULT = "Monster";
-    public static final String PRISONER = "Prisoner";
-    public static final String ZOMBIE = "Zombie";
-    public static final String GOLEM = "Golem";
+    int turnsNextToPlayer;
     
-    private int turnsNextToPlayer;
-    
-    public String name;
-    
-    private int startX, startY;
-    
-    public Monster(int x, int y, int health, char symbol)
-    {
-        this.x = x;
-        this.y = y;
-        this.startX = x;
-        this.startY = y;
-        this.health = health;
-        this.symbol = symbol;
-        
-        name = DEFAULT;
-    }
-    
-    public Monster(int x, int y, String type)
-    {
-        this.x = x;
-        this.y = y;
-        this.startX = x;
-        this.startY = y;
-        
-        if (ZOMBIE.equalsIgnoreCase(type))
-        {
-            damage = 2;
-            this.health = 5;
-            this.symbol = 'Z';
-            name = ZOMBIE;
-        } else if (GOLEM.equalsIgnoreCase(type))
-        {
-            damage = 1;
-            this.health = 10;
-            this.symbol = 'G';
-            name = GOLEM;
-        } else if (PRISONER.equalsIgnoreCase(type))
-        {
-            damage = 1;
-            this.health = 2;
-            this.symbol = 'P';
-            name = PRISONER;
-        } else {
-            damage = 2;
-            this.health = 2;
-            this.symbol = 'D';
-            name = DEFAULT;
-        }
-    }
+    String name;
+    char symbol;
+    int startX, startY;
     
     
     public void update()
@@ -85,7 +31,7 @@ public class Monster extends Character{
     
     
     
-    private void damagePlayer()
+    void damagePlayer()
     {
         if (distanceToPlayer() < 2)
         {
@@ -101,7 +47,7 @@ public class Monster extends Character{
     }
     
     
-    private void moveTowardsPlayer()
+    void moveTowardsPlayer()
     {
         if (distanceToPlayer() > 20)
         {
@@ -155,7 +101,7 @@ public class Monster extends Character{
 
     }
     
-    private void move(int disX, int disY)
+    void move(int disX, int disY)
     {
         if (disX > -2 && disX < 2 && disY > -2 && disY < 2)
         {
@@ -163,7 +109,7 @@ public class Monster extends Character{
         }
     }
     
-    private void displace()
+    void displace()
     {
         do
         {
@@ -178,7 +124,7 @@ public class Monster extends Character{
         } while (true);
     }
     
-    private static boolean isMonster(int x, int y)
+    static boolean isMonster(int x, int y)
     {
         for (Monster m : Files.currentMapData().getMonsters())
         {

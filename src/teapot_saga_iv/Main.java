@@ -13,6 +13,14 @@
 
 package teapot_saga_iv;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import teapot_saga_iv.characters.Player;
 import teapot_saga_iv.maps.Staircase;
 
@@ -32,9 +40,20 @@ public class Main
     
     public static boolean isAtOverworld = true;
     
+    private static final String FILESPATH = System.getProperty("user.home") + "/Desktop/log.txt";
+    public static PrintWriter writer;
+    
+    
     
     public static void main(String[] args)
     {   
+        try {
+            writer =  new PrintWriter(FILESPATH, "UTF-8");
+        } catch (Exception e) {}
+        
+        writer.write(FILESPATH);
+        writer.println(FILESPATH);
+        
         Files.loadAllMapData();
         useMap(1,1);
     }

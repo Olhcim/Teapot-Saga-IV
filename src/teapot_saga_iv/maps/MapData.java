@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import teapot_saga_iv.*;
-import teapot_saga_iv.characters.Monster;
+import teapot_saga_iv.characters.*;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
@@ -37,8 +37,6 @@ public class MapData {
     List<Staircase> stairs = new ArrayList<Staircase>();
     List<Monster> monsters = new ArrayList<Monster>();
     List<Monster> removeMonsters = new ArrayList<Monster>();
-    
-    
     
     
     public char[][] getMap()
@@ -201,7 +199,7 @@ public class MapData {
                     int y = Integer.parseInt(mapData[i][2]);
                     String type = mapData[i][3].toLowerCase();
 
-                    monsters.add(new Monster(x, y, type));
+                    monsters.add( createNewMonster(x, y, type) );
                 }
                 
                 if (mapData[i][0].equalsIgnoreCase("Staircase"))
@@ -216,6 +214,26 @@ public class MapData {
                 }
             }
         } catch (Exception e) {}
+    }
+    
+    private Monster createNewMonster(int x, int y, String type)
+    {
+        if (type.equalsIgnoreCase("prisoner"))
+        {
+            return new Monster_Prisoner(x, y);
+        }
+        else if (type.equalsIgnoreCase("golem"))
+        {
+            return new Monster_Golem(x, y);
+        }
+        else if (type.equalsIgnoreCase("zombie"))
+        {
+            return new Monster_Zombie(x, y);
+        }
+        else
+        {
+            return new Monster_Bat(x, y);
+        }
     }
     
    /**
