@@ -2,7 +2,7 @@ package teapot_saga_iv.maps;
 
 import java.util.Collections;
 import teapot_saga_iv.Main;
-import teapot_saga_iv.characters.Monster;
+import teapot_saga_iv.characters.Entity;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
@@ -24,7 +24,6 @@ public class Map extends MapData {
         
         
         sight = new LineOfSight(this);
-        sight.fill('1');
     }
     
     
@@ -35,13 +34,10 @@ public class Map extends MapData {
     public void update()
     {
         updateSeen();
-        updateMonsters();
-        removeMonsters();
+        updateEntities();
+        removeEntities();
         
     }
-    
-    
-    
     
         
     public void updateSeen()
@@ -49,13 +45,13 @@ public class Map extends MapData {
         sight.update(Main.getPlayer().getX(), Main.getPlayer().getY());
     }
     
-    public void updateMonsters()
+    public void updateEntities()
     {
-        for (Monster m : monsters)
+        for (Entity e : entities)
         {
-            m.update();
+            e.update();
         }
-        Collections.shuffle(monsters);
+        Collections.shuffle(entities);
     }
     
     

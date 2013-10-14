@@ -14,6 +14,6 @@ public class Monster_Golem extends Monster {
         health = 10;
         
         name = "Golem";
-        symbol = 'G';
+        symbol = 225;
     }
 } 

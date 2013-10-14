@@ -2,14 +2,12 @@ package teapot_saga_iv.characters;
 
 
 import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
 import teapot_saga_iv.a_star.*;
 
 
-public class Character {
+public class Character extends Entity {
     
     int health = 100, damage = 2;
-    int x, y;
     
     boolean canMove = true;
     
@@ -41,35 +39,7 @@ public class Character {
         this.y = y;
     }
     
-    /**
-     * Sets the position of the character.
-     * @param x the x position on the map
-     * @param y the y position on the map.
-     */
-    public void setPos(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-    
-    /**
-     * Fetches the x coordinate.
-     * @return The current x coordinate of the character.
-     */
-    
-    public int getX()
-    {
-        return x;
-    }
-    
-    /**
-     * Fetches the y coordinate.
-     * @return The current y coordinate of the character. 
-     */
-    public int getY()
-    {
-        return y;
-    }
+
     
     /**
      * Fetches the health.
@@ -85,6 +55,11 @@ public class Character {
         health -= (d > 0) ? d : 0;
     }
     
+    public void heal(int d)
+    {
+        health += (d > 0) ? d : 0;
+    }
+    
     public boolean isDead()
     {
         if (health < 1)
@@ -93,6 +68,7 @@ public class Character {
         }
         return false;
     }
+    
     
     /**
      * Sets whether this character can move or not.
@@ -136,18 +112,5 @@ public class Character {
     public boolean MoveAllowed()
     {
         return canMove;
-    }
-    
-    public double distanceToPlayer()
-    {
-        int x = Main.getPlayer().getX();
-        int y = Main.getPlayer().getY();
-        
-        return Math.sqrt((this.x-x)*(this.x-x) + (this.y-y)*(this.y-y));
-    }
-    
-    public void findPath(int x, int y)
-    {
-        this.path = new AStar(this.x, this.y, x, y).getFinalNode();
     }
 } 

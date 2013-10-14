@@ -8,18 +8,61 @@ import teapot_saga_iv.maps.Staircase;
 
 public class Player extends Character{
     
-    public int moves = 0;
+    private int moves = 0;
+    private int healthPotions = 10;
+    private boolean triedToUsePot = false;
     
     public int getMoves()
-    {
-        return moves;
-    }
+    { return moves; }
+    
+    public int getHealthPotions()
+    { return healthPotions; }
     
     public void update()
     {
         moves++;
         checkForStairCase();
+
     }
+    
+    
+    
+    
+    
+    public void giveHealthPotion(int a)
+    {
+        healthPotions += ((a > 0) ? a : 0);
+        Render.queueDialog("You recieved " + a + " health potion" + ((a > 1) ? "s" : "") + "." );
+    }
+    
+    public void useHealthPotion()
+    {
+        if (healthPotions > 0)
+        {
+            if(health > 99)
+            {
+                if (!triedToUsePot)
+                {
+                    triedToUsePot = true;
+                Render.queueDialog("You cannot use health potions when you have full health");
+                }
+            } else {
+
+                triedToUsePot = false;
+                
+                healthPotions--;
+                int gain = (health > 75) ? ( 25 - (health+25-100) ) : 25;
+                health += gain;
+
+                Render.queueDialog("You used a health potion and gained " + gain + " life." );
+            }
+        }
+    }
+    
+    
+    
+    
+    
     
     /**
      * Moves the player to the start but does not update the GUI.
@@ -28,8 +71,6 @@ public class Player extends Character{
     {
         setPos(Files.currentMapData().getStartX(), Files.currentMapData().getStartY());
     }
-    
-    
     /**
      * Moves the player to the exit but does not update the GUI.
      */
@@ -38,32 +79,7 @@ public class Player extends Character{
         setPos(Files.currentMapData().getExitX(), Files.currentMapData().getExitY());
     }
     
-    /**
-     * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
-     */
-    private void checkForStairCase()
-    {
 
-        if(isAtExit())
-        {
-            Main.NextMap();
-        }
-        else if (isAtEntrance())
-        {
-            Main.PrevMap();
-        }
-        else
-        {
-            for (Staircase s : Files.currentMapData().getStairs())
-            {
-                if (s.getX() == x && s.getY() == y)
-                {
-                    Main.useMap(s.getDestWorld(), s.getDestLevel());
-                }
-            }
-        }
-        
-    }
     
     public void attack(Monster m)
     {
@@ -123,6 +139,9 @@ public class Player extends Character{
                 break;
             case 32:
                 Render.paintDialogInQueue();         //quick navigation, testing purposes only.
+                break;
+            case 70:
+                useHealthPotion();
                 break;
         }
     }
@@ -191,13 +210,29 @@ public class Player extends Character{
         return false;
     }
     
-    
-    public boolean sameAsPlayer(int a, int b)
+    /**
+     * Checks weather the current position is over an entrance or exit and follows the appropriate actions..
+     */
+    private void checkForStairCase()
     {
-        if (this.x == a && this.y == b)
+
+        if(isAtExit())
         {
-            return true;
+            Main.NextMap();
         }
-        return false;
+        else if (isAtEntrance())
+        {
+            Main.PrevMap();
+        }
+        else
+        {
+            for (Staircase s : Files.currentMapData().getStairs())
+            {
+                if (s.getX() == x && s.getY() == y)
+                {
+                    Main.useMap(s.getDestWorld(), s.getDestLevel());
+                }
+            }
+        }
     }
 } 

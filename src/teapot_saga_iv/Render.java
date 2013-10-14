@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import teapot_saga_iv.characters.Entity;
 import teapot_saga_iv.characters.Monster;
 import teapot_saga_iv.maps.Staircase;
 
@@ -38,7 +39,8 @@ public class Render {
     public static char[][] disMap;
     
     
-    private static List<String> dialogQueue = new ArrayList<String>();
+    public static List<String> dialogQueue = new ArrayList<String>();
+    public static List<Entity> extra = new ArrayList<Entity>();
     
 ////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCTOR
@@ -195,11 +197,15 @@ public class Render {
             return in;
         }
         
+        if(in.substring(0, len).contains("\n"))
+        {
+            return in.substring(0, in.indexOf("\n")).trim() + "\n\n" + wrap(in.substring(in.indexOf("\n") + 1), len);
+        }
+        
         int place=Math.max(Math.max(in.lastIndexOf(" ",len),in.lastIndexOf("\t",len)),in.lastIndexOf("-",len));
         
         return in.substring(0,place).trim()+"\n"+wrap(in.substring(place),len);
     }
-    
     
 ////////////////////////////////////////////////////////////////////////////////
 // Update Status box
@@ -212,13 +218,10 @@ public class Render {
     {        
 
         String health = "Health: " + Main.getPlayer().getHealth();
-        String numMoves = "Turns: " + Main.getPlayer().getMoves();
+        String pots = "   Health Potions: " + Main.getPlayer().getHealthPotions();
+        String numMoves = "   Turns: " + Main.getPlayer().getMoves();
         
-        if      (Main.getPlayer().getHealth() > 99) {health += "   ";}
-        else if (Main.getPlayer().getHealth() > 9)  {health += "    ";}
-        else                         {health += "     ";}
-        
-        String all = health + numMoves;
+        String all = health + pots + numMoves;
 
         
         for (int i = 0; i < all.length(); i++)
@@ -296,17 +299,21 @@ public class Render {
      */
     public static void update()
     {
+        
         paintMap();
-        paintMonsters();
+        paintEntity();
         paintOverworldObjects();
         paintPlayer();
         
+        paintExtra();
         
         paintDialogInQueue();
         
         
         updateStats();
         Window.repaintAll();
+        
+        
     }
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -351,14 +358,15 @@ public class Render {
         paintToMap('@', Main.getPlayer().getX() + getMidX(), Main.getPlayer().getY() + getMidY());
     }
     
-    private static void paintMonsters()
+    private static void paintEntity()
     {
         
-        for (Monster m : Files.currentMapData().getMonsters())
+        for (Entity e : Files.currentMapData().getEntities())
         {
-            if (Files.currentMapData().getSeen()[m.getY()][m.getX()] == '1')
+            
+            if (Files.currentMapData().getSeen()[e.getY()][e.getX()] == '1')
             {
-            paintToMap(m.getSymbol(), m.getX() + getMidX(),m.getY() + getMidY());
+            paintToMap(e.getSymbol(), e.getX() + getMidX(),e.getY() + getMidY());
             }
         }
     }
@@ -372,6 +380,21 @@ public class Render {
                 paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
             }
         }
+    }
+    
+        
+    public static void paintExtra(Entity e) {
+        extra.add(e);
+    }
+    
+    private static void paintExtra()
+    {
+        for (Entity e : extra)
+        {
+            paintToMap(e.getSymbol(), e.getX() + getMidX(), e.getY() + getMidY());
+        }
+        
+        extra.clear();
     }
 
 ////////////////////////////////////////////////////////////////////////////////

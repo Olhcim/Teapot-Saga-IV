@@ -3,7 +3,7 @@ package teapot_saga_iv.a_star;
 import java.util.ArrayList;
 import java.util.List;
 import teapot_saga_iv.Files;
-import teapot_saga_iv.characters.Monster;
+import teapot_saga_iv.characters.Entity;
 
 public class AStar {
 
@@ -155,11 +155,11 @@ public class AStar {
     
     public boolean isOtherMonster(Node n)
     {
-        for (Monster m : Files.currentMapData().getMonsters())
+        for (Entity e : Files.currentMapData().getEntities())
         {
-            if (m.getX() != endX && m.getY() != endY)
+            if (e.getX() != endX || e.getY() != endY)
             {
-                if (m.getX() == n.x && m.getY() == n.y)
+                if (e.getX() == n.x && e.getY() == n.y)
                 {
                     return true;
                 }

@@ -1,9 +1,9 @@
 package teapot_saga_iv.characters;
 
 
-public class Monster_Zombie extends Monster {
+public class Monster_Teageist extends Monster {
 
-    public Monster_Zombie(int x, int y)
+    public Monster_Teageist(int x, int y)
     {
         this.x = x;
         this.y = y;
@@ -13,7 +13,7 @@ public class Monster_Zombie extends Monster {
         damage = 2;
         health = 4;
         
-        name = "Zombie";
-        symbol = 'Z';
+        name = "Teageist";
+        symbol = 226;
     }
 } 

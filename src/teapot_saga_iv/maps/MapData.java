@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import teapot_saga_iv.*;
 import teapot_saga_iv.characters.*;
+import teapot_saga_iv.characters.Entity;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
@@ -35,8 +36,8 @@ public class MapData {
     
     
     List<Staircase> stairs = new ArrayList<Staircase>();
-    List<Monster> monsters = new ArrayList<Monster>();
-    List<Monster> removeMonsters = new ArrayList<Monster>();
+    List<Entity> entities = new ArrayList<Entity>();
+    List<Entity> removeEntities = new ArrayList<Entity>();
     
     
     public char[][] getMap()
@@ -52,8 +53,26 @@ public class MapData {
     
     
     
-    public List<Monster> getMonsters()
-    { return monsters; }
+    public List<Entity> getEntities()
+    { return entities; }
+    
+    public boolean isEntity(String a)
+    {
+        boolean value = false;
+        
+        for (Entity e : entities)
+        {
+            if (e.getType().equalsIgnoreCase(a))
+            {
+                value = true;
+            }
+        }
+        
+        return value;
+    }
+    
+    public void addEntity(Entity e)
+    { entities.add(e); }
     
     
     
@@ -113,27 +132,27 @@ public class MapData {
     
     
     
-    
-    
-    public void killMonster(Monster m)
+    public void rerender()
     {
-        Render.queueDialog("You Killed a " + m.getType() + ".");
-        queueMonsterForRemoval(m);
+        parseMap();
+        renderDisMap();
     }
     
-    public void queueMonsterForRemoval(Monster m)
+    
+    
+    public void queueEntityForRemoval(Entity e)
     {
-        removeMonsters.add(m);
+        removeEntities.add(e);
     }
     
-    public void removeMonsters()
+    public void removeEntities()
     {
-        for (Monster m : removeMonsters)
+        for (Entity e : removeEntities)
         {
-            monsters.remove(m);
+            entities.remove(e);
         }
         
-        removeMonsters.clear();
+        removeEntities.clear();
     }
     
     
@@ -164,8 +183,8 @@ public class MapData {
         {
             dialogStart = "";
             dialogExit = "";
-            monsters.clear();
-            monsters = new ArrayList<Monster>();
+            entities.clear();
+            entities = new ArrayList<Entity>();
 
             for (int i = 0; i < mapData.length; i++)
             {
@@ -193,13 +212,13 @@ public class MapData {
                     dialogExit = mapData[i][1];
                 }
                 
-                if (mapData[i][0].equalsIgnoreCase("Monster"))
+                if (mapData[i][0].equalsIgnoreCase("Entity"))
                 {
                     int x = Integer.parseInt(mapData[i][1]);
                     int y = Integer.parseInt(mapData[i][2]);
                     String type = mapData[i][3].toLowerCase();
 
-                    monsters.add( createNewMonster(x, y, type) );
+                    entities.add( createNewEntity(x, y, type) );
                 }
                 
                 if (mapData[i][0].equalsIgnoreCase("Staircase"))
@@ -216,24 +235,16 @@ public class MapData {
         } catch (Exception e) {}
     }
     
-    private Monster createNewMonster(int x, int y, String type)
+    private Entity createNewEntity(int x, int y, String type)
     {
-        if (type.equalsIgnoreCase("prisoner"))
-        {
-            return new Monster_Prisoner(x, y);
-        }
-        else if (type.equalsIgnoreCase("golem"))
-        {
-            return new Monster_Golem(x, y);
-        }
-        else if (type.equalsIgnoreCase("zombie"))
-        {
-            return new Monster_Zombie(x, y);
-        }
-        else
-        {
-            return new Monster_Bat(x, y);
-        }
+        type = type.toLowerCase();
+        
+        if      (type.equalsIgnoreCase("prisoner"))     { return new Monster_Prisoner       (x, y); }
+        else if (type.equalsIgnoreCase("golem"))        { return new Monster_Golem          (x, y); }
+        else if (type.equalsIgnoreCase("teageist"))     { return new Monster_Teageist       (x, y); }
+        else if (type.equalsIgnoreCase("teageistboss")) { return new Monster_TeageistBoss   (x, y); }
+        else if (type.equalsIgnoreCase("healthpotion")) { return new Item_HealthPotion      (x, y); }
+        else                                            { return new Monster_Bat            (x, y); }
     }
     
    /**
