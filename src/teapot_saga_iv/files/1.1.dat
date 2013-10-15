@@ -2,6 +2,7 @@ PosStart:2:2
 #PosExit:2:2
 
 DialogStart:Map #1 - Monster testing facility.
+DialogStart:Exit Dialog, press space to continue.
 
 Entity:2:6:Prisoner
 Entity:2:10:HealthPotion

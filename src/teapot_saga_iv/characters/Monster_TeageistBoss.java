@@ -18,7 +18,7 @@ public class Monster_TeageistBoss extends Monster {
         startY = y;
         
         damage = 1;
-        health = 50;
+        health = 20;
         
         name = "Teageist Boss";
         symbol = 231;
@@ -36,17 +36,16 @@ public class Monster_TeageistBoss extends Monster {
         {
             counter++;
             if (counter > 20) {spawnMinions();}
+            
+            if (isOverPlayer(x,y))
+            {
+                Main.getPlayer().attack(this);
+                displace();
+            } else {
+                moveTowards(11,11);
+                damagePlayer();
+            }
         }
-
-        if (isOverPlayer(x,y))
-        {
-            Main.getPlayer().attack(this);
-            displace();
-        }
-        
-        moveTowards(11,11);
-        
-        damagePlayer();
         
         if (isDead())
         {
@@ -54,6 +53,7 @@ public class Monster_TeageistBoss extends Monster {
             Files.currentMapData().getMap()[11][1] = '<';
             Files.currentMapData().getMap()[11][21] = '>';
             Files.currentMapData().rerender();
+            Render.updatMap();
         }
     }
     
@@ -63,6 +63,9 @@ public class Monster_TeageistBoss extends Monster {
         Files.currentMapData().addEntity(new Monster_Teageist(21,11));
         Files.currentMapData().addEntity(new Monster_Teageist(11,1));
         Files.currentMapData().addEntity(new Monster_Teageist(11,21));
+        
+        Render.queueDialog("A new wave of four Teageists has spawned.");
+        Render.update();
     }
 
     void moveTowards(int destX, int destY)

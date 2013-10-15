@@ -214,7 +214,7 @@ public class Render {
     /**
      * Updates the status box with the required text.
      */
-    private static void updateStats()
+    private static void paintStats()
     {        
 
         String health = "Health: " + Main.getPlayer().getHealth();
@@ -223,6 +223,10 @@ public class Render {
         
         String all = health + pots + numMoves;
 
+        for (int i = 0; i < WIDTH; i++)
+        {
+            paintToStats(' ', i , STATS_HEIGHT-2);
+        }
         
         for (int i = 0; i < all.length(); i++)
         {
@@ -230,8 +234,6 @@ public class Render {
         }
     }
     
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // Clearing
     // >>>> ADD SELECTIVE CLEARING <<<<
@@ -299,21 +301,40 @@ public class Render {
      */
     public static void update()
     {
+        paintDialogInQueue();
         
         paintMap();
         paintEntity();
         paintOverworldObjects();
         paintPlayer();
         
-        paintExtra();
+        paintStats();
         
+        Window.repaintAll();
+    }
+    
+    public static void updateDialog()
+    {
         paintDialogInQueue();
         
-        
-        updateStats();
         Window.repaintAll();
+    }
+    
+    public static void updatMap()
+    { 
+        paintMap();
+        paintEntity();
+        paintOverworldObjects();
+        paintPlayer();
         
+        Window.repaintAll();
+    }
+    
+    public static void updateStats()
+    {
+        paintStats();
         
+        Window.repaintAll();
     }
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -380,21 +401,6 @@ public class Render {
                 paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
             }
         }
-    }
-    
-        
-    public static void paintExtra(Entity e) {
-        extra.add(e);
-    }
-    
-    private static void paintExtra()
-    {
-        for (Entity e : extra)
-        {
-            paintToMap(e.getSymbol(), e.getX() + getMidX(), e.getY() + getMidY());
-        }
-        
-        extra.clear();
     }
 
 ////////////////////////////////////////////////////////////////////////////////

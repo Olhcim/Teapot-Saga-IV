@@ -14,6 +14,8 @@
 package teapot_saga_iv;
 
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import teapot_saga_iv.characters.Player;
 import teapot_saga_iv.maps.Staircase;
 
@@ -48,7 +50,7 @@ public class Main
         writer.println(FILESPATH);
         
         Files.loadAllMapData();
-        useMap(5,3);
+        useMap(1,1);
     }
     
     /**
@@ -154,6 +156,7 @@ public class Main
         if (Files.mapExists(Files.world, Files.level + 1))
         {
             useMap(Files.world, Files.level + 1);
+            Render.queueDialog(Files.currentMapData().getDialogStart());
         }
         else
         {
@@ -169,6 +172,18 @@ public class Main
     {
     	if (Files.mapExists(Files.world, Files.level - 1))
         {
+            if (Files.currentMapData().getDialogExit() != null)
+            {
+                Render.queueDialog(Files.currentMapData().getDialogStart());
+                
+                do
+                { 
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ex) {}
+                } while (Render.dialogQueue.size() > 0);
+            }
+            
             useMap(Files.world, Files.level - 1);
 
         }

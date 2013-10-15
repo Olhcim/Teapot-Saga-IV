@@ -57,6 +57,8 @@ public class Player extends Character{
                 Render.queueDialog("You used a health potion and gained " + gain + " life." );
             }
         }
+        Render.updateDialog();
+        Render.updateStats();
     }
     
     
