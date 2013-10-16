@@ -40,6 +40,7 @@ public class Render {
     
     
     public static List<String> dialogQueue = new ArrayList<String>();
+    public static String defaultDialog;
     public static List<Entity> extra = new ArrayList<Entity>();
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -80,12 +81,17 @@ public class Render {
         dialogQueue.add(a);
     }
     
+    public static void setDefaultDialog(String a)
+    {
+        defaultDialog = a;
+    }
+    
     public static void paintDialogInQueue()
     {
         try {
             String current = dialogQueue.get(0);
             print(current);
-            
+
             if (dialogQueue.size() > 1)
             {
                 printSpaceToContinue();
@@ -95,8 +101,8 @@ public class Render {
         }
         catch (Exception e)
         {
-//            clearDialog();
-            System.out.println("No dialog in queue.");
+            clearDialog();
+            print(defaultDialog);
         }
     }
     
@@ -135,7 +141,7 @@ public class Render {
     /**
      * Prints a line of text the the second line of the display
      */
-    private static void print(String a)
+    public static void print(String a)
     {
         
         clearDialog();
@@ -220,8 +226,9 @@ public class Render {
         String health = "Health: " + Main.getPlayer().getHealth();
         String pots = "   Health Potions: " + Main.getPlayer().getHealthPotions();
         String numMoves = "   Turns: " + Main.getPlayer().getMoves();
+        String pos = "   x: " + Main.getPlayer().getX() + "   y: " + Main.getPlayer().getY();
         
-        String all = health + pots + numMoves;
+        String all = health + pots + numMoves + pos;
 
         for (int i = 0; i < WIDTH; i++)
         {
@@ -316,7 +323,6 @@ public class Render {
     public static void updateDialog()
     {
         paintDialogInQueue();
-        
         Window.repaintAll();
     }
     
@@ -387,7 +393,7 @@ public class Render {
             
             if (Files.currentMapData().getSeen()[e.getY()][e.getX()] == '1')
             {
-            paintToMap(e.getSymbol(), e.getX() + getMidX(),e.getY() + getMidY());
+                paintToMap(e.getSymbol(), e.getX() + getMidX(),e.getY() + getMidY());
             }
         }
     }
@@ -398,7 +404,10 @@ public class Render {
         {
             for (Staircase s : Files.currentMapData().getStairs())
             {
-                paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
+                    if (Integer.parseInt( s.getSymbol() + "" ) <= Main.getPlayer().allowedOverworldStaircase)
+                    {
+                        paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
+                    } else { }
             }
         }
     }

@@ -1,8 +1,5 @@
 package teapot_saga_iv.maps;
 
-import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
-
 
 public class Staircase {
 

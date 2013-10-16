@@ -321,21 +321,11 @@ public class MapData {
                     ran = (int)(random.nextDouble()*3);
                     
                     if (ran==0) {
-                        disMap[y][x] = '.';
+                        disMap[y][x] = (char) 7;
                     } else if (ran==1) {
                         disMap[y][x] = (char) 177;
                     } else {
                         disMap[y][x] = (char) 178;
-                    }
-                }
-                
-                
-                for (Staircase s : stairs)
-                {
-                    if (s.x == x && s.y == y)
-                    {
-                        disMap[y][x] = s.getSymbol();
-                        map[y][x] = s.getSymbol();
                     }
                 }
             }

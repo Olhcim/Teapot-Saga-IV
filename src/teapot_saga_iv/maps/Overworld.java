@@ -2,7 +2,6 @@ package teapot_saga_iv.maps;
 
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
-
 public class Overworld extends MapData {
     
     public Overworld(char[][] map, String[][] mapDat) {

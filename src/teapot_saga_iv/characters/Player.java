@@ -12,6 +12,10 @@ public class Player extends Character{
     private int healthPotions = 10;
     private boolean triedToUsePot = false;
     
+    public int allowedOverworldStaircase = 1;
+    
+    public int x, y;
+    
     public int getMoves()
     { return moves; }
     
@@ -20,11 +24,29 @@ public class Player extends Character{
     
     public void update()
     {
+        System.out.println("Allowed: " + allowedOverworldStaircase);
         moves++;
         checkForStairCase();
 
     }
     
+    
+    
+    
+    public void freeze()
+    {
+        canMove = false;
+    }
+    
+    public void unfreeze()
+    {
+        canMove = true;
+    }
+    
+    public boolean canMove()
+    {
+        return canMove;
+    }
     
     
     
@@ -230,7 +252,20 @@ public class Player extends Character{
         {
             for (Staircase s : Files.currentMapData().getStairs())
             {
-                if (s.getX() == x && s.getY() == y)
+                
+                if (Main.isAtOverworld)
+                {
+                    if (Integer.parseInt( s.getSymbol() + "" ) <= allowedOverworldStaircase)
+                    {
+                        System.out.println("Staircase: " + s.getSymbol() + " " + s.getX() + " " + s.getY());
+                        if (s.getX() == x && s.getY() == y)
+                        {
+                            
+                            Main.useMap(s.getDestWorld(), s.getDestLevel());
+                        }
+                    }
+                }
+                else if (s.getX() == x && s.getY() == y)
                 {
                     Main.useMap(s.getDestWorld(), s.getDestLevel());
                 }

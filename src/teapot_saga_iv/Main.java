@@ -35,22 +35,26 @@ public class Main
     
     public static boolean isAtOverworld = true;
     
-    private static final String FILESPATH = System.getProperty("user.home") + "/Desktop/log.txt";
-    public static PrintWriter writer;
-    
-    
-    
     public static void main(String[] args)
     {   
-        try {
-            writer =  new PrintWriter(FILESPATH, "UTF-8");
-        } catch (Exception e) {}
-        
-        writer.write(FILESPATH);
-        writer.println(FILESPATH);
-        
+
         Files.loadAllMapData();
         useMap(1,1);
+        p.setPos(2,3);
+        
+//        long time = System.currentTimeMillis();
+//        
+//        for (int i = 0; i < 1000; i++)
+//        {
+//            p.x ++;
+//            doGameTick();
+//            p.x--;
+//            doGameTick();
+//        
+//        }
+//        
+//        time = System.currentTimeMillis() - time;
+//        System.out.println("move: " + Main.p.getMoves() + " Time:" + time);
     }
     
     /**
@@ -68,24 +72,24 @@ public class Main
      */
     public static void doGameTick()
     {
-        
-        long time = System.currentTimeMillis();
-
         Render.dialogQueue.clear();
+        
+//        long time = System.currentTimeMillis();
 
         p.update();
-        
+
         Files.currentMapData().update();
+        
         
         Render.update();
         
-        time = System.currentTimeMillis() - time;
+//        time = System.currentTimeMillis() - time;
         
-        count++;
-        totalTime += time;
-        aveTime = totalTime / count;
+//        count++;
+//        totalTime += time;
+//        aveTime = totalTime / count;
         
-        System.out.println("move: " + Main.p.getMoves() + " Time:" + time + " AveTime: " + aveTime);
+//        System.out.println("move: " + Main.p.getMoves() + " Time:" + time + " AveTime: " + aveTime);
     }
     
     
@@ -120,10 +124,12 @@ public class Main
         
         if (ahead)
         {
+            Render.setDefaultDialog(Files.currentMapData().getDialogStart());
             p.goToStart();
         }
         else if (!ahead)
         {
+            Render.setDefaultDialog("You have already visited this place.");
             p.goToExit();
         }
 
@@ -141,8 +147,14 @@ public class Main
         
         Files.currentMapData().update();
 
-        for (Staircase s : Files.currentMapData().getStairs()) {
-            if (s.getDestWorld() == Files.world) {
+        for (Staircase s : Files.currentMapData().getStairs())
+        {
+            if (s.getDestWorld() == Files.world)
+            {
+                if (s.getDestWorld() < Files.world)
+                {
+                    p.allowedOverworldStaircase++;
+                }
                 p.setPos(s.getX(), s.getY());
             }
         }
@@ -156,7 +168,6 @@ public class Main
         if (Files.mapExists(Files.world, Files.level + 1))
         {
             useMap(Files.world, Files.level + 1);
-            Render.queueDialog(Files.currentMapData().getDialogStart());
         }
         else
         {
@@ -172,17 +183,7 @@ public class Main
     {
     	if (Files.mapExists(Files.world, Files.level - 1))
         {
-            if (Files.currentMapData().getDialogExit() != null)
-            {
-                Render.queueDialog(Files.currentMapData().getDialogStart());
-                
-                do
-                { 
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException ex) {}
-                } while (Render.dialogQueue.size() > 0);
-            }
+            Render.queueDialog("You have already visited this map");
             
             useMap(Files.world, Files.level - 1);
 
