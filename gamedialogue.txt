@@ -1,0 +1,62 @@
+Teapot Saga Dialogue - To Be Copypasta'd at a Later Date
+
+INTRO: F1,1 Start: "You awake to find yourself in a dark, windowless room. A cell, you deduce, a view supported by the heavy, barred
+		    door and lack of obvious light sources or other means of egress. Time, perhaps, to escape into the tea-tinted world!
+       F1,1 End: "Running through the prison, you reach the stairs leading upwards, through the guard's quarters, to the surface and your
+                  freedom. Time to escape, no doubt; there is no point in waiting to succumb to this jail.
+       F1,2 Start: "This floor is somewhat less squalid: the walls are still stone, the taint of tea is still everywhere and there is still
+                    no doubt that you're in a prison, but there are little touches here and there; signs that the guards live here.
+       F1,3 Start: "The final staircase, your way out of this hellish prison, is in sight! Hurry! Escape before the guards catch you!
+
+OVERWORLD 1: "You've done it! Welcome to the world, [yournamehere]! The rebel base is across the river to the south-east. Perhaps someone there
+              will know what's going on and deign to explain it to you. Make your way, then, to the rebel base post haste!
+
+REBELS: F2,1 Start: "As you slip into the secret base, you feel the eyes of the assorted rebels following you. Finally, someone directs you to their
+                     leader, the Rebel Queen De'caf, to be found on the floor below. She wishes to talk to you, you're told, before the rebel scurries
+                     back to his previous activities."
+	F2,2 De'caf: "Greetings, [yournamehere]. Congratulations on escaping Soap's hellish prison. You may not realise it, but your escape means great
+		      things for the Rebellion against the Teanity. Even though the Prophet Soap controls the world through the Saturation induced by the
+	              Teapocalypse, it is your destiny to undo all of that and drain all tea from our world! Help us, [yournamehere]! You're our only hope!
+                      ... What's that you say? You don't know what the Teapocalypse is? Why it is we rebel against Soap and the Teanity? Let me explain quickly.
+                      Once upon a time, the world had colour. Then, in a ritual to the Teanity, the Prophet Soap induced what we call the Teapocalypse: all of 
+                      reality was infused with the essence of Tea. Earl Grey, our diviners suspect. That is why the world is brown: Tea has Saturated all of reality!
+                      That is why our fight is important, [yournamehere]. That is why the Teanity and its supporters must be overthrown!"
+        F2,2 Exit: "Go to Scavenchey's Farm, [yournamehere]. We suspect he is secretly growing Tea to support the cultists. Raid his warehouse, discover if he has a
+                    stockpile of the stuff and, if possible, stop him and destroy it. Good luck, [yournamehere]."
+FARM: F3,1 Start: "You arrive at the farm of the well known gentleman farmer Robert Scavenchey. His lands are quite large and a sturdy fence separates the farmhouse and
+                   entrance from the warehouse. You hear his dogs barking, sensing your intruding presence."
+      F3,1 Exit: "There are Tea stains on the floor of this warehouse! They betray a hidden trapdoor! So that must be where Scavenchey stores his secret Tea-processing 
+                  facility! Make haste and proceed downstairs!"
+      F3,2 Start: "You appear to be in a vast underground storeroom, hidden beneath the warehouse. You hear the footsteps of patrolling guards."
+      F3,2 Door: "In front of you, you see an absolutely massive quantity of Tea, stacked in massive piles, each one large enough to stain a bay. This operation is far larger
+                  than the rebels back at the base had anticipated! Perhaps there is more to learn farther onwards."
+      F3,2 Exit: "More Tea stains betray the fact that there is another trapdoor, leading deeper into the bowels of the earth."
+      F3,3 Start: "The smell of Tea assails your senses even more than before as you climb down the ladder. It all makes sense: this is no mere warehouse: Scavenchey is operating
+                   an altar to the Teanity here! They have been holding services in this place, using the grown Tea as a sacrament!"
+      F3,3 Altar: "You hear a small voice at the back of your head. "Think, for a moment. Consider the power of Tea. Don't let the rebels pull wool over your eyes, [yournamehere]."
+                   You attempt to ignore it; fortunately, it remains silent for the time being.
+      F3,3 Exit: "You are extremely glad to be out of this hellhole and back to the sanity of the real world."
+
+SECRET: F4,1 Start: "High up in the Xanthodontous Mountains, you locate a small tower, presumably belonging to some wizard or other. Time to climb it, perhaps!"
+        F4,3 Start: "Was it worth climbing the monster-infested Tower for this? Of course it was! There are DUCKS!"
+
+CASTLE: F5,1 Start: "This is the governer's palace, currently inhabited by some high-ranking cultist of the Teanity. He has been known to summon Teageists, a massive crime against
+                     all that is Right and Good. The time has come to end this and purge the area of the Teanity's influence. Once again, the voice in your head from earlier speaks:
+                     "Go, [yournamehere]. Let the power of the Teanity flow through you: consider this your final test." That can't be right! YOu're stopping them!"
+	F5,2 Start: "You climb the marble staircase to the second floor of the mansion. The smell of Tea begins to fill the air and you hear the grinding of walls. They must have used
+                     some demonic Tea-curse to do something to hinder you! You're sure you'll find out what soon."
+        F5,2 Exit: ""The time has come to end this. There can be no turning back, [yournamehere]," says the voice in your head."
+	F5,3 Start: "You can see the Chief Cultist. He wears an plain brown robe and holds an ornate silver-inlaid bone-china Teapot. "Kill him," says the voice. To death and/or glory!"
+        F5,3 Dead: "The Cultist falls to the ground, his head cracked open. The Teapot he was holding begins to glow and floats over to you. Clasping it in your hands feels like the most
+                    natural thing you've ever done. "Congratulations," says the voice, which you now somehow recognise as that of Joe Soap, Avatar of the Teanity and Prophet of Their Cause.
+                    "Invoke the Teanity and you may leave. Welcome to our order, [yournamehere]. The Teanity will appreciate one of your power. Consider this Teapot and mansion payment for your
+                     deeds here." Holding the Teapot as you saw the Cultist clasp it, you mutter a few words of dog-Latin and the glow from the Teapot intensifies. Then, stairs appear from the
+                     once-blank floors. "Praise the Teanity," you say, hardly realising the implications of what you've just done."
+        F5,3 Exit: "The time has arrived to advance the aims of the Teanity. "Let the power of Tea reign forever," you say as you leave.
+CREDITS: "THE END.
+          THE TEAPOT SAGA IV
+          BY NATHAN MICHLO AND SAMUEL SAPIRE
+          BRACE YOURSELF FOR THE EPIC PART V, DUE 2014!
+          WITH THANKS TO OUR VALIENT PLAYTESTERS:
+          -DUCKS DELUXE
+          -AND SOME OTHER SCRUBS WE CAN'T BE BOTHERED TO LIST"
