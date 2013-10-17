@@ -1,15 +1,14 @@
-PosStart:20:13
-#PosExit:2:2
+PosStart:2:2
 
 DialogStart:Map #1 - Monster testing facility.
 DialogExit:Exit Dialog, press space to continue.
 
-Entity:2:6:Prisoner
+Entity:2:6:Soldier
 Entity:2:10:HealthPotion
 Entity:2:17:Golem
-Entity:2:25:Prisoner
+Entity:2:25:Teageist
 
-Entity:9:2:Zombie
+Entity:9:2:Teageist
 Entity:9:10:Prisoner
 Entity:9:25:Bat
 
@@ -18,8 +17,8 @@ Entity:13:10:Prisoner
 Entity:17:10:Bat
 
 Entity:21:2:Prisoner
-Entity:21:6:Zombie
-Entity:21:17:Zombie
+Entity:21:6:Soldier
+Entity:21:17:Soldier
 
 Entity:28:2:Prisoner
 Entity:28:10:Bat

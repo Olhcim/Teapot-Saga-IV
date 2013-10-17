@@ -1,3 +1,14 @@
 DialogStart:Map #2 - Test facility.
 #PosStart:6:3
 #PosExit:1:7
+
+
+Entity:6:9:Soldier
+Entity:8:8:Soldier
+Entity:10:10:Soldier
+Entity:12:9:Soldier
+
+Entity:6:19:Soldier
+Entity:8:19:Soldier
+
+Entity:3:9:HealthPotion

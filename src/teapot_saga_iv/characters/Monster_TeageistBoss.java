@@ -3,7 +3,6 @@ package teapot_saga_iv.characters;
 import teapot_saga_iv.Files;
 import teapot_saga_iv.Main;
 import teapot_saga_iv.Render;
-import teapot_saga_iv.Window;
 
 
 public class Monster_TeageistBoss extends Monster {
@@ -18,7 +17,7 @@ public class Monster_TeageistBoss extends Monster {
         startY = y;
         
         damage = 1;
-        health = 20;
+        health = 25;
         
         name = "Teageist Boss";
         symbol = 231;
@@ -35,7 +34,17 @@ public class Monster_TeageistBoss extends Monster {
         else
         {
             counter++;
-            if (counter > 20) {spawnMinions();}
+            if (counter > 20)
+            {
+                spawnMinions();
+                
+                if (Main.getPlayer().getHealth() < 10)
+                {
+                    int px = (int) ((Math.random()*19)+3);
+                    int py = (int) ((Math.random()*19)+3);
+                    Files.currentMapData().addEntity(new Item_HealthPotion(px,py));
+                }
+            }
             
             if (isOverPlayer(x,y))
             {
@@ -54,15 +63,18 @@ public class Monster_TeageistBoss extends Monster {
             Files.currentMapData().getMap()[11][21] = '>';
             Files.currentMapData().rerender();
             Render.updatMap();
+            
+            
+            Main.endGame("You defeated the infamous Teageist, and completed the game, would you like to play again?");
         }
     }
     
     public void spawnMinions()
     {
-        Files.currentMapData().addEntity(new Monster_Teageist(1,11));
-        Files.currentMapData().addEntity(new Monster_Teageist(21,11));
-        Files.currentMapData().addEntity(new Monster_Teageist(11,1));
-        Files.currentMapData().addEntity(new Monster_Teageist(11,21));
+        Files.currentMapData().addEntity(new Monster_Bat(1,11));
+        Files.currentMapData().addEntity(new Monster_Bat(21,11));
+        Files.currentMapData().addEntity(new Monster_Bat(11,1));
+        Files.currentMapData().addEntity(new Monster_Bat(11,21));
         
         Render.queueDialog("A new wave of four Teageists has spawned.");
         Render.update();

@@ -9,12 +9,12 @@ import teapot_saga_iv.maps.Staircase;
 public class Player extends Character{
     
     private int moves = 0;
-    private int healthPotions = 10;
+    private int healthPotions = 0;
     private boolean triedToUsePot = false;
     
-    public int allowedOverworldStaircase = 1;
+    private int critChance = 10;
     
-    public int x, y;
+    public int allowedOverworldStaircase = 1;
     
     public int getMoves()
     { return moves; }
@@ -24,10 +24,9 @@ public class Player extends Character{
     
     public void update()
     {
-        System.out.println("Allowed: " + allowedOverworldStaircase);
         moves++;
         checkForStairCase();
-
+        System.out.println(allowedOverworldStaircase);
     }
     
     
@@ -78,6 +77,8 @@ public class Player extends Character{
 
                 Render.queueDialog("You used a health potion and gained " + gain + " life." );
             }
+        } else {
+            Render.queueDialog("You do not have any tea leaves to use in health potions." );
         }
         Render.updateDialog();
         Render.updateStats();
@@ -107,6 +108,16 @@ public class Player extends Character{
     
     public void attack(Monster m)
     {
+        int crit = (int) (Math.random()*100);
+        
+        if (critChance > crit) {
+            damage = 4;
+            Render.queueDialog("You landed a critical strike and dealt 4 damage.");
+        } else {
+            damage = 2;
+        }
+        
+        
         m.damage(damage);
     }
     
@@ -134,19 +145,19 @@ public class Player extends Character{
         switch (a)
         {
             case 65:
-            case 37:
+//            case 37:
                 if(canMove(x-1, y)) { x--; Main.doGameTick();}
                 break;
             case 87:
-            case 38:
+//            case 38:
                 if(canMove(x, y-1)) { y--; Main.doGameTick();}
                 break;
             case 68:
-            case 39:
+//            case 39:
                 if(canMove(x+1, y)) { x++; Main.doGameTick();}
                 break;
             case 83:
-            case 40:
+//            case 40:
                 if(canMove(x, y+1)) { y++; Main.doGameTick();}
                 break;
             case 79:

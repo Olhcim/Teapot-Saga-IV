@@ -7,54 +7,49 @@
  * Programming:
  * 
  * Nathan Michlo
+ * 
+ * 
  * Samuel Sapire 
  */
 
 
 package teapot_saga_iv;
 
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 import teapot_saga_iv.characters.Player;
 import teapot_saga_iv.maps.Staircase;
 
 
 public class Main
 {
-    
-    public static int totalTime = 0;
-    public static int count = 0;
-    public static double aveTime = 0;
 
-    public static boolean gameActive = true;
-    public static boolean frameActive = false;
+    public static boolean gameActive;
+    public static boolean frameActive;
     
-    private static Player p = new Player();
-    private static Window w = new Window();
+    private static Player p;
+    private static Window w;
     
-    public static boolean isAtOverworld = true;
+    public static boolean isAtOverworld;
     
     public static void main(String[] args)
     {   
 
-        Files.loadAllMapData();
-        useMap(1,1);
-        p.setPos(2,3);
-        
-//        long time = System.currentTimeMillis();
-//        
-//        for (int i = 0; i < 1000; i++)
-//        {
-//            p.x ++;
-//            doGameTick();
-//            p.x--;
-//            doGameTick();
-//        
-//        }
-//        
-//        time = System.currentTimeMillis() - time;
-//        System.out.println("move: " + Main.p.getMoves() + " Time:" + time);
+        setupGame();
+    }
+    
+    private static void setupGame()
+    {
+        gameActive = true;
+        frameActive = false;
+    
+        p = new Player();
+        w = new Window();
+    
+       isAtOverworld = false;
+       
+       Files.loadAllMapData();
+       useMap(1,1);
     }
     
     /**
@@ -72,34 +67,49 @@ public class Main
      */
     public static void doGameTick()
     {
+        
         Render.dialogQueue.clear();
         
-//        long time = System.currentTimeMillis();
-
         p.update();
 
         Files.currentMapData().update();
         
+        if (p.isDead())
+        {
+            endGame("You died, would you like to restart?");
+        }
         
         Render.update();
+    }
+    
+    public static void endGame(String a)
+    {
+        Render.queueDialog(a);
+        Render.update();
         
-//        time = System.currentTimeMillis() - time;
-        
-//        count++;
-//        totalTime += time;
-//        aveTime = totalTime / count;
-        
-//        System.out.println("move: " + Main.p.getMoves() + " Time:" + time + " AveTime: " + aveTime);
+            int option = JOptionPane.showConfirmDialog(null, a);
+
+            if (option == 0)
+            {
+                setupGame();
+            } else {
+                System.exit(0);
+            }
     }
     
     
-    
+    /**
+     * Switches the map to the specified map corrisponding to the world and level passed to the method.
+     * 
+     * @param world The world to switch to.
+     * @param level The level in the world to switch to.
+     */
     public static void useMap(int world, int level)
     {
         
         Render.clearAll();
      
-        isAtOverworld = false;
+
         boolean ahead = true;
         
         
@@ -122,15 +132,29 @@ public class Main
         Files.world = world;
         Files.level = level;
         
-        if (ahead)
+        if (isAtOverworld)
         {
-            Render.setDefaultDialog(Files.currentMapData().getDialogStart());
-            p.goToStart();
+            isAtOverworld = false;
+            
+           if(level == 1)
+           {
+                Files.currentMapData().setDefaultDialog("You have already visited this place.");
+                p.goToStart();
+           } else {
+               Files.currentMapData().setDefaultDialog("You have already visited this place.");
+                p.goToExit();
+           }
         }
-        else if (!ahead)
+        else 
         {
-            Render.setDefaultDialog("You have already visited this place.");
-            p.goToExit();
+            if (!ahead)
+            {
+                Files.currentMapData().setDefaultDialog("You have already visited this place.");
+                p.goToExit();
+            } else {
+                Render.queueDialog(Files.currentMapData().getDialogStart());
+                p.goToStart();
+            }
         }
 
         Files.currentMapData().update();
@@ -151,10 +175,6 @@ public class Main
         {
             if (s.getDestWorld() == Files.world)
             {
-                if (s.getDestWorld() < Files.world)
-                {
-                    p.allowedOverworldStaircase++;
-                }
                 p.setPos(s.getX(), s.getY());
             }
         }
@@ -171,6 +191,11 @@ public class Main
         }
         else
         {
+            if (p.allowedOverworldStaircase < Files.world + 1)
+            {
+                p.allowedOverworldStaircase++;
+            }
+            
             goToOverworld();
         }
         

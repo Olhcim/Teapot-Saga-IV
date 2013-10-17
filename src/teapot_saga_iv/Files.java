@@ -75,6 +75,7 @@ public class Files {
      */
     private static void loadMaps()
     {
+        data.clear();
         
         int world = 1, lvl = 1;
         

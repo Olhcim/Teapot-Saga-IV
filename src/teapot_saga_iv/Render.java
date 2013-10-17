@@ -40,7 +40,6 @@ public class Render {
     
     
     public static List<String> dialogQueue = new ArrayList<String>();
-    public static String defaultDialog;
     public static List<Entity> extra = new ArrayList<Entity>();
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -81,11 +80,6 @@ public class Render {
         dialogQueue.add(a);
     }
     
-    public static void setDefaultDialog(String a)
-    {
-        defaultDialog = a;
-    }
-    
     public static void paintDialogInQueue()
     {
         try {
@@ -102,7 +96,9 @@ public class Render {
         catch (Exception e)
         {
             clearDialog();
-            print(defaultDialog);
+            try {
+            print(Files.currentMapData().getDefaultDialog());
+            } catch (Exception e2) {}
         }
     }
     
@@ -407,7 +403,7 @@ public class Render {
                     if (Integer.parseInt( s.getSymbol() + "" ) <= Main.getPlayer().allowedOverworldStaircase)
                     {
                         paintToMap(s.getSymbol(), s.getX() + getMidX(), s.getY() + getMidY());
-                    } else { }
+                    }
             }
         }
     }

@@ -24,8 +24,9 @@ public class MapData {
     
     
     
-    String dialogStart;
-    String dialogExit;
+    String dialogStart = "";
+    String dialogExit = "";
+    String defaultDialog = "";
     
     LineOfSight sight;
     
@@ -129,6 +130,12 @@ public class MapData {
     
     public String getDialogExit()
     { return dialogExit; }
+    
+    public String getDefaultDialog()
+    { return defaultDialog; }
+    
+    public void setDefaultDialog(String a)
+    { defaultDialog = a; }
     
     
     
@@ -237,13 +244,13 @@ public class MapData {
     
     private Entity createNewEntity(int x, int y, String type)
     {
-        type = type.toLowerCase();
         
         if      (type.equalsIgnoreCase("prisoner"))     { return new Monster_Prisoner       (x, y); }
         else if (type.equalsIgnoreCase("golem"))        { return new Monster_Golem          (x, y); }
         else if (type.equalsIgnoreCase("teageist"))     { return new Monster_Teageist       (x, y); }
         else if (type.equalsIgnoreCase("teageistboss")) { return new Monster_TeageistBoss   (x, y); }
         else if (type.equalsIgnoreCase("healthpotion")) { return new Item_HealthPotion      (x, y); }
+        else if (type.equalsIgnoreCase("soldier"))      { return new Monster_Soldier        (x, y); }
         else                                            { return new Monster_Bat            (x, y); }
     }
     
