@@ -254,6 +254,8 @@ public class MapData {
     */
     void parseMap()
     {
+//        int wallCount = 0;
+        
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 if (map[y][x] == '<') {
@@ -265,8 +267,14 @@ public class MapData {
                     exitY = y;
                     stairs.add( new Staircase(x, y, world, level + 1, '>') );
                 }
+//                else if (map[y][x] == '#' || map[y][x] == '+' || map[y][x] == 'X' || map[y][x] == 'x')
+//                {
+//                    wallCount++;
+//                }
             }
         }
+        
+//        System.out.println(world + " " + level + " walls: " + wallCount);
     }
     
    /**

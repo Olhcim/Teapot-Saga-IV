@@ -29,7 +29,7 @@ public class Main
     private static Window w;
     
     public static boolean isAtOverworld;
-    
+
     public static void main(String[] args)
     {   
 
@@ -78,6 +78,7 @@ public class Main
         }
         
         Render.update();
+
     }
     
     public static void endGame(String a)
@@ -136,7 +137,7 @@ public class Main
             
            if(level == 1)
            {
-                Files.currentMapData().setDefaultDialog("You have already visited this place.");
+                Render.queueDialog(Files.currentMapData().getDialogStart());
                 p.goToStart();
            } else {
                Files.currentMapData().setDefaultDialog("You have already visited this place.");
@@ -181,7 +182,7 @@ public class Main
     }
     
     
-    public static void NextMap()
+    public static void nextMap()
     {
         if (Files.mapExists(Files.world, Files.level + 1))
         {
@@ -202,7 +203,7 @@ public class Main
     /**
      * Loads the previous Map, moves the player and updates the GUI.
      */
-    public static void PrevMap()
+    public static void prevMap()
     {
     	if (Files.mapExists(Files.world, Files.level - 1))
         {

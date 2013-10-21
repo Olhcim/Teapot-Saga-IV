@@ -1,5 +1,7 @@
 package teapot_saga_iv;
 
+import java.awt.event.KeyEvent;
+
 
 public class Player extends Character{
     
@@ -134,9 +136,9 @@ public class Player extends Character{
     /**
      * recieves the keycodes of keys pressed from Window.class
      */
-    public void handleKey(int a)
+    public void handleKey(KeyEvent ke)
     {
-        switch (a)
+        switch (ke.getKeyCode())
         {
             case 65:
 //            case 37:
@@ -160,18 +162,13 @@ public class Player extends Character{
             case 67:
                 Main.doGameTick();
                 break;
-//            case 49:
-//                Main.PrevMap();         //quick navigation, testing purposes only.
-//                break;
-//            case 50:
-//                Main.NextMap();         //quick navigation, testing purposes only.
-//                break;
             case 32:
                 Render.paintDialogInQueue();
                 break;
             case 70:
                 useHealthPotion();
                 break;
+            case KeyEvent.VK_ESCAPE : System.exit(0);
         }
     }
     
@@ -247,11 +244,11 @@ public class Player extends Character{
 
         if(isAtExit())
         {
-            Main.NextMap();
+            Main.nextMap();
         }
         else if (isAtEntrance())
         {
-            Main.PrevMap();
+            Main.prevMap();
         }
         else
         {      

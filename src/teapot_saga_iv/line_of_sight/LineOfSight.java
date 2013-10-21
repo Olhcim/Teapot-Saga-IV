@@ -6,6 +6,7 @@ import teapot_saga_iv.MapData;
 public class LineOfSight
 {
     private char[][] sight;
+    private char[][] currentMap;
     
     public LineOfSight(MapData data)
     {
@@ -19,7 +20,8 @@ public class LineOfSight
     
     public void update(int x, int y)
     {
-        findVisable(x,y);
+        currentMap = Files.currentMap().clone();
+        findVisable(x,y,9);
     }
     
     /**
@@ -34,29 +36,29 @@ public class LineOfSight
      * @param sx - start x pos.
      * @param sy - start y pos.
      */
-    private void findVisable(int sx, int sy)
+    
+    private void findVisable(int sx, int sy, int r)
     {
         
-        for (int ey = 0; ey < sight.length; ey++)
+        for (int y = -r; y <= r; y++)
         {
-            for (int ex = 0; ex < sight[ey].length; ex++)
+            for (int x = -r; x <= r; x++)
             {
-                if(Files.currentMap()[ey][ex] == '#' || Files.currentMap()[ey][ex] == '+') // only searches to all the walls in the current map
+                if (x*x + y*y > r*r) { continue; }
+                
+                if (sx + x < 0 || sx + x >= currentMap[0].length || sy + y < 0 || sy + y >= currentMap.length) { continue; }
+
+                for ( Point p : new Line(sx,sy, sx + x, sy + y).getPoints() )
                 {
-                    Line line = new Line(sx,sy,ex,ey);
+                    int px = p.getX();
+                    int py = p.getY();
 
-                    for (Point p : line.getPoints())
+                    if(Files.currentMap()[py][px] == '#' || Files.currentDisMap()[py][px] == '+')
                     {
-                        int px = p.getX();
-                        int py = p.getY();
-
-                        if(Files.currentMap()[py][px] == '#' || Files.currentDisMap()[py][px] == '+')
-                        {
-                            sight[py][px] = '1';
-                            break;
-                        } else {
-                            sight[py][px] = '1';
-                        }
+                        sight[py][px] = '1';
+                        break;
+                    } else {
+                        sight[py][px] = '1';
                     }
                 }
             }

@@ -81,7 +81,7 @@ public class Window extends JFrame implements KeyListener
     public void keyPressed(KeyEvent ke) {
         
 //        System.out.println(ke.getKeyChar() + ": " +ke.getKeyCode());
-        Main.getPlayer().handleKey(ke.getKeyCode());
+        Main.getPlayer().handleKey(ke);
     }
 
     /*
