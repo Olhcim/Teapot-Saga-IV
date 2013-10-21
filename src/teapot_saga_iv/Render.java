@@ -5,9 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import teapot_saga_iv.characters.Entity;
-import teapot_saga_iv.characters.Monster;
-import teapot_saga_iv.maps.Staircase;
 
 
 public class Render {

@@ -1,6 +1,5 @@
-package teapot_saga_iv.characters;
+package teapot_saga_iv;
 
-import teapot_saga_iv.Main;
 
 public class Monster_Bat extends Monster {
 

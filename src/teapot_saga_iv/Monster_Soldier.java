@@ -1,7 +1,4 @@
-package teapot_saga_iv.characters;
-
-import teapot_saga_iv.Main;
-import teapot_saga_iv.Render;
+package teapot_saga_iv;
 
 
 public class Monster_Soldier extends Monster {

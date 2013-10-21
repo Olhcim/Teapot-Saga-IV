@@ -1,8 +1,6 @@
-package teapot_saga_iv.characters;
+package teapot_saga_iv;
 
-import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
-import teapot_saga_iv.Render;
+
 import teapot_saga_iv.a_star.AStar;
 
 public class Monster extends Character{

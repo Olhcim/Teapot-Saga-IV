@@ -1,7 +1,7 @@
 package teapot_saga_iv.line_of_sight;
 
 import teapot_saga_iv.Files;
-import teapot_saga_iv.maps.MapData;
+import teapot_saga_iv.MapData;
 
 public class LineOfSight
 {

@@ -1,4 +1,4 @@
-package teapot_saga_iv.maps;
+package teapot_saga_iv;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import teapot_saga_iv.*;
-import teapot_saga_iv.characters.*;
-import teapot_saga_iv.characters.Entity;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 
@@ -118,10 +115,8 @@ public class MapData {
     
     public int getWorld()
     { return world; }
-    public List<Staircase> getStairs ()
-    {
-        return stairs;
-    }
+    public List<Staircase> getStairs()
+    { return stairs; }
     
     
     

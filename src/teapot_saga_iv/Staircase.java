@@ -1,4 +1,4 @@
-package teapot_saga_iv.maps;
+package teapot_saga_iv;
 
 
 public class Staircase {

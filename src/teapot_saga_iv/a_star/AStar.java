@@ -3,7 +3,7 @@ package teapot_saga_iv.a_star;
 import java.util.ArrayList;
 import java.util.List;
 import teapot_saga_iv.Files;
-import teapot_saga_iv.characters.Entity;
+import teapot_saga_iv.Entity;
 
 public class AStar {
 

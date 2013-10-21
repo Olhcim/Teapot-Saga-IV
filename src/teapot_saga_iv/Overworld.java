@@ -1,4 +1,4 @@
-package teapot_saga_iv.maps;
+package teapot_saga_iv;
 
 import teapot_saga_iv.line_of_sight.LineOfSight;
 

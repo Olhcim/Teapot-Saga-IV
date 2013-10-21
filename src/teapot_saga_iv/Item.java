@@ -1,5 +1,5 @@
 
-package teapot_saga_iv.characters;
+package teapot_saga_iv;
 
 public class Item extends Entity {
     

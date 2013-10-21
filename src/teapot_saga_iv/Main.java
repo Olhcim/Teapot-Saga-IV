@@ -17,8 +17,6 @@ package teapot_saga_iv;
 
 
 import javax.swing.JOptionPane;
-import teapot_saga_iv.characters.Player;
-import teapot_saga_iv.maps.Staircase;
 
 
 public class Main
@@ -171,7 +169,7 @@ public class Main
         
         Files.currentMapData().update();
 
-        for (Staircase s : Files.currentMapData().getStairs())
+        for (Staircase s : Files.currentMapData().stairs)
         {
             if (s.getDestWorld() == Files.world)
             {

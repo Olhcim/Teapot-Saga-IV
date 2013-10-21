@@ -1,8 +1,5 @@
 
-package teapot_saga_iv.characters;
-
-import teapot_saga_iv.Main;
-import teapot_saga_iv.Files;
+package teapot_saga_iv;
 
 public class Item_HealthPotion extends Item{
     

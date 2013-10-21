@@ -1,8 +1,6 @@
-package teapot_saga_iv.maps;
+package teapot_saga_iv;
 
 import java.util.Collections;
-import teapot_saga_iv.Main;
-import teapot_saga_iv.characters.Entity;
 import teapot_saga_iv.line_of_sight.LineOfSight;
 
 

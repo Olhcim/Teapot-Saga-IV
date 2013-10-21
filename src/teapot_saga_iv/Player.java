@@ -1,9 +1,4 @@
-package teapot_saga_iv.characters;
-
-import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
-import teapot_saga_iv.Render;
-import teapot_saga_iv.maps.Staircase;
+package teapot_saga_iv;
 
 
 public class Player extends Character{
@@ -26,7 +21,6 @@ public class Player extends Character{
     {
         moves++;
         checkForStairCase();
-        System.out.println(allowedOverworldStaircase);
     }
     
     
@@ -166,14 +160,14 @@ public class Player extends Character{
             case 67:
                 Main.doGameTick();
                 break;
-            case 49:
-                Main.PrevMap();         //quick navigation, testing purposes only.
-                break;
-            case 50:
-                Main.NextMap();         //quick navigation, testing purposes only.
-                break;
+//            case 49:
+//                Main.PrevMap();         //quick navigation, testing purposes only.
+//                break;
+//            case 50:
+//                Main.NextMap();         //quick navigation, testing purposes only.
+//                break;
             case 32:
-                Render.paintDialogInQueue();         //quick navigation, testing purposes only.
+                Render.paintDialogInQueue();
                 break;
             case 70:
                 useHealthPotion();
@@ -260,7 +254,7 @@ public class Player extends Character{
             Main.PrevMap();
         }
         else
-        {
+        {      
             for (Staircase s : Files.currentMapData().getStairs())
             {
                 

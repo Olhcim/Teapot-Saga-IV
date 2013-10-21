@@ -1,5 +1,4 @@
-package teapot_saga_iv.characters;
-
+package teapot_saga_iv;
 
 public class Monster_Teageist extends Monster {
 

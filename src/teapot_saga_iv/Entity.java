@@ -1,7 +1,5 @@
-package teapot_saga_iv.characters;
 
-import teapot_saga_iv.Files;
-import teapot_saga_iv.Main;
+package teapot_saga_iv;
 
 
 public class Entity {
