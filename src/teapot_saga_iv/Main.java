@@ -32,11 +32,10 @@ public class Main
 
     public static void main(String[] args)
     {   
-
         setupGame();
     }
     
-    private static void setupGame()
+    public static void setupGame()
     {
         gameActive = true;
         frameActive = false;
@@ -65,7 +64,6 @@ public class Main
      */
     public static void doGameTick()
     {
-        
         Render.dialogQueue.clear();
         
         p.update();
@@ -86,14 +84,14 @@ public class Main
         Render.queueDialog(a);
         Render.update();
         
-            int option = JOptionPane.showConfirmDialog(null, a);
+        int option = JOptionPane.showConfirmDialog(null, a);
 
-            if (option == 0)
-            {
-                setupGame();
-            } else {
-                System.exit(0);
-            }
+        if (option == 0)
+        {
+            setupGame();
+        } else if (option == 1) {
+            System.exit(0);
+        }
     }
     
     

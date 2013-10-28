@@ -23,7 +23,7 @@ public class Monster_TeageistBoss extends Monster {
     public void update()
     {
 
-        if (Files.currentMapData().isEntity("Teageist"))
+        if ( Files.currentMapData().isEntity("Minion of the Teanity"))
         {
             counter = 0;
         }
@@ -42,6 +42,7 @@ public class Monster_TeageistBoss extends Monster {
                 }
             }
             
+            
             if (isOverPlayer(x,y))
             {
                 Main.getPlayer().attack(this);
@@ -58,7 +59,7 @@ public class Monster_TeageistBoss extends Monster {
             Files.currentMapData().getMap()[11][1] = '<';
             Files.currentMapData().getMap()[11][21] = '>';
             Files.currentMapData().rerender();
-            Render.updatMap();
+            Render.updateMap();
             
             
             Main.endGame("You defeated the infamous Teageist, and completed the game, would you like to play again?");
@@ -67,12 +68,13 @@ public class Monster_TeageistBoss extends Monster {
     
     public void spawnMinions()
     {
-        Files.currentMapData().addEntity(new Monster_Bat(1,11));
-        Files.currentMapData().addEntity(new Monster_Bat(21,11));
-        Files.currentMapData().addEntity(new Monster_Bat(11,1));
-        Files.currentMapData().addEntity(new Monster_Bat(11,21));
+        Files.currentMapData().addEntity(new Monster_TeageistMinion(1,11));
+        Files.currentMapData().addEntity(new Monster_TeageistMinion(21,11));
+        Files.currentMapData().addEntity(new Monster_TeageistMinion(11,1));
+        Files.currentMapData().addEntity(new Monster_TeageistMinion(11,21));
         
         Render.queueDialog("A new wave of four Teageists has spawned.");
+        
         Render.update();
     }
 
@@ -111,21 +113,4 @@ public class Monster_TeageistBoss extends Monster {
     }
 
                 
-}
-
-class Teageist extends Monster
-{
-    public Teageist(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-//        startX = x;
-//        startY = y;
-        
-        damage = 2;
-        health = 4;
-        
-        name = "Teageist";
-        symbol = 226;
-    }
 }

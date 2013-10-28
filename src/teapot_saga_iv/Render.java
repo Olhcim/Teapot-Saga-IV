@@ -74,7 +74,7 @@ public class Render {
     
     public static void queueDialog(String a)
     {
-        dialogQueue.add(a);
+            dialogQueue.add(a);
     }
     
     public static void paintDialogInQueue()
@@ -145,9 +145,6 @@ public class Render {
         int y = 0;
         int x = 0;
         
-        System.out.println(a);
-        
-        
         for (int i = 0; i < a.length(); i++)
         {
             if (a.charAt(i) == '\n')
@@ -158,11 +155,6 @@ public class Render {
                 x++;
             }
         }
-        
-//        for (int i = 0; i < WIDTH; i++)
-//        {
-//            paintToDialog((char) 196, i, DIALOG_HEIGHT-1);
-//        }
         
         Window.repaintAll();
     }
@@ -217,11 +209,18 @@ public class Render {
     {        
 
         String health = "Health: " + Main.getPlayer().getHealth();
-        String pots = "   Health Potions: " + Main.getPlayer().getHealthPotions();
-        String numMoves = "   Turns: " + Main.getPlayer().getMoves();
-        String pos = "   x: " + Main.getPlayer().getX() + "   y: " + Main.getPlayer().getY();
+        String pots = "  Health Potions: " + Main.getPlayer().getHealthPotions();
+        String numMoves = "  Turns: " + Main.getPlayer().getMoves();
+        String pos = "  x: " + Main.getPlayer().getX() + "  y: " + Main.getPlayer().getY();
+        String place = "";
         
-        String all = health + pots + numMoves + pos;
+        if (Main.isAtOverworld) {
+            place = "  World: Overworld"; }
+        else {
+            place = "  world: " + Files.world + "  level: " + Files.level;
+        }
+        
+        String all = health + pots + numMoves + place + pos;
 
         for (int i = 0; i < WIDTH; i++)
         {
@@ -319,7 +318,7 @@ public class Render {
         Window.repaintAll();
     }
     
-    public static void updatMap()
+    public static void updateMap()
     { 
         paintMap();
         paintEntity();

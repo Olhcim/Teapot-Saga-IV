@@ -15,5 +15,6 @@ public class Monster_Prisoner extends Monster {
         
         name = "Prisoner";
         symbol = 227;
+        symbol = 'P';
     }
 } 

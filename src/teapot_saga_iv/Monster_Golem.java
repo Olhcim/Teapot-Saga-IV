@@ -15,5 +15,6 @@ public class Monster_Golem extends Monster {
         
         name = "Golem";
         symbol = 225;
+        symbol = 'G';
     }
 } 

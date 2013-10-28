@@ -10,6 +10,7 @@ public class Monster extends Character{
     int startX, startY;
     
     
+    @Override
     public void update()
     {
         moveTowardsPlayer();
@@ -57,7 +58,7 @@ public class Monster extends Character{
         {
             if (distanceToPlayer >= 2.5 )
             {
-                findPath(Main.getPlayer().getX(), Main.getPlayer().getY());
+                findPath( Main.getPlayer().getX(), Main.getPlayer().getY() );
 
                 if (path == null)
                 {
@@ -126,8 +127,6 @@ public class Monster extends Character{
     public void damage(int d)
     {
         health -= d;
-        
-        System.out.println(getType() + " Health: " + health);
         
         if (health < 1)
         {

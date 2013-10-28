@@ -14,5 +14,6 @@ public class Monster_Teageist extends Monster {
         
         name = "Teageist";
         symbol = 226;
+        symbol = 'T';
     }
 } 

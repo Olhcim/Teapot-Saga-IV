@@ -16,6 +16,7 @@ public class Monster_Soldier extends Monster {
         
         name = "Soldier";
         symbol = 224;
+        symbol = 'S';
     }
     
     @Override

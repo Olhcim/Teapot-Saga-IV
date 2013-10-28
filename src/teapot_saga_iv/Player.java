@@ -138,6 +138,7 @@ public class Player extends Character{
      */
     public void handleKey(KeyEvent ke)
     {
+        
         switch (ke.getKeyCode())
         {
             case 65:
@@ -177,27 +178,30 @@ public class Player extends Character{
      */
     private void useDoor()
     {
-        if(doorAt(0,1))
+        if ( !doorAt(0,0) )
         {
-            openDoor(0,1);
-            openDoor(1,1);
-            openDoor(-1,1);
-            
-        } else if (doorAt(0,-1))
-        {
-            openDoor(0,-1);
-            openDoor(1,-1);
-            openDoor(-1,-1);
-        } else if (doorAt(1,0))
-        {
-            openDoor(1,0);
-            openDoor(1,1);
-            openDoor(1,-1);
-        } else if (doorAt(-1,0))
-        {
-            openDoor(-1,0);
-            openDoor(-1,1);
-            openDoor(-1,-1);
+            if(doorAt(0,1))
+            {
+                openDoor(0,1);
+                openDoor(1,1);
+                openDoor(-1,1);
+
+            } else if (doorAt(0,-1))
+            {
+                openDoor(0,-1);
+                openDoor(1,-1);
+                openDoor(-1,-1);
+            } else if (doorAt(1,0))
+            {
+                openDoor(1,0);
+                openDoor(1,1);
+                openDoor(1,-1);
+            } else if (doorAt(-1,0))
+            {
+                openDoor(-1,0);
+                openDoor(-1,1);
+                openDoor(-1,-1);
+            }
         }
     }
     
