@@ -8,7 +8,35 @@ public class Character extends Entity {
     
     int health = 100, damage = 2;
     
+    boolean canMove = true;
+    
     public Node path;
+    
+    /**
+     * Creates a character with 100 health.
+     * x position is 0.
+     * y position is 0.
+     */
+    public Character() {}
+    
+    /**
+     * Creates a character with 100 health
+     */
+    public Character(int x, int y) {
+
+    }
+
+    /**
+     * @param h the starting health of the character.
+     * @param x the starting x coordinate of the character.
+     * @param y the starting y coordinate of the character.
+     */
+    public Character(int h, int x, int y) {
+        
+        health = h;
+        this.x = x;
+        this.y = y;
+    }
     
 
     
@@ -77,5 +105,11 @@ public class Character extends Entity {
                 case 7: return canMove(x-1, y-1);
             }
         return false;
+    }
+    
+    
+    public boolean MoveAllowed()
+    {
+        return canMove;
     }
 } 
